@@ -5,7 +5,7 @@
     $prestador =  $_SESSION['CPF_PREST'];
     $c = "select MAX(cd_indicacao) from indicacao";
     $cr = $mysqli->query($c)==true or die ($mysqli->error);
-    echo $cliente;
+    echo "cliente $cliente";
     echo "   ";
     echo $prestador;
     echo "  ";
