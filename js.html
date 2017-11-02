@@ -1,0 +1,29 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang= "en">
+<head>
+<meta http-equiv= "Content-Type" content="text/html; charset=utf-8">
+<title>first script</title>
+<script type= "text/javascript">
+onload= function(){
+    var sel= document.getElementsByName('selectScript')[0];
+    var inp= document.getElementsByName('txtScript')[0];
+    sel.onchange= function(){
+        inp.value= sel.value;
+    }
+}
+</script>
+</head>
+<body>
+<h1>Scriptus</h1>
+<form action="" onsubmit="return false">
+<p>
+<select name= "selectScript" size="1">
+<option selected= "selected" value="javascript">javascript</option>
+<option value= "scriptus">scriptust</option>
+<option value= "maximus">maximus</option>
+</select>
+<input type= "text" name="txtScript" readonly="readonly" hidden>
+</p>
+</form>
+</body>
+</html>

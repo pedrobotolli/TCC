@@ -1,0 +1,23 @@
+[01-Nov-2017 00:05:29 UTC] PHP Fatal error:  Call to a member function query() on a non-object in /home/ubuntu/workspace/Sistema/logando.php on line 19
+[01-Nov-2017 00:05:29 UTC] PHP Stack trace:
+[01-Nov-2017 00:05:29 UTC] PHP   1. {main}() /home/ubuntu/workspace/Sistema/logando.php:0
+[01-Nov-2017 00:16:32 UTC] PHP Fatal error:  Call to a member function fetch_assoc() on a non-object in /home/ubuntu/workspace/Sistema/cadastro.php on line 125
+[01-Nov-2017 00:16:32 UTC] PHP Stack trace:
+[01-Nov-2017 00:16:32 UTC] PHP   1. {main}() /home/ubuntu/workspace/Sistema/cadastro.php:0
+[01-Nov-2017 01:48:11 UTC] PHP Warning:  mysqli::mysqli(): (HY000/1045): Access denied for user 'pedrobotolli-tcc-spf-5606798'@'localhost' (using password: NO) in /home/ubuntu/workspace/Sistema/conexao.php on line 9
+[01-Nov-2017 01:48:11 UTC] PHP Stack trace:
+[01-Nov-2017 01:48:11 UTC] PHP   1. {main}() /home/ubuntu/workspace/Sistema/logando.php:0
+[01-Nov-2017 01:48:11 UTC] PHP   2. include() /home/ubuntu/workspace/Sistema/logando.php:9
+[01-Nov-2017 01:48:11 UTC] PHP   3. mysqli->mysqli() /home/ubuntu/workspace/Sistema/conexao.php:9
+[01-Nov-2017 01:48:11 UTC] PHP Notice:  Access denied for user 'pedrobotolli-tcc-spf-5606798'@'localhost' (using password: NO) in /home/ubuntu/workspace/Sistema/conexao.php on line 10
+[01-Nov-2017 01:48:11 UTC] PHP Stack trace:
+[01-Nov-2017 01:48:11 UTC] PHP   1. {main}() /home/ubuntu/workspace/Sistema/logando.php:0
+[01-Nov-2017 01:48:11 UTC] PHP   2. include() /home/ubuntu/workspace/Sistema/logando.php:9
+[01-Nov-2017 01:48:11 UTC] PHP   3. trigger_error() /home/ubuntu/workspace/Sistema/conexao.php:10
+[01-Nov-2017 01:48:11 UTC] PHP Warning:  mysqli::query(): Couldn't fetch mysqli in /home/ubuntu/workspace/Sistema/logando.php on line 19
+[01-Nov-2017 01:48:11 UTC] PHP Stack trace:
+[01-Nov-2017 01:48:11 UTC] PHP   1. {main}() /home/ubuntu/workspace/Sistema/logando.php:0
+[01-Nov-2017 01:48:11 UTC] PHP   2. mysqli->query() /home/ubuntu/workspace/Sistema/logando.php:19
+[01-Nov-2017 01:48:11 UTC] PHP Warning:  main(): Couldn't fetch mysqli in /home/ubuntu/workspace/Sistema/logando.php on line 19
+[01-Nov-2017 01:48:11 UTC] PHP Stack trace:
+[01-Nov-2017 01:48:11 UTC] PHP   1. {main}() /home/ubuntu/workspace/Sistema/logando.php:0
