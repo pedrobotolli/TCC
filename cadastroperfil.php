@@ -1,4 +1,4 @@
-SPFSPFSPF<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -8,6 +8,7 @@ SPFSPFSPF<!DOCTYPE html>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
+    <link rel="icon" href="favicon.png" type="image/x-icon" />
 
     <title>Cadastro de Prestador</title>
 
@@ -64,84 +65,51 @@ SPFSPFSPF<!DOCTYPE html>
         </div>
         <!-- /.container-fluid -->
     </nav>
-
-    <!-- Header -->
-    <header>
-        <div class="container" id="maincontent" tabindex="-1">
-            <div class="row">
-                <div class="col-lg-12">
-                    <img class="img-responsive" src="img/profile.png" alt="">
-                    <div class="intro-text">
-                        <h1 class="name">spf </h1>
-                        <hr class="star-light">
-                        <span class="skills">Service Provider Finder - Seu serviço de conexão cliente-trabalhador autonomo</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </header>
-
+    <br><br>
     <!-- Portfolio Grid Section -->
     <section id="portfolio">
         <div class="container">
           <div class="row">
             <div class="col-lg-12 text-center">
-                    <h2>Perfil</h2>
-              </div>
+                   <legend><h2>Cadastro de Prestador</h2></legend>
+            </div>
             <div class="col-lg-12 text-center">
                 <form action="cadastrarprestador.php" method="post">
-      <fieldset>
-        <legend>Altere seu perfil!</legend>
-        <div style="float:left;width:30%;">
-          <p>imagem vai aqui </p>
-          <p>
-  <input type = "submit" />
-          <input type = "submit" />
-          </p>
-        </div>
-        <div style="float:left;width:70%;">
-<fieldset>
-        <legend>Faça seu cadastro ai</legend>
-        <p>
-          <label>Nome</label>
-          <input type = "text"
-                 name = "nome"
-                 value = "" />
-          
-                 <label>CPF</label>
-          <input type = "text"
-                  name = "CPF"
-                  value = "" />
-        </p>
-        <p>
-			<label>Email</label>
-       		<input type = "text"
-       			   name = "email"
-       			   value = "" />
-                <label>Telefone</label>
-			  <input type = "text"
-			  		name = "telefone"
-			  		value = "">
-					 	
-        </p>
-        <p>
-            <label>Estado<label/>
-                <?php
-    
-    
-
-    include 'conexao.php';
-    $sql1 = "select sg_estado, nm_estado from estado";
-    $resultado1 = $mysqli->query($sql1);
-    ?>
-                <select name='estado'>
-    <option value=''></option>
-    <?php
-    while($row = $resultado1->fetch_assoc()) {
-        echo "<option value=".$row["sg_estado"].">".$row["nm_estado"]."</option>";
-        
-    }                    ?>		
-    </select>
+                <fieldset>
+                <div style="float:left;width:30%;">
+                    <h3>imagem de perfil </h3>
+                    <input type = "file" name="imagem" />
+                    
+                </div>
+                <div style="float:left;width:70%;">
+                    <fieldset>
+                    <p>
+                        <label>Nome</label>
+                        <input type = "text" name = "nome" value = "" />
+                        <label>CPF</label>
+                        <input type = "text" name = "CPF" value = "" />
+                    </p>
+                    <p>
+                        <label>Email</label>
+                        <input type = "text" name = "email" value = "" />
+                        <label>Telefone</label>
+    			        <input type = "text" name = "telefone" value = "">
+					</p>
+                    <p>
+                        <label>Estado<label/>
+                        <?php
+                            include 'conexao.php';
+                            $sql1 = "select sg_estado, nm_estado from estado";
+                            $resultado1 = $mysqli->query($sql1);
+                        ?>
+                        <select name='estado'>
+                        <option value=''></option>
+                        <?php
+                            while($row = $resultado1->fetch_assoc()) {
+                                echo "<option value=".$row["sg_estado"].">".$row["nm_estado"]."</option>";
+                            }
+                        ?>		
+                        </select>
                         
                        
 

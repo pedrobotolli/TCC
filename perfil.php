@@ -1,4 +1,4 @@
-<?php session_start(); ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -142,6 +142,7 @@
 
          include 'conexao.php';
          $per = $_GET['perfil'];
+         
          $selecao = "select p.cd_cpf_prestador, nm_prestador, nm_email,nr_telefone,ds_curriculo,nm_rua,nr_casa,nm_bairro,nm_cidade,nm_estado from estado as e,cidade as c,bairro as b,logradouro as l,prestador as p where nm_email = '$per' and p.cd_logradouro = l.cd_logradouro and b.cd_bairro = l.cd_bairro and c.cd_cidade = b.cd_cidade and c.sg_estado = e.sg_estado";
          $resultado = $mysqli->query($selecao) or die ($mysqli->error);
          $row = $resultado->fetch_assoc();
@@ -157,7 +158,7 @@
          $estado = $row["nm_estado"];
          $numero = $row["nr_casa"];
 		$endereco = $rua . "," . $numero . "," . $bairro . "," . $cidade . "," . $estado;
-
+         $_SESSION['CPF_PREST'] = $CPF;
 
 		        $selecao = "select cli.cd_cliente, cli.nm_cliente, cli.nm_email,cli.nr_telefone,nm_rua,nr_casa,nm_bairro,nm_cidade,nm_estado from estado as e,cidade as c,bairro as b,logradouro as l,cliente as cli where cli.nm_email = '". $_SESSION['email'] ."' and cli.cd_logradouro = l.cd_logradouro and b.cd_bairro = l.cd_bairro and c.cd_cidade = b.cd_cidade and c.sg_estado = e.sg_estado";
          		$resultado = $mysqli->query($selecao) or die ($mysqli->error);
@@ -278,6 +279,9 @@
       echo" <br/>";
       echo"<input type='submit' onclick='Denunciar()' value='Denunciar'/>";
       echo"</form>";
+      echo"<form action='indicar.php'>";
+			echo"<input type='submit' value='Indicar'/>";
+			echo"</form>";
 		}
 			else
 			{
@@ -355,6 +359,9 @@
             echo" <br/>";
             echo"<input type='submit' onclick='Denunciar()' value='Denunciar'/>";
             echo"</form>";
+            echo"<form action='indicar.php>";
+			echo"<input type='submit' value='Indicar'/>";
+			echo"</form>";
 				}
 				else{
 					echo "<h2>Página não encontrada!</h2>";

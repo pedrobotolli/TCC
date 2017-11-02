@@ -8,8 +8,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
+    <link rel="icon" href="favicon.png" type="image/x-icon" />
 
-    <title>Cadastro</title>
+    <title>Cadastro de Cliente</title>
 
   
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -66,51 +67,40 @@
         <!-- /.container-fluid -->
     </nav>
 
-    <!-- Header -->
-    <header>
-        <div class="container" id="maincontent" tabindex="-1">
-            <div class="row">
-                <div class="col-lg-12">
-                    <img class="img-responsive" src="img/profile.png" alt="">
-                    <div class="intro-text">
-                        <h1 class="name">spf </h1>
-                        <hr class="star-light">
-                        <span class="skills">Service Provider Finder - Seu serviço de conexão cliente-trabalhador autonomo</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </header>
-
     <!-- Portfolio Grid Section -->
     <section id="portfolio">
         <div class="container">
-            <div class="row">
+            <div class="row"></div>
                 <div class="col-lg-12 text-center">
-                    <h2>Tela de cadastro</h2>
+                    <legend><h2>Cadastro de Cliente</h2></legend>
                 </div>
-              <div class="col-lg-12 text-center">
-                  <form action="cadastrar.php" method="post">
-      <fieldset>
-        <legend>Faça seu cadastro aqui</legend>
-        <p>
-          <label>Nome</label>
-          <input type = "text"
-                 name = "nome"
-                 value = "" />
-          
-                 <label>CPF</label>
-          <input type = "text"
-                  name = "CPF"
-                  value = "" />
-          
-          <label>Email</label>
-       		<input type = "text"
-       			   name = "email"
-       			   value = "" />
-        </p>
-        <p>
-            <label>Estado</label>
+            </div>
+            <div class = "row">
+            <div class="container">
+                <form action="cadastrar.php" method="post">
+                    <fieldset>
+                    <div class="col-lg-3">
+                        <h3>imagem de perfil </h3>
+                        <input type = "file" name="imagem" />
+                        
+                    </div>
+                    <div class="col-lg-13">
+                    <p>
+                    <label>Nome</label>
+                    <input type = "text"
+                             name = "nome"
+                             value = "" />
+                      
+                             <label>CPF</label>
+                      <input type = "text"
+                              name = "CPF"
+                              value = "" />
+                      
+                      <label>Email</label>
+                   		<input type = "text" name = "email"  value = "" />
+                    </p>
+                    <p>
+                        <label>Estado</label>
           <?php
     
     
@@ -187,9 +177,8 @@
         
                 </div>
                 
+                </div>
           </div>
-            <div class="row"></div>
-        </div>
     </section>
 
     <!-- About Section --><!-- Contact Section --><!-- Footer -->

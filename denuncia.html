@@ -8,7 +8,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-
+    <link rel="icon" href="favicon.png" type="image/x-icon">
+    
     <title>Denuncia</title>
 
   
@@ -73,17 +74,15 @@
                     <h2>Denuncia</h2>
                 </div>
               <div class="col-lg-12 text-center">
-                    <form action="mail/denuncias.php" method="post">
+                    <form action="denunciar.php" method="get">
       <fieldset>
-        <legend>Buscar por CPF ou Nome</legend>
+        <legend>Buscar Nome</legend>
         <p>
           <input type = "text"
-                 id = "log"
+                 id = "busca"
                  value = "" />
           </p>
-        <p><textarea name="MsgDenuncia"
-   rows="10" cols="50" disabled></textarea></p>
-        <p>
+       
           <input type = "reset" />
           <input type = "submit" />
         </p>

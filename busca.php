@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <?php
 
 ?>
@@ -11,6 +11,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
+    <link rel="icon" href="favicon.png" type="image/x-icon" />
 
     <title>busca</title>
 
@@ -112,7 +113,7 @@
                   
                     <div class="footer-col col-md-4">
                         <h3>Sobre o SPF</h3>
-                        <p>Service Provider Finder � uma ferramenta gratuita que ajuda pessoas a acharem um profissional para ajud�-las</p>
+                        <p>Service Provider Finder é uma ferramenta gratuita que ajuda pessoas a acharem um profissional para ajudá-las</p>
                     </div>
                 </div>
             </div>

@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-
+    <link rel="icon" href="favicon.png" type="image/x-icon">
     <title>Email</title>
 
 
@@ -76,16 +76,24 @@
        		  <div>
 
                 <div style="float:left;width:30%;">
-                <?php echo $_POST['email']; ?>
-                <?php session_start()?>
+                <?php echo $_GET['busca']; ?>
+                <?php session_start();
+                  $selecao = "select p.nm_prestador from prestador p join indicacao i on p.cd_cpf_prestador=i.cd_cpf_prestador join cliente c on c.cd_cpf_cliente = i.cd_cpf_cliente where p.nm_prestador like '%". $_GET['busca']. "%'";
+                  $resultado = $mysqli->query($selecao) or die ($mysqli->error);
+                  $linhas= $mysqli->query($selecao)->num_rows;
+                  if($linhas > 0){
+                      
+                  
+                
+                ?>
 					<form name ="denuncia" action="Enviar_Denuncia.php" method="post">
-					<input type="text" name="email"  id="email" value="<?php echo $_POST['email']; ?>">
 					<br></p>
 					<p>Descreva sua denúncia:</p><p><textarea name="mensagem" rows="10" cols="50"></textarea></p><br>
 
                  	<input type="submit" value="Enviar">
 
                  </form>
+                 <?php } ?>
                   </div>
        		  </div>
             </div>
