@@ -4,7 +4,11 @@
     $cliente = $_SESSION['CPF'];
     $prestador =  $_SESSION['CPF_PREST'];
     $c = "select MAX(cd_indicacao) from indicacao";
-    $cr = $mysqli->query("select MAX(cd_indicacao) from indicacao")==true or die ($mysqli->error);
+    $cr = $mysqli->query($c)==true or die ($mysqli->error);
+    echo $cliente;
+    echo "   ";
+    echo $prestador;
+    echo "  ";
     echo $cr;
     echo "  ";
     $cod = $cr + 1;
