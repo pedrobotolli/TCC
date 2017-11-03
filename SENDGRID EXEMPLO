@@ -1,0 +1,6 @@
+a senha ta no sendgrid.env
+pro git ignorar o .env com a key do sendgrid é so jogar esses comandos no terminal
+
+echo "export SENDGRID_API_KEY='coloque a key aqui'" > sendgrid.env
+echo "sendgrid.env" >> .gitignore
+source ./sendgrid.env

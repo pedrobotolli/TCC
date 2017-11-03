@@ -1,4 +1,4 @@
-SPF<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -9,7 +9,7 @@ SPF<!DOCTYPE html>
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Red FON ÉOQ</title>
+    <title>Perfil</title>
 
   
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -62,23 +62,7 @@ SPF<!DOCTYPE html>
         <!-- /.container-fluid -->
     </nav>
 
-    <!-- Header -->
-    <header>
-        <div class="container" id="maincontent" tabindex="-1">
-            <div class="row">
-                <div class="col-lg-12">
-                    <img class="img-responsive" src="img/profile.png" alt="">
-                    <div class="intro-text">
-                        <h1 class="name">spf </h1>
-                        <hr class="star-light">
-                        <span class="skills">Service Provider Finder - Seu serviço de conexão cliente-trabalhador autonomo</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </header>
-
-    <!-- Portfolio Grid Section -->
+   <!-- Portfolio Grid Section -->
     <section id="portfolio">
         <div class="container">
           <div class="row">

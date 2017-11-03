@@ -58,6 +58,7 @@ class ComposerStaticInitdd68a909cf926cdb08875219184478a2
         ),
         'D' => 
         array (
+            'Dotenv\\' => 7,
             'Doctrine\\Instantiator\\' => 22,
         ),
     );
@@ -166,6 +167,10 @@ class ComposerStaticInitdd68a909cf926cdb08875219184478a2
         'Interop\\Container\\' => 
         array (
             0 => __DIR__ . '/..' . '/container-interop/container-interop/src/Interop/Container',
+        ),
+        'Dotenv\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/vlucas/phpdotenv/src',
         ),
         'Doctrine\\Instantiator\\' => 
         array (

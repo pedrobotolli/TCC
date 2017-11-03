@@ -32,5 +32,6 @@ return array(
     'Monolog\\' => array($vendorDir . '/monolog/monolog/src/Monolog'),
     'JsonSchema\\' => array($vendorDir . '/justinrainbow/json-schema/src/JsonSchema'),
     'Interop\\Container\\' => array($vendorDir . '/container-interop/container-interop/src/Interop/Container'),
+    'Dotenv\\' => array($vendorDir . '/vlucas/phpdotenv/src'),
     'Doctrine\\Instantiator\\' => array($vendorDir . '/doctrine/instantiator/src/Doctrine/Instantiator'),
 );

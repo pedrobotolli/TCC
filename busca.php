@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <?php
+session_start();
 
 ?>
 <html lang="en">
@@ -29,7 +30,6 @@
 
 
 </head>
-
 <body id="page-top" class="index">
 <div id="skipnav"><a href="#maincontent">Skip to main content</a></div>
 

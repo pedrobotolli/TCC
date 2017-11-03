@@ -4,7 +4,7 @@
 
 
 $time = 2 * 60 * 60; // Defini 2 horas
-session_set_cookie_params($time);
+
 session_start();
 include 'conexao.php';
 

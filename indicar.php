@@ -3,12 +3,8 @@
     include 'conexao.php';
     $cliente = $_SESSION['CPF'];
     $prestador =  $_SESSION['CPF_PREST'];
-    $c = "select MAX(cd_indicacao) from indicacao";
+    $c = "select cd_indicacao from indicacao where cd_indicacao = (SELECT MAX(cd_indicacao) FROM indicacao)";
     $cr = $mysqli->query($c)==true or die ($mysqli->error);
-    echo "cliente $cliente";
-    echo "   ";
-    echo $prestador;
-    echo "  ";
     echo $cr;
     echo "  ";
     $cod = $cr + 1;
