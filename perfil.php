@@ -143,12 +143,17 @@ session_start();
          <?php
 
          include 'conexao.php';
+         $p = $_SESSION['email'];
+         $sel = "select cli.cd_cliente, cli.nm_cliente, cli.nm_email,cli.nr_telefone,nm_rua,nr_casa,nm_bairro,nm_cidade,nm_estado from estado as e,cidade as c,bairro as b,logradouro as l,cliente as cli
+         		where nm_email = '$p' and cli.cd_logradouro = l.cd_logradouro and b.cd_bairro = l.cd_bairro and c.cd_cidade = b.cd_cidade and c.sg_estado = e.sg_estado";
+         $result = $mysqli->query($sel) or die ($mysqli->error);
+         $linha = $result->fetch_assoc();
          $per = $_GET['perfil'];
          
          $selecao = "select p.cd_cpf_prestador, nm_prestador, nm_email,nr_telefone,ds_curriculo,nm_rua,nr_casa,nm_bairro,nm_cidade,nm_estado from estado as e,cidade as c,bairro as b,logradouro as l,prestador as p where nm_email = '$per' and p.cd_logradouro = l.cd_logradouro and b.cd_bairro = l.cd_bairro and c.cd_cidade = b.cd_cidade and c.sg_estado = e.sg_estado";
          $resultado = $mysqli->query($selecao) or die ($mysqli->error);
          $row = $resultado->fetch_assoc();
-		if($row["nm_email"]==$per){
+		if($linha["nm_email"]==$p){
          $CPF = $row["cd_cpf_prestador"];
          $nome = $row["nm_prestador"];
          $email = $row["nm_email"];
@@ -221,10 +226,10 @@ session_start();
 
 				for($cont=0;$cont<count($profissao);$cont++){
 					echo $profissao[$cont];
-					echo(',');
+					
 					echo "' ";
 			}
-
+                
                echo "readonly />";
 
                echo "<br/>";
@@ -287,7 +292,7 @@ session_start();
 		}
 			else
 			{
-				 $selecao = "select cli.cd_cliente, cli.nm_cliente, cli.nm_email,cli.nr_telefone,nm_rua,nr_casa,nm_bairro,nm_cidade,nm_estado from estado as e,cidade as c,bairro as b,logradouro as l,cliente as cli
+				$selecao = "select cli.cd_cliente, cli.nm_cliente, cli.nm_email,cli.nr_telefone,nm_rua,nr_casa,nm_bairro,nm_cidade,nm_estado from estado as e,cidade as c,bairro as b,logradouro as l,cliente as cli
          		where nm_email = '$per' and cli.cd_logradouro = l.cd_logradouro and b.cd_bairro = l.cd_bairro and c.cd_cidade = b.cd_cidade and c.sg_estado = e.sg_estado";
          		$resultado = $mysqli->query($selecao) or die ($mysqli->error);
          		$row = $resultado->fetch_assoc();
@@ -357,13 +362,10 @@ session_start();
             echo    " name = 'estado'";
             echo  "value = '$estado' ";
             echo "readonly /> <br/>";
-            echo"<input type='submit' onclick='SolicitarServico()' value='Solicitar Serviço'/>";
-            echo" <br/>";
+            
             echo"<input type='submit' onclick='Denunciar()' value='Denunciar'/>";
             echo"</form>";
-            echo"<form action='indicar.php>";
-			echo"<input type='submit' value='Indicar'/>";
-			echo"</form>";
+            
 				}
 				else{
 					echo "<h2>Página não encontrada!</h2>";

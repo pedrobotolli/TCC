@@ -3,7 +3,7 @@
     $servidor = "127.0.0.1";
     $usuario = "pedrobotolli";
     $senha = "";
-    $banco = "tcc";
+    $banco = "banco";
     $porta = '3306';
 
     $mysqli = new mysqli($servidor, $usuario, $senha, $banco,$porta);

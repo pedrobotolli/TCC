@@ -70,115 +70,62 @@
     <!-- Portfolio Grid Section -->
     <section id="portfolio">
         <div class="container">
-            <div class="row"></div>
+            <div class="row">
                 <div class="col-lg-12 text-center">
+                    <br>
                     <legend><h2>Cadastro de Cliente</h2></legend>
                 </div>
             </div>
-            <div class = "row">
-            <div class="container">
-                <form action="cadastrar.php" method="post">
-                    <fieldset>
-                    <div class="col-lg-3">
-                        <h3>imagem de perfil </h3>
-                        <input type = "file" name="imagem" />
-                        
+        </div>
+        <br>
+        <div class="container">
+            <form action="cadastrar.php" method="post">
+            <fieldset>
+            <div class = "row justify-content-center">
+                <div class="col-lg-4">
+                    <label for="imagemPerfil" >Imagem de perfil </label>
+                    <br><br>
+                    <input type = "file" class="form-control-file" id="imagemPerfil" name="imagem" />
+                </div>
+                <div class="col-lg-8">
+                    <label for="nomeUsuario">Nome</label>
+                    <input type = "text" class="form-control" name = "nome" id="nomeUsuario" value = "" />
+                    <br>
+                    <label for="cpfUsuario">CPF</label>
+                    <input type = "text" class="form-control" name = "CPF" id="cpfUsuario" value = "" />
+                </div>
+            </div>
+            <div class="row justify-content-center">                
+                <div class="col-lg-12">    
+                    <br>
+                    <label for="emailUsuario">Email</label>
+                    <input type = "text" class="form-control" name = "email" id="emailUsuario" value = "" />
+                    <br>
+                    <label>CEP</label>
+                    <div class="row justify-content-center">
+                        <div class="col-lg-12">
+                            <div class="input-group">
+                                <input type = "text" class="form-control" name = "endereco" value = "">
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-primary">Verificar</button>
+                                </span>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-lg-13">
-                    <p>
-                    <label>Nome</label>
-                    <input type = "text"
-                             name = "nome"
-                             value = "" />
-                      
-                             <label>CPF</label>
-                      <input type = "text"
-                              name = "CPF"
-                              value = "" />
-                      
-                      <label>Email</label>
-                   		<input type = "text" name = "email"  value = "" />
-                    </p>
-                    <p>
-                        <label>Estado</label>
-          <?php
-    
-    
-
-    include 'conexao.php';
-    $sql1 = "select sg_estado, nm_estado from estado";
-    $resultado1 = $mysqli->query($sql1);
-    ?>
-                <select name='estado'>
-    <option value=''></option>
-    <?php
-    while($row = $resultado1->fetch_assoc()) {
-        echo "<option value=".$row["sg_estado"].">".$row["nm_estado"]."</option>";
-        
-    }                    ?>
-                </select>
-		  <label>Cidade</label>
-                  <?php
-    
-    
-
-    include 'conexao.php';
-    $sql2 = "select cd_cidade, nm_cidade from cidade";
-    $resultado2 = $mysqli->query($sql2);
-    ?>
-			<select name="cidade">
-                            <option></option>
-                        <?php
-    while($row = $resultado2->fetch_assoc()) {
-        echo "<option value=".$row["cd_cidade"].">".$row["nm_cidade"]."</option>";
-        
-    }                    ?>		
-                  </select> 
-       		
-       		<label>Bairro</label>
-                <?php
-    include 'conexao.php';
-    $sql3 = "select cd_bairro, nm_bairro from bairro";
-    $resultado3 = $mysqli->query($sql3);
-    ?>
-                <select name="bairro" >
-                            <option value=""></option>
-                            <?php
-    while($row = $resultado3->fetch_assoc()) {
-        echo "<option value=".$row["cd_bairro"].">".$row["nm_bairro"]."</option>";
-        
-    }                    ?>
-       		</select> 
-        </p>
-         <p>
-			 <label>Endereço</label>
-			  <input type = "text"
-			  		name = "endereco"
-			  		value = "">
-					 	
-				<label>Numero</label>
-			  <input type = "text"
-			  		name = "numero"
-			  		value = "">
-					 	
-					 
-					 <label>Telefone</label>
-			  <input type = "text"
-			  		name = "telefone"
-			  		value = "">
-					 	
-				  </p>
-         
-          <input type = "reset" />
-          <input type = "submit"/>
-          
+                    <br>
+                    <label>Numero</label>
+                    <input type = "text" class="form-control" name = "numero" value = "">
+                    <br>
+                    <label>Telefone</label>
+                    <input type = "text" class="form-control" name = "telefone" value = "">
+                    <br>
+                    <button type = "reset" class="btn btn-secondary pull-right">Redefinir</button>
+                    <button type = "submit" class="btn btn-primary pull-right">Enviar</button>
+                </div>
+            </div>
             </fieldset>
-    </form>
-        
-                </div>
-                
-                </div>
-          </div>
+            </form>
+        </div>
     </section>
 
     <!-- About Section --><!-- Contact Section --><!-- Footer -->
@@ -208,238 +155,6 @@
             </div>
         </div>
     </footer>
-
-    <!-- Scroll to Top Button (Only visible on small and extra-small screen sizes) -->
-    <div class="scroll-top page-scroll hidden-sm hidden-xs hidden-lg hidden-md">
-        <a class="btn btn-primary" href="#page-top">
-            <i class="fa fa-chevron-up"></i>
-        </a>
-    </div>
-
-    <!-- Portfolio Modals -->
-    <div class="portfolio-modal modal fade" id="portfolioModal1" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-content">
-            <div class="close-modal" data-dismiss="modal">
-                <div class="lr">
-                    <div class="rl">
-                    </div>
-                </div>
-            </div>
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-8 col-lg-offset-2">
-                        <div class="modal-body">
-                            <h2>Project Title</h2>
-                            <hr class="star-primary">
-                            <img src="img/portfolio/cabin.png" class="img-responsive img-centered" alt="">
-                            <p>Use this area of the page to describe your project. The icon above is part of a free icon set by <a href="https://sellfy.com/p/8Q9P/jV3VZ/">Flat Icons</a>. On their website, you can download their free set with 16 icons, or you can purchase the entire set with 146 icons for only $12!</p>
-                            <ul class="list-inline item-details">
-                                <li>Client:
-                                    <strong><a href="http://startbootstrap.com">Start Bootstrap</a>
-                                    </strong>
-                                </li>
-                                <li>Date:
-                                    <strong><a href="http://startbootstrap.com">April 2014</a>
-                                    </strong>
-                                </li>
-                                <li>Service:
-                                    <strong><a href="http://startbootstrap.com">Web Development</a>
-                                    </strong>
-                                </li>
-                            </ul>
-                            <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="portfolio-modal modal fade" id="portfolioModal2" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-content">
-            <div class="close-modal" data-dismiss="modal">
-                <div class="lr">
-                    <div class="rl">
-                    </div>
-                </div>
-            </div>
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-8 col-lg-offset-2">
-                        <div class="modal-body">
-                            <h2>Project Title</h2>
-                            <hr class="star-primary">
-                            <img src="img/portfolio/cake.png" class="img-responsive img-centered" alt="">
-                            <p>Use this area of the page to describe your project. The icon above is part of a free icon set by <a href="https://sellfy.com/p/8Q9P/jV3VZ/">Flat Icons</a>. On their website, you can download their free set with 16 icons, or you can purchase the entire set with 146 icons for only $12!</p>
-                            <ul class="list-inline item-details">
-                                <li>Client:
-                                    <strong><a href="http://startbootstrap.com">Start Bootstrap</a>
-                                    </strong>
-                                </li>
-                                <li>Date:
-                                    <strong><a href="http://startbootstrap.com">April 2014</a>
-                                    </strong>
-                                </li>
-                                <li>Service:
-                                    <strong><a href="http://startbootstrap.com">Web Development</a>
-                                    </strong>
-                                </li>
-                            </ul>
-                            <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="portfolio-modal modal fade" id="portfolioModal3" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-content">
-            <div class="close-modal" data-dismiss="modal">
-                <div class="lr">
-                    <div class="rl">
-                    </div>
-                </div>
-            </div>
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-8 col-lg-offset-2">
-                        <div class="modal-body">
-                            <h2>Project Title</h2>
-                            <hr class="star-primary">
-                            <img src="img/portfolio/circus.png" class="img-responsive img-centered" alt="">
-                            <p>Use this area of the page to describe your project. The icon above is part of a free icon set by <a href="https://sellfy.com/p/8Q9P/jV3VZ/">Flat Icons</a>. On their website, you can download their free set with 16 icons, or you can purchase the entire set with 146 icons for only $12!</p>
-                            <ul class="list-inline item-details">
-                                <li>Client:
-                                    <strong><a href="http://startbootstrap.com">Start Bootstrap</a>
-                                    </strong>
-                                </li>
-                                <li>Date:
-                                    <strong><a href="http://startbootstrap.com">April 2014</a>
-                                    </strong>
-                                </li>
-                                <li>Service:
-                                    <strong><a href="http://startbootstrap.com">Web Development</a>
-                                    </strong>
-                                </li>
-                            </ul>
-                            <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="portfolio-modal modal fade" id="portfolioModal4" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-content">
-            <div class="close-modal" data-dismiss="modal">
-                <div class="lr">
-                    <div class="rl">
-                    </div>
-                </div>
-            </div>
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-8 col-lg-offset-2">
-                        <div class="modal-body">
-                            <h2>Project Title</h2>
-                            <hr class="star-primary">
-                            <img src="img/portfolio/game.png" class="img-responsive img-centered" alt="">
-                            <p>Use this area of the page to describe your project. The icon above is part of a free icon set by <a href="https://sellfy.com/p/8Q9P/jV3VZ/">Flat Icons</a>. On their website, you can download their free set with 16 icons, or you can purchase the entire set with 146 icons for only $12!</p>
-                            <ul class="list-inline item-details">
-                                <li>Client:
-                                    <strong><a href="http://startbootstrap.com">Start Bootstrap</a>
-                                    </strong>
-
-                                </li>
-                                <li>Date:
-                                    <strong><a href="http://startbootstrap.com">April 2014</a>
-                                    </strong>
-                                </li>
-                                <li>Service:
-                                    <strong><a href="http://startbootstrap.com">Web Development</a>
-                                    </strong>
-                                </li>
-                            </ul>
-                            <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="portfolio-modal modal fade" id="portfolioModal5" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-content">
-            <div class="close-modal" data-dismiss="modal">
-                <div class="lr">
-                    <div class="rl">
-                    </div>
-                </div>
-            </div>
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-8 col-lg-offset-2">
-                        <div class="modal-body">
-                            <h2>Project Title</h2>
-                            <hr class="star-primary">
-                            <img src="img/portfolio/safe.png" class="img-responsive img-centered" alt="">
-                            <p>Use this area of the page to describe your project. The icon above is part of a free icon set by <a href="https://sellfy.com/p/8Q9P/jV3VZ/">Flat Icons</a>. On their website, you can download their free set with 16 icons, or you can purchase the entire set with 146 icons for only $12!</p>
-                            <ul class="list-inline item-details">
-                                <li>Client:
-                                    <strong><a href="http://startbootstrap.com">Start Bootstrap</a>
-                                    </strong>
-                                </li>
-                                <li>Date:
-                                    <strong><a href="http://startbootstrap.com">April 2014</a>
-                                    </strong>
-                                </li>
-                                <li>Service:
-                                    <strong><a href="http://startbootstrap.com">Web Development</a>
-                                    </strong>
-                                </li>
-                            </ul>
-                            <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="portfolio-modal modal fade" id="portfolioModal6" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-content">
-            <div class="close-modal" data-dismiss="modal">
-                <div class="lr">
-                    <div class="rl">
-                    </div>
-                </div>
-            </div>
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-8 col-lg-offset-2">
-                        <div class="modal-body">
-                            <h2>Project Title</h2>
-                            <hr class="star-primary">
-                            <img src="img/portfolio/submarine.png" class="img-responsive img-centered" alt="">
-                            <p>Use this area of the page to describe your project. The icon above is part of a free icon set by <a href="https://sellfy.com/p/8Q9P/jV3VZ/">Flat Icons</a>. On their website, you can download their free set with 16 icons, or you can purchase the entire set with 146 icons for only $12!</p>
-                            <ul class="list-inline item-details">
-                                <li>Client:
-                                    <strong><a href="http://startbootstrap.com">Start Bootstrap</a>
-                                    </strong>
-                                </li>
-                                <li>Date:
-                                    <strong><a href="http://startbootstrap.com">April 2014</a>
-                                    </strong>
-                                </li>
-                                <li>Service:
-                                    <strong><a href="http://startbootstrap.com">Web Development</a>
-                                    </strong>
-                                </li>
-                            </ul>
-                            <button id="btnSubmit" type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <!-- jQuery -->
     <script src="vendor/jquery/jquery.min.js"></script>

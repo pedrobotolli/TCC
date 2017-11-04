@@ -5,14 +5,22 @@
 require 'vendor/autoload.php';
 // If you are not using Composer
 // require("path/to/sendgrid-php/sendgrid-php.php");
+
+// dotenv carregando
 $dotenv = new Dotenv\Dotenv( __DIR__ , 'sendgrid.env'); 
 $dotenv->load();
+
+
 $from = new SendGrid\Email("Example User", "test@example.com");
 $subject = "Sending with SendGrid is Fun";
 $to = new SendGrid\Email("Example User", "pedrobotolli.santos@gmail.com");
 $content = new SendGrid\Content("text/plain", "and easy to do anywhere, even with PHP");
 $mail = new SendGrid\Mail($from, $subject, $to, $content);
+
+//usando o  getenv
 $apiKey = getenv('SENDGRID_API_KEY');
+
+
 $sg = new \SendGrid($apiKey);
 $response = $sg->client->mail()->send()->post($mail);
 echo $response->statusCode();

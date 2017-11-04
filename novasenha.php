@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 include("conexao.php");
 $senhaantiga = $_POST["senhaantiga"] ;
 $senhaA = crypt($senhaantiga,'rl');

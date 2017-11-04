@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html>
 <head>
 <meta charset="utf-8">
@@ -101,13 +101,27 @@ if($row['nm_email']==$email)
 {
 	$cd_prestador=$row['cd_cpf_prestador'];
 	$selecao="select cd_cliente from cliente where nm_email='$usuario'";
-	echo $selecao;
+
 	$resultado = $mysqli->query($selecao) or die ($mysqli->error);
 	$row = $resultado->fetch_assoc();
 	$cd_cliente=$row['cd_cliente'];
+	$dt_denuncia=date('Y-m-d');
+    $ds_denuncia=$_POST['mensagem'];
+    $sql1 = "INSERT INTO denuncia (cd_denuncia, ds_denuncia, dt_denuncia, cd_cliente,cd_cpf_prestador) VALUES ";
+    $sql1 .= "('$cd_denuncia','$ds_denuncia','$dt_denuncia','$cd_cliente','$cd_prestador')";
+    if($mysqli->query($sql1)===TRUE)
+    {
+        echo 'Denúncia Registrada com sucesso!';
+
+    }
+    else
+    {
+        echo 'ERRO: ' . $sql1 . '<br>' . $mysqli->error;
+    }
 }
 else
 {
+    echo 'ENTROU NO SEGUNDO';
 	$selecao="select cd_cliente from cliente where nm_email='$email'";
 	echo $selecao;
 	$resultado = $mysqli->query($selecao) or die ($mysqli->error);
@@ -119,21 +133,23 @@ else
 	$resultado = $mysqli->query($selecao) or die ($mysqli->error);
 	$row = $resultado->fetch_assoc();
 	$cd_prestador=$row['cd_cpf_prestador'];
-}
-$dt_denuncia=date('Y-m-d');
-$ds_denuncia=$_POST['mensagem'];
-$sql1 = "INSERT INTO denuncia (cd_denuncia, ds_denuncia, dt_denuncia, cd_cliente,cd_cpf_prestador) VALUES ";
-$sql1 .= "('$cd_denuncia','$ds_denuncia','$dt_denuncia','$cd_cliente'','$cd_prestador')";
-if($mysqli->query($sql1)===TRUE)
+    $dt_denuncia=date('Y-m-d');
+    $ds_denuncia=$_POST['mensagem'];
+    $sql1 = "INSERT INTO denuncia (cd_denuncia, ds_denuncia, dt_denuncia, cd_cliente,cd_cpf_prestador) VALUES ";
+    $sql1 .= "('$cd_denuncia','$ds_denuncia','$dt_denuncia','$cd_cliente'','$cd_prestador')";
+    if($mysqli->query($sql1)===TRUE)
     {
-    echo 'Denúncia Registrada com sucesso!';
+        echo 'Denúncia Registrada com sucesso!';
 
-}else{
-    echo 'ERRO: ' . $sql1 . '<br>' . $mysqli->error;
+    }
+    else
+    {
+        echo 'ERRO: ' . $sql1 . '<br>' . $mysqli->error;
 
+    }
 }
+    echo $row;
 ?>
-       <h3>Denúncia enviada com Sucesso</h3>
         </p>
 
       </fieldset>

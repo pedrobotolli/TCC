@@ -1,9 +1,4 @@
-﻿<?php
-
-
-
-
-$time = 2 * 60 * 60; // Defini 2 horas
+<?php
 
 session_start();
 include 'conexao.php';

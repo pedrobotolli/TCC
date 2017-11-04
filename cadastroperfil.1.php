@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -8,11 +8,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
+    <link rel="icon" href="favicon.png" type="image/x-icon" />
 
-    <title>Admin</title>
+    <title>Cadastro de Prestador</title>
 
   
-    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
 
 
     <link href="css/freelancer.min.css" rel="stylesheet">
@@ -49,51 +50,164 @@
                     <li>
                         <a href="login.html">Login</a>
                     </li>
-                    <li class="page-scroll">
-                        <a href="#admin">Mensagens</a>
+                    <li>
+                        <a href="cadastro.php">Cadastrar Cliente</a>
                     </li>
-                    <li class="page-scroll">
-                        <a href="#about">About</a>
+                    <li>
+                        <a href="cadastroperfil.php">Cadastrar Prestador</a>
                     </li>
-                    <li class="page-scroll">
-                        <a href="#contact">Contact</a>
-                    </li>
+     <li>
+                        <a href="recuperasenha.html">Recuperar Senha</a>
+                    </li>               
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
         </div>
         <!-- /.container-fluid -->
     </nav>
-
-    <!-- Header --><!-- Portfolio Grid Section -->
- <section id="admin">
+    <br><br>
+    <!-- Portfolio Grid Section -->
+    <section id="portfolio">
         <div class="container">
-			<div class="Mensagens">
-				<h1>Mensagens</h1>
-			  	<div></div>
-       		  <div>
-           		
-                <div style="float:left;width:30%;">
-                    <dl>
-<dt><select name="mensagens[]" size="3">
-           			    <option value="scs">Fulano de tal: Não me pagou</option>
-           			    <option value="sa">Cliente x: Quebrou o meu computador</option>
-           			    <option value="sbc">Rafa the witcher: apagou o meu save</option>
-       			      </select></dt>
-
-</dl></div>
-
-       			<div style="float:right;width:70%;"> 
-           			<p>Nome/Email do Profissional: <input type="text" name="nm_profissional" disabled><br></p>
-       			<p>Assunto:<input type="text" name="assunto" disabled><br></p>
-       			  <p>Mensagem:<input type="text" name="mennsagem" disabled><br></p>
-       			
-                  </div>
-       		  </div>
+          <div class="row">
+            <div class="col-lg-12 text-center">
+                   <legend><h2>Cadastro de Prestador</h2></legend>
             </div>
-        </div>
-    </section>
+            <div class="col-lg-12 text-center">
+                <form action="cadastrarprestador.php" method="post">
+                <fieldset>
+                <div style="float:left;width:30%;">
+                    <h3>imagem de perfil </h3>
+                    <input type = "file" name="imagem" />
+                    
+                </div>
+                <div style="float:left;width:70%;">
+                    <fieldset>
+                    <p>
+                        <label>Nome</label>
+                        <input type = "text" name = "nome" value = "" />
+                        <label>CPF</label>
+                        <input type = "text" name = "CPF" value = "" />
+                    </p>
+                    <p>
+                        <label>Email</label>
+                        <input type = "text" name = "email" value = "" />
+                        <label>Telefone</label>
+    			        <input type = "text" name = "telefone" value = "">
+					</p>
+                    <p>
+                        <label>Estado<label/>
+                        <?php
+                            include 'conexao.php';
+                            $sql1 = "select sg_estado, nm_estado from estado";
+                            $resultado1 = $mysqli->query($sql1);
+                        ?>
+                        <select name='estado'>
+                        <option value=''></option>
+                        <?php
+                            while($row = $resultado1->fetch_assoc()) {
+                                echo "<option value=".$row["sg_estado"].">".$row["nm_estado"]."</option>";
+                            }
+                        ?>		
+                        </select>
+                        
+                       
 
+          
+		  <label>Cidade</label>
+                  <?php
+    include 'conexao.php';
+    $sql2 = "select cd_cidade, nm_cidade from cidade";
+    $resultado2 = $mysqli->query($sql2);
+    ?>
+                  <select name="cidade" >
+                            <option value=""></option>
+                            <?php
+    while($row = $resultado2->fetch_assoc()) {
+        echo "<option value=".$row["cd_cidade"].">".$row["nm_cidade"]."</option>";
+        
+    }                    ?>
+       		</select> 
+                      
+       		<label>Bairro</label>
+                <?php
+    include 'conexao.php';
+    $sql3 = "select cd_bairro, nm_bairro from bairro";
+    $resultado3 = $mysqli->query($sql3);
+    ?>
+                <select name="bairro" >
+                            <option value=""></option>
+                            <?php
+    while($row = $resultado3->fetch_assoc()) {
+        echo "<option value=".$row["cd_bairro"].">".$row["nm_bairro"]."</option>";
+        
+    }                    ?>
+       		</select> 
+        </p>
+         <p>
+			 <label>Endereço</label>
+			  <input type = "text"
+			  		name = "endereco"
+			  		value = "">
+					 	
+				<label>Numero</label>
+			  <input type = "text"
+			  		name = "numero"
+			  		value = "">
+					 	
+                         
+				  </p>
+                            <p>      
+                        <label>Profissao</label>
+                        
+    <?php
+    
+    
+
+    include 'conexao.php';
+    $sql = "select cd_profissao, nm_profissao from profissao";
+    $resultado = $mysqli->query($sql);
+    ?>
+    <select name='profissao'>
+    <option></option>
+    <?php
+    while($row = $resultado->fetch_assoc()) {
+        echo "<option value=".$row["cd_profissao"].">".$row["nm_profissao"]."</option>";
+    }                    
+	?>		
+    </select>
+                        
+                       
+
+  
+                        
+                        </p>
+ <label>Descrição</label>
+             <br/>
+               <textarea name="curriculo"
+   rows="10" cols="50" ></textarea>
+          
+            </fieldset>
+            
+              
+            
+           
+          
+          <br/>
+           </div>
+      
+          <input type = "submit" />
+          <input type = "reset" />
+      </fieldset>
+
+    </form>
+        </div>
+                </div>
+                
+          </div>
+            <div class="row"></div>
+        
+    </section>
 
     <!-- About Section --><!-- Contact Section --><!-- Footer -->
     <footer class="text-center">
@@ -102,11 +216,12 @@
                 <div class="row">
                     <div class="footer-col col-md-4">
                     <h3>Criadores</h3>
-                    <p>Equipe SPF</p>
+                    <p>Equipe SPF </p>
                   </div>
+                  
                     <div class="footer-col col-md-4">
-                      <h3>Sobre o SPF</h3>
-                        <p>Service Provider Finder é uma ferramenta gratuita que ajuda pessoas a acharem um profissional para ajudá-las</p>
+                        <h3>Sobre o SPF</h3>
+                        <p>Service Provider Finder é uma ferramenta gratuita que ajuda pessoas a acharem um profissional para ajudá-lass</p>
                     </div>
                 </div>
             </div>
@@ -115,7 +230,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12">
-                        Copyright &copy;Thomas Corporation</div>
+                        Copyright &copy;Corporation</div>
                 </div>
             </div>
         </div>
