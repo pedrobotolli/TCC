@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 
 <head>
 
@@ -62,222 +62,151 @@
     <section id="portfolio">
         <div class="container">
           <div class="row">
-            <div class="col-lg-12 text-center">
+            <div class="col-md-12 text-center">
                     <h2>Perfil</h2>
-              </div>
-            <div class="col-lg-12 ">
+            </div>
+            <div class="col-md-12 ">
                 <form action="alteracao.php" method="post">
-      <fieldset>
-        <legend>Altere seu perfil!</legend>
-        <div style="float:left;width:30%;">
-          
-        </div>
-        <div style="float:left;width:70%;">
-        <p>
-         <?php
-         session_start();
-         include 'conexao.php';
-         
-         
-		 if($_SESSION['cod'] == 2) 
-	 {
-	     $p = $_SESSION['email'];
-         
-         $selecao = "select p.cd_cpf_prestador, nm_prestador, nm_email,nr_telefone,ds_curriculo,nm_profissao,nr_endereco,nr_cep from profissao as pro, prest_profi as pp, prestador as p where nm_email = '$p' and p.cd_cpf_prestador = pp.cd_cpf_prestador_pp and pp.cd_profissao_pp = pro.cd_profissao";
-         $resultado = $mysqli->query($selecao) or die ($mysqli->error);
-		 $row = $resultado->fetch_assoc();
-         
-         $CPF = $row["cd_cpf_prestador"];
-         $nome = $row["nm_prestador"];
-         $email = $row["nm_email"];
-         $profissao = $row["nm_profissao"];
-         $CEP = $row["nr_cep"];
-         $curriculo = $row["ds_curriculo"];
-         $telefone = $row["nr_telefone"];
-         $numero = $row["nr_endereco"];
-         
-         
-          echo "<div class='container'>";
-          echo "<label for='imagemPerfil' >Imagem de perfil </label>";
-          echo"<br><br>";
-          echo "<input type='hidden' name='MAX_FILE_SIZE' value='2000000' />";
-          echo "<input type='file' id='idFileUpload' name='userfile' accept='image/png, image/jpg' >";
-         echo "<div class='col-md-12'>";
-         echo "<label >Nome</label>";
-          echo "<input type = 'text' class='form-control'";
-            echo    " name = 'nome'";
-               echo  "value = '$nome'";
-          echo "<br/>";
-                echo "<br/>";
-               
-               echo "<label >CPF</label>";
-          echo "<input type = 'text' class='form-control'";
-            echo    " name = 'CPF'";
-               echo  "value = '$CPF'";
-                echo " readonly/>";
-          echo "<br/>";
-          echo "</div>";
-          
-          echo "<div class='col-md-12'>";
-         echo "<label >Email</label>";
-          echo "<input type = 'text' class='form-control'";
-            echo    " name = 'email'";
-               echo  "value = '$email' ";
-               echo "<br/>";
-               echo "<br/>";
-                
-         ?>
-             <?php
-             echo "<label >Telefone</label>";
-          echo "<input type = 'text' class='form-control'";
-            echo    " name = 'telefone'";
-               echo  "value = '$telefone' ";
-               echo "<br/>";
-               echo "<br/>";
-               echo "</div>";
-             ?>   
-             
-           <?php
-                        include 'conexao.php';
-                        $sql = "select cd_profissao, nm_profissao from profissao";
-                        $resultado = $mysqli->query($sql);
-                    echo "<div class='col-md-12'>";
-                    ?>
-                    
-                    <label>Profissão</label>
-                    <select id="profissao" name ="profissao" class='form-control'>
-                    <?php echo "<option>$profissao</option>" ?>
-                    <?php
-                        while($row = $resultado->fetch_assoc()) {
-                        echo "<option value=".$row["cd_profissao"].">".$row["nm_profissao"]."</option>";
-                        }                    
-	                ?>	
-                    </select>
-                   
-             <?php 
-             echo "<br/>";
-               echo "<label >CEP</label>";
-          echo "<input type = 'text' class='form-control'";
-            echo    " name = 'CEP'";
-               echo  "value = '$CEP'";
-                echo "<br/>";
-                echo "<br/>";
-                echo "</div>";
-                
-                echo "<div class='col-md-12'>";
-               echo "<label >Numero</label>";
-          echo "<input type = 'text' class='form-control'";
-            echo    " name = 'numero'";
-               echo  "value = '$numero' ";
-             
-         echo "<br/>";
-         
-         
-         echo "<br/>";    
-         echo "<label>Descrição</label>";
-             
-               echo "<textarea name='curriculo' class='form-control'";
-   echo "rows='10' cols='50'>$curriculo</textarea>";
-   echo "<br/>";
-           echo "</div>";
-           echo "</div>";
-           
-            ?>
-           
-          
-         
-             
-          <input type = "submit" class="btn btn-primary btn-lg pull-right" value="Alterar"/>
-          <input type = "reset"  class="btn btn-secondary btn-lg pull-right"/>
-          
-        <?php } 
-			else{
-		$p = $_SESSION['email'];		
-		$selecao = "select cd_cpf_cliente, nm_cliente, nm_email,nr_telefone,nr_endereco,nr_cep from cliente where nm_email = '$p' ";
-        $resultado = $mysqli->query($selecao) or die ($mysqli->error);
-     	$row = $resultado->fetch_assoc();
-     	
-		$cd = $row["cd_cpf_cliente"];
-         $nome = $row["nm_cliente"];
-         $email = $row["nm_email"];
-         $CEP = $row["nr_cep"];
-         $telefone = $row["nr_telefone"];
-         $numero = $row["nr_endereco"];	
-				
-			echo "<div class='container'>";	
-			  echo "<label for='imagemPerfil' >Imagem de perfil </label>";
-                echo"<br><br>";
-                    echo "<input type='hidden' name='MAX_FILE_SIZE' value='2000000' />";
-                    echo "<input type='file' id='idFileUpload' name='userfile' accept='image/png, image/jpg' >";
-				 echo "<div class='col-md-12'>";	
-		echo "<label >Nome</label>";
-          echo "<input type = 'text' class='form-control'";
-            echo    " name = 'nome'";
-               echo  "value = '$nome'";
-                echo "<br/>";
-                echo "<br/>";
-                
-                echo "<label >CPF</label>";
-          echo "<input type = 'text' class='form-control'";
-            echo    " name = 'CPF'";
-               echo  "value = '$cd'";
-                echo " readonly/>";
-               
-          echo "<br/>";
-          echo "</div>";
-          
-           echo "<div class='col-md-12'>";	
-         echo "<label >Email</label>";
-          echo "<input type = 'text' class='form-control'";
-            echo    " name = 'email'";
-               echo  "value = '$email' ";
-                echo "<br/>";
-         ?>
-             <br/>
-             
-             <?php
-             echo "<label >Telefone</label>";
-          echo "<input type = 'text' class='form-control'";
-            echo    " name = 'telefone'";
-               echo  "value = '$telefone' ";
-                echo "<br/>";
-               echo "<br/>";
-               echo "</div>";
-                echo "<div class='col-md-12'>";	
-               echo "<label >CEP</label>";
-          echo "<input type = 'text' class='form-control'";
-            echo    " name = 'CEP'";
-               echo  "value = '$CEP'";
-               echo "<br/>";
-               echo "<br/>";
-               echo "<label >Numero</label>";
-          echo "<input type = 'text' class='form-control'";
-            echo    " name = 'numero'";
-               echo  "value = '$numero' ";
-             echo "<br/>";
-       echo "</div>";
-       echo "</div>";
-         ?>
-         <br/>
-         
-         <input type = "submit" class="btn btn-primary btn-lg pull-right" value="Alterar"/>
-          <input type = "reset" class="btn btn-secondary btn-lg pull-right"/>
-         <?php               	
-				
-			}?>
-       </p>
-        </div>
-      
-          
-      </fieldset>
-            
-    </form>
-        </div>
+                <fieldset>
+                <legend>Altere seu perfil!</legend>
+                <div style="float:left;width:30%;">
+                  
                 </div>
-                
-          </div>
-            <div class="row"></div>
-        
+                <div style="float:left;width:70%;">
+                <p>
+<?php
+session_start();
+include 'conexao.php';
+if($_SESSION['cod'] == 2){
+	$p = $_SESSION['email'];
+    $selecao = "select p.cd_cpf_prestador, nm_prestador, nm_email,nr_telefone,ds_curriculo,nm_profissao,nr_endereco,nr_cep from profissao as pro, prest_profi as pp, prestador as p where nm_email = '$p' and p.cd_cpf_prestador = pp.cd_cpf_prestador_pp and pp.cd_profissao_pp = pro.cd_profissao";
+    $resultado = $mysqli->query($selecao) or die ($mysqli->error);
+	$row = $resultado->fetch_assoc();
+    $CPF = $row["cd_cpf_prestador"];
+    $nome = $row["nm_prestador"];
+    $email = $row["nm_email"];
+    $profissao = $row["nm_profissao"];
+    $CEP = $row["nr_cep"];
+    $curriculo = $row["ds_curriculo"];
+    $telefone = $row["nr_telefone"];
+    $numero = $row["nr_endereco"];
+        echo "<div class='container'>";
+            echo "<div class='col-md-12'>";
+                echo "<label for='imagemPerfil' >Imagem de perfil </label>";
+                echo"<br><br>";
+                echo "<input type='hidden' name='MAX_FILE_SIZE' value='2000000' />";
+                echo "<input type='file' id='idFileUpload' name='userfile' accept='image/png, image/jpg' >";
+                echo "<label >Nome</label>";
+                echo "<input type = 'text' class='form-control' name = 'nome' value = '$nome'>";
+                echo "<br/>";
+                echo "<br/>";
+                echo "<label >CPF</label>";
+                echo "<input type = 'text' class='form-control'  name = 'CPF' value = '$CPF' readonly/>";
+                echo "<br/>";
+                echo "<label >Email</label>";
+                echo "<input type = 'text' class='form-control' name = 'email' value = '$email' >";
+                echo "<br/>";
+                echo "<br/>";
+                echo "<label >Telefone</label>";
+                echo "<input type = 'text' class='form-control' name = 'telefone' value = '$telefone' >";
+                echo "<br/>";
+                echo "<br/>";
+    include 'conexao.php';
+    $sql = "select cd_profissao, nm_profissao from profissao";
+    $resultado = $mysqli->query($sql);
+                echo "<div class='col-md-12'>";
+                    echo "<label>Profissão</label>";
+                    echo "<select id='profissao' name ='profissao' class='form-control'>";
+                    echo "<option>$profissao</option>";
+    while($row = $resultado->fetch_assoc()) {
+                        echo "<option value=".$row["cd_profissao"].">".$row["nm_profissao"]."</option>";
+    }                    
+	  	
+                echo "</select>";
+                echo "<br/>";
+                echo "<label >CEP</label>";
+                echo "<input type = 'text' class='form-control' name = 'CEP' value = '$CEP'>";
+                echo "<br/>";
+                echo "<br/>";
+                echo "<label >Numero</label>";
+                echo "<input type = 'text' class='form-control'  name = 'numero' value = '$numero'>";
+                echo "<br/>";
+                echo "<br/>";    
+                echo "<label>Descrição</label>";
+                echo "<textarea name='curriculo' class='form-control' rows='10' cols='50'>$curriculo</textarea>";
+                echo "<br/>";
+                echo "<input type = 'submit' class='btn btn-primary btn-lg pull-right' value='Alterar'/>";
+                echo "<input type = 'reset'  class='btn btn-secondary btn-lg pull-right'/>";
+            echo "</div>";
+        echo "</div>";
+}elseif($_SESSION['cod'] == 1){
+	$p = $_SESSION['email'];		
+	$selecao = "select cd_cpf_cliente, nm_cliente, nm_email,nr_telefone,nr_endereco,nr_cep from cliente where nm_email = '$p' ";
+    $resultado = $mysqli->query($selecao) or die ($mysqli->error);
+ 	$row = $resultado->fetch_assoc();
+	$cd = $row["cd_cpf_cliente"];
+    $nome = $row["nm_cliente"];
+    $email = $row["nm_email"];
+    $CEP = $row["nr_cep"];
+    $telefone = $row["nr_telefone"];
+    $numero = $row["nr_endereco"];	
+		echo "<div class='container'>";
+    		echo "<div class='col-md-12'>";
+        		echo "<label for='imagemPerfil' >Imagem de perfil </label>";
+                echo"<br><br>";
+                echo "<input type='hidden' name='MAX_FILE_SIZE' value='2000000' />";
+                echo "<input type='file' id='idFileUpload' name='userfile' accept='image/png, image/jpg' >";
+        		echo "<label >Nome</label>";
+                echo "<input type = 'text' class='form-control'";
+                echo    " name = 'nome'";
+                echo  "value = '$nome'>";
+                echo "<br/>";
+                echo "<br/>";
+                echo "<label >CPF</label>";
+                echo "<input type = 'text' class='form-control'";
+                echo    " name = 'CPF'";
+                echo  "value = '$cd'";
+                echo " readonly/>";
+                echo "<br/>";
+                echo "<label >Email</label>";
+                echo "<input type = 'text' class='form-control'";
+                echo    " name = 'email'";
+                echo  "value = '$email' ";
+                echo "<br/>";
+                echo "<br/>";
+                echo "<label >Telefone</label>";
+                echo "<input type = 'text' class='form-control'";
+                echo    " name = 'telefone'";
+                echo  "value = '$telefone' ";
+                echo "<br/>";
+                echo "<br/>";
+                echo "<label >CEP</label>";
+                echo "<input type = 'text' class='form-control'";
+                echo    " name = 'CEP'";
+                echo  "value = '$CEP'";
+                echo "<br/>";
+                echo "<br/>";
+                echo "<label >Numero</label>";
+                echo "<input type = 'text' class='form-control'";
+                echo    " name = 'numero'";
+                echo  "value = '$numero' ";
+                echo "<br/>";
+                echo "<br/>";
+                echo "<input type = 'submit' class='btn btn-primary btn-lg pull-right' value='Alterar'/>";
+                echo "<input type = 'reset' class='btn btn-secondary btn-lg pull-right'/>";
+            echo "</div>";
+        echo "</div>";
+}else{
+    echo "erro na sessao";
+}
+?>
+       </p>
+                    </div>
+                </fieldset>
+                </form>
+            </div>
+        </div>
+    <div class="row"></div>
     </section>
 
     <!-- About Section --><!-- Contact Section --><!-- Footer -->

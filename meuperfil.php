@@ -100,7 +100,7 @@
          
          
          echo "<div class='container'>";
-         echo "<img src='/uploads/P-".$CPF.".jpg' width='150' height='150'>" ;
+         echo "<img src='/uploads/P-".$CPF.".png' width='150' height='150'>" ;
          echo "<div class='col-md-12'>";
          echo "<label for='nomeUsuario'>Nome</label>";
           echo "<input type = 'text' class='form-control' ";
@@ -196,7 +196,7 @@
          $numero = $row["nr_endereco"];	
 				
 			 echo "<div class='container'>";
-            echo "<img src='/uploads/C-".$CPF.".jpg' width='150' height='150'>" ;
+            echo "<img src='/uploads/C-".$CPF.".png' width='150' height='150'>" ;
 
          echo "<div class='col-md-12'>";	
 		echo "<label >Nome</label>";
