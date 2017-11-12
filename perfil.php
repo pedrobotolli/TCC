@@ -11,14 +11,11 @@ session_start();
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-
+    <link rel="icon" href="favicon.png" type="image/x-icon" />
     <title>Perfil</title>
 
-
+    <link href="css/freelancer.css" rel="stylesheet">
     <link href="css/bootstrap.min.css" rel="stylesheet">
-
-
-    <link href="css/freelancer.min.css" rel="stylesheet">
 
 
     <link href="css/font-awesome.min.css" rel="stylesheet" type="text/css">
@@ -106,22 +103,7 @@ session_start();
         <!-- /.container-fluid -->
     </nav>
 
-    <!-- Header -->
-    <header>
-        <div class="container" id="maincontent" tabindex="-1">
-            <div class="row">
-                <div class="col-lg-12">
-                    <img class="img-responsive" src="img/profile.png" alt="">
-                    <div class="intro-text">
-                        <h1 class="name">spf </h1>
-                        <hr class="star-light">
-                        <span class="skills">Service Provider Finder - Seu serviço de conexão cliente-trabalhador autonomo</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </header>
-
+   
     <!-- Portfolio Grid Section -->
     <section id="portfolio">
         <div class="container">
@@ -129,13 +111,10 @@ session_start();
             <div class="col-lg-12 text-center">
                     <h2>Perfil</h2>
               </div>
-            <div class="col-lg-12 text-center">
+            <div class="col-lg-12">
 
       <fieldset>
         <div style="float:left;width:30%;">
-          <p>imagem vai aqui </p>
-          <p>
-          </p>
         </div>
 		<div id="map"></div>
 		<div style="float:left;width:70%;">
@@ -144,68 +123,58 @@ session_start();
 
          include 'conexao.php';
          $p = $_SESSION['email'];
-         $sel = "select cli.cd_cliente, cli.nm_cliente, cli.nm_email,cli.nr_telefone,nm_rua,nr_casa,nm_bairro,nm_cidade,nm_estado from estado as e,cidade as c,bairro as b,logradouro as l,cliente as cli
-         		where nm_email = '$p' and cli.cd_logradouro = l.cd_logradouro and b.cd_bairro = l.cd_bairro and c.cd_cidade = b.cd_cidade and c.sg_estado = e.sg_estado";
+         $sel = "select nm_email from cliente where nm_email = '$p'";
          $result = $mysqli->query($sel) or die ($mysqli->error);
          $linha = $result->fetch_assoc();
          $per = $_GET['perfil'];
          
-         $selecao = "select p.cd_cpf_prestador, nm_prestador, nm_email,nr_telefone,ds_curriculo,nm_rua,nr_casa,nm_bairro,nm_cidade,nm_estado from estado as e,cidade as c,bairro as b,logradouro as l,prestador as p where nm_email = '$per' and p.cd_logradouro = l.cd_logradouro and b.cd_bairro = l.cd_bairro and c.cd_cidade = b.cd_cidade and c.sg_estado = e.sg_estado";
+         $selecao = "select cd_cpf_prestador, nm_prestador, nm_email,nr_telefone,ds_curriculo,nr_cep,nr_endereco from prestador where nm_email = '$per' ";
          $resultado = $mysqli->query($selecao) or die ($mysqli->error);
          $row = $resultado->fetch_assoc();
-		if($linha["nm_email"]==$p){
+         
+         $prestCPF = $row["cd_cpf_prestador"];
+         $profi = "select nm_profissao from prestador as pre, profissao as p, prest_profi as pp where pp.cd_cpf_prestador_pp = pre.cd_cpf_prestador and pp.cd_profissao_pp = p.cd_profissao";
+         $rpro = $mysqli->query($profi) or die ($mysqli->error);
+         $rowpro = $rpro->fetch_assoc();
+         $profissao = $rowpro["nm_profissao"];
+         
+		if($_SESSION['cod'] == 1){
          $CPF = $row["cd_cpf_prestador"];
          $nome = $row["nm_prestador"];
          $email = $row["nm_email"];
-         $rua = $row["nm_rua"];
          $curriculo = $row["ds_curriculo"];
          $telefone = $row["nr_telefone"];
-         $bairro = $row["nm_bairro"];
-         $cidade = $row["nm_cidade"];
-         $estado = $row["nm_estado"];
-         $numero = $row["nr_casa"];
-		$endereco = $rua . "," . $numero . "," . $bairro . "," . $cidade . "," . $estado;
+         $numero = $row["nr_endereco"];
+         $CEP = $row["nr_cep"];
+         $curriculo = $row["ds_curriculo"];
+
          $_SESSION['CPF_PREST'] = $CPF;
-
-		        $selecao = "select cli.cd_cliente, cli.nm_cliente, cli.nm_email,cli.nr_telefone,nm_rua,nr_casa,nm_bairro,nm_cidade,nm_estado from estado as e,cidade as c,bairro as b,logradouro as l,cliente as cli where cli.nm_email = '". $_SESSION['email'] ."' and cli.cd_logradouro = l.cd_logradouro and b.cd_bairro = l.cd_bairro and c.cd_cidade = b.cd_cidade and c.sg_estado = e.sg_estado";
-         		$resultado = $mysqli->query($selecao) or die ($mysqli->error);
-         		$row = $resultado->fetch_assoc();
-
-		$enderecous = $row["nm_rua"] . ", " . $row["nr_casa"] . ", " . $row["nm_bairro"] . ", " . $row["nm_cidade"] . ", " .$row["nm_estado"];
-
-          $selecao = "select c.cd_cliente, c.nm_cliente, a.ds_avaliacao, a.vl_nota from avaliacao a join cliente c on a.cd_cliente=c.cd_cliente where a.cd_cpf_prestador = '". $CPF ."'";
-		$resultado = $mysqli->query($selecao) or die ($mysqli->error);
-		$cliente=array();
-		$avaliacao=array();
-		$nota=array();
-         while($row=$resultado->fetch_assoc()){
-         $cliente[]=$row["nm_cliente"];
-		 $avaliacao[]=$row["ds_avaliacao"];
-		 $nota[]=$row["vl_nota"];
-		 }
-		 $selecao = "select p.nm_profissao from profissao as p join prest_profi pp on p.cd_profissao=pp.cd_profissao join prestador pr on pr.cd_cpf_prestador=pp.cd_cpf_prestador where pr.cd_cpf_prestador = '". $CPF ."'";
-		$resultado = $mysqli->query($selecao) or die ($mysqli->error);
-		$profissao=array();
-         while($row=$resultado->fetch_assoc()){
-         $profissao[]=$row["nm_profissao"];
-
-		 }
+		 
+		 
         echo "<form method='post' name='formulario'>";
+        
+        echo "<div class='container'>";
+        echo "<img src='/uploads/C-".$CPF.".jpg' width='150' height='150'>" ;
+        echo "<div class='col-md-12'>";
          echo "<label >Nome</label>";
-          echo "<input type = 'text'";
+          echo "<input type = 'text' class='form-control'";
             echo    " name = 'nome'";
                echo  "value = '$nome'";
                echo " readonly/>";
-
+                echo" <br/>";
+                
+                
                echo "<label >CPF</label>";
-          echo "<input type = 'text'";
+          echo "<input type = 'text' class='form-control'";
             echo    " name = 'CPF'";
                echo  "value = '$CPF'";
                echo " readonly/>";
           echo "<br/>";
+          echo "</div>";
 
+        echo "<div class='col-md-12'>";
          echo "<label >Email</label>";
-          echo "<input type = 'text'";
+          echo "<input type = 'text' class='form-control'";
             echo    " name = 'email'";
                echo  "value = '$email' ";
                echo "readonly />";
@@ -214,66 +183,38 @@ session_start();
 
              <?php
              echo "<label >Telefone</label>";
-          echo "<input type = 'text'";
+          echo "<input type = 'text' class='form-control'";
             echo    " name = 'telefone'";
                echo  "value = '$telefone' ";
                echo "readonly />";
-
-           echo "<label >Profissao</label>";
-          echo "<input type = 'text'";
-            echo    " name = 'profissao'";
-               echo  "value = '";
-
-				for($cont=0;$cont<count($profissao);$cont++){
-					echo $profissao[$cont];
-					
-					echo "' ";
-			}
+               echo" <br/>";
+               echo "</div>";
                 
-               echo "readonly />";
+            echo "<div class='col-md-12'><label >Profissao</label><input type = 'text' class='form-control'name = 'profissao' value = '$profissao' readonly />";
 
                echo "<br/>";
 
-               echo "<label >Endereço</label>";
-          echo "<input type = 'text'";
+               echo "<label >CEP</label>";
+          echo "<input type = 'text' class='form-control'";
             echo    " name = 'endereco'";
-               echo  "value = '$rua'";
+               echo  "value = '$CEP'";
                echo " readonly />";
-
+               echo" <br/>";
+            echo "</div>";
+            
+            echo "<div class='col-md-12'>";
                echo "<label >Numero</label>";
-          echo "<input type = 'text'";
+          echo "<input type = 'text' class='form-control'";
             echo    " name = 'numero'";
                echo  "value = '$numero' ";
             echo "readonly />";
-
-         ?>
-         <br/>
-         <?php
-            echo "<label >Bairro</label>";
-          echo "<input type = 'text'";
-            echo    " name = 'bairro'";
-               echo  "value = '$bairro' ";
-            echo "readonly />";
-
-            echo "<label >Cidade</label>";
-          echo "<input type = 'text'";
-            echo    " name = 'cidade'";
-               echo  "value = '$cidade' ";
-            echo "readonly />";
-            echo "<br/>";
-            echo "<label >Estado</label>";
-          echo "<input type = 'text'";
-            echo    " name = 'estado'";
-               echo  "value = '$estado' ";
-            echo "readonly />";
-               ?>
-
-         <?php
+            
+         
          echo "<br/>";
          echo "<label>Descrição</label>";
 
-               echo "<textarea name='curriculo'";
-   echo "rows='10' cols='50' readonly>'$curriculo'</textarea> <br/>";
+               echo "<textarea name='curriculo' class='form-control'";
+   echo "rows='10' cols='50' readonly>$curriculo</textarea> <br/>";
 			/*echo "Avaliações: <textarea name='curriculo'";
    echo "rows='10' cols='50' readonly>";
 			for($cont=0;$cont<count($avaliacao);$cont++){
@@ -281,89 +222,80 @@ session_start();
 			echo $avaliacao[$cont] ." ";
 			}
 			echo "</textarea> <br/>";*/
-
-      echo"<input type='submit' onclick='SolicitarServico()' value='Solicitar Serviço'/>";
-      echo" <br/>";
-      echo"<input type='submit' onclick='Denunciar()' value='Denunciar'/>";
+			echo "</div>";
+        echo "</div>";
+      echo"<input type='submit' class='btn btn-primary btn-lg pull-right' onclick='SolicitarServico()' value='Solicitar Serviço'/>";
+      
+      echo"<input type='submit' class='btn btn-primary btn-lg pull-right' onclick='Denunciar()' value='Denunciar'/>";
       echo"</form>";
       echo"<form action='indicar.php'>";
-			echo"<input type='submit' value='Indicar'/>";
+			echo"<input type='submit' class='btn btn-primary btn-lg pull-right' value='Indicar'/>";
 			echo"</form>";
 		}
 			else
 			{
-				$selecao = "select cli.cd_cliente, cli.nm_cliente, cli.nm_email,cli.nr_telefone,nm_rua,nr_casa,nm_bairro,nm_cidade,nm_estado from estado as e,cidade as c,bairro as b,logradouro as l,cliente as cli
-         		where nm_email = '$per' and cli.cd_logradouro = l.cd_logradouro and b.cd_bairro = l.cd_bairro and c.cd_cidade = b.cd_cidade and c.sg_estado = e.sg_estado";
+				$selecao = "select cd_cpf_cliente, nm_cliente, nm_email,nr_telefone,nr_endereco,nr_cep from cliente where nm_email = '$per'"; 
          		$resultado = $mysqli->query($selecao) or die ($mysqli->error);
          		$row = $resultado->fetch_assoc();
 				if($row["nm_email"]==$per)
 				{
 					$nome = $row["nm_cliente"];
          			$email = $row["nm_email"];
-         			$rua = $row["nm_rua"];
          			$telefone = $row["nr_telefone"];
-         			$bairro = $row["nm_bairro"];
-         			$cidade = $row["nm_cidade"];
-         			$estado = $row["nm_estado"];
-         			$numero = $row["nr_casa"];
+         			$numero = $row["nr_endereco"];
+         			$CPF = $row["cd_cpf_prestador"];
+         			$CEP = $row["nr_cep"];
+         			
               echo "<form method='post' name='formulario'>";
-					    echo "<label >Nome</label>";
-          			echo "<input type = 'text'";
+              
+                    echo "<div class='container'>";
+                    echo "<img src='/uploads/P-".$CPF.".jpg' width='150' height='150'>" ;
+                    echo "<div class='col-md-12'>";
+					echo "<label >Nome</label>";
+          			echo "<input type = 'text' class='form-control'";
             		echo    " name = 'nome'";
                		echo  "value = '$nome'";
                		echo " readonly/>";
           			echo "<br/>";
+          			
+          			
 
          			echo "<label >Email</label>";
-          			echo "<input type = 'text'";
+          			echo "<input type = 'text' class='form-control'";
                 echo "id = 'correio'";
             		echo    " name = 'email'";
                		echo  "value = '$email' ";
                		echo "readonly />";
-         ?>
-             <br/>
-
-             <?php
-
+               		echo "<br/>";
+               		echo "</div>";
+        
+            echo "<div class='col-md-12'>";
              echo "<label >Telefone</label>";
-             echo "<input type = 'text'";
+             echo "<input type = 'text' class='form-control'";
              echo    " name = 'telefone'";
              echo  "value = '$telefone' ";
              echo "readonly />";
              echo "<br/>";
-             echo "<label >Endereço</label>";
-          	 echo "<input type = 'text'";
-             echo    " name = 'endereco'";
-             echo  "value = '$rua'";
-             echo " readonly />";
+             
              echo "<label >Numero</label>";
-          	 echo "<input type = 'text'";
+          	 echo "<input type = 'text' class='form-control'";
              echo    " name = 'numero'";
              echo  "value = '$numero' ";
              echo "readonly />";
-
-         ?>
-         <br/>
-         <?php
-            echo "<label >Bairro</label>";
-          	echo "<input type = 'text'";
+            echo "<br/>";
+            echo "</div>";   
+         
+            echo "<div class='col-md-12'>";
+            echo "<label >CEP</label>";
+          	echo "<input type = 'text' class='form-control'";
             echo    " name = 'bairro'";
-            echo  "value = '$bairro' ";
-            echo "readonly />";
-
-            echo "<label >Cidade</label>";
-          	echo "<input type = 'text'";
-            echo    " name = 'cidade'";
-            echo  "value = '$cidade' ";
+            echo  "value = '$CEP' ";
             echo "readonly />";
             echo "<br/>";
-            echo "<label >Estado</label>";
-          	echo "<input type = 'text'";
-            echo    " name = 'estado'";
-            echo  "value = '$estado' ";
-            echo "readonly /> <br/>";
-            
-            echo"<input type='submit' onclick='Denunciar()' value='Denunciar'/>";
+            echo "</div>";
+            echo "<br/>";
+            echo "</div>";
+            echo"<input type='submit' class='btn btn-primary btn-lg pull-right' onclick='Denunciar()' value='Denunciar'/>";
             echo"</form>";
             
 				}
@@ -507,21 +439,19 @@ session_start();
 
 
 
-    <!-- jQuery -->
-    <script src="vendor/jquery/jquery.min.js"></script>
+<!-- jQuery -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
-    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
 
     <!-- Plugin JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
 
-    <!-- Contact Form JavaScript -->
-    <script src="js/jqBootstrapValidation.js"></script>
-    <script src="js/contact_me.js"></script>
+        <!-- Theme JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/startbootstrap-freelancer/3.3.7/js/freelancer.min.js"></script>
 
-    <!-- Theme JavaScript -->
-    <script src="js/freelancer.min.js"></script>
 
 </body>
 

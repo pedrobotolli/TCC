@@ -1,75 +1,194 @@
-﻿<?php
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Recuperar Senha</title>
 
-include('conexao.php');
-$email = $_POST['email'];
-$nome = $_POST['nome'];
-$cpf = $_POST['cpf'];
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="favicon.png" type="image/x-icon">
 
-$tamanho = 6;
-    $consoantes = 'bcfg';
-    $vogais = 'aeiou';
-    $password= '';
-    $alt = time() % 2;
-    for ($i = 0; $i < $tamanho; $i++) {
-        if ($alt == 1) {
-            $password .= $consoantes[(rand() % strlen($consoantes))];
-            $alt = 0;
-           
-        } else {
-            $password .= $vogais[(rand() % strlen($vogais))];
-            $alt = 1;
-           
+
+    <link href="css/freelancer.css" rel="stylesheet">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+
+
+    <link href="css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+
+
+
+</head>
+
+<body id="page-top" class="index">
+<div id="skipnav"><a href="#maincontent">Skip to main content</a></div>
+
+    <!-- Navigation -->
+    <nav id="mainNav" class="navbar navbar-default navbar-fixed-top navbar-custom">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
+                </button>
+                <a class="navbar-brand" href="index.html">Inicio</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="hidden">
+                        <a href="#page-top"></a>
+                    </li>
+                    <li>
+                        <a href="login.html">Login</a>
+                    </li>
+                    <li class="page-scroll">
+                        <a href="#portfolio">Portfolio</a>
+                    </li>
+                    <li class="page-scroll">
+                        <a href="#about">About</a>
+                    </li>
+                    <li class="page-scroll">
+                        <a href="#contact">Contact</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container-fluid -->
+    </nav>
+
+    <!-- Header --><!-- Portfolio Grid Section -->
+    <section id="portfolio">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                </div>
+              <div class="col-lg-12 text-center">
+      <fieldset>
+
+        
+        <?php
+        include("conexao.php");
+        $senha =$_POST['senha'];
+        $confsenha =$_POST['confsenha'];
+        if($senha==$confsenha)
+        {
+            $cpf=$_POST['cpf'];
+            $selecao = "select cd_cpf_cliente from cliente where cd_cpf_cliente='". $cpf. "'";
+             $resultado = $mysqli->query($selecao) or die ($mysqli->error);
+             $num=$mysqli->query($selecao)->num_rows;
+             if($num > 0)
+             {
+                 $comando = "update cliente set cd_senha='".$senha."' where cd_cpf_cliente='". $cpf. "'";
+                 $resultado = $mysqli->query($comando) or die ($mysqli->error);  
+                 $comando = "update cliente set ic_ativo=TRUE where cd_cpf_cliente='". $cpf. "'";
+                 $resultado = $mysqli->query($comando) or die ($mysqli->error);  
+                 echo "<h3>Senha alterada com sucesso!</h3>";
+             }
+             else
+             {
+                 $selecao = "select cd_cpf_prestador from prestador where cd_cpf_prestador='". $cpf. "'";
+                 $resultado = $mysqli->query($selecao) or die ($mysqli->error);
+                 $num=$mysqli->query($selecao)->num_rows;
+                 if($num > 0)
+                 {
+                     $comando = "update prestador set cd_senha='".$senha."' where cd_cpf_prestador='". $cpf. "'";
+                     $resultado = $mysqli->query($comando) or die ($mysqli->error);  
+                     $comando = "update prestador set ic_ativo=TRUE where cd_cpf_prestador='". $cpf. "'";
+                     $resultado = $mysqli->query($comando) or die ($mysqli->error);  
+                     echo "<h3>Senha alterada com sucesso!</h3>";             
+                 }
+                 else
+                 {
+                     $url = "recupera_senha.php?codigo=". $_POST['codigo'];
+                     ?>
+                    <form action=<?php echo $url; ?>>
+                        <h1>Informações incorretas, tente novamente</h1>
+                        <input type="submit" value="OK" />
+                    </form>
+        
+                <?php 
+                } 
+            }
         }
-    }
-$senha1 = crypt($password,'rl');
-$valida = "select cd_cpf_prestador, nm_email from prestador where nm_email = '$email' and cd_cpf_prestador = '$cpf'";
-$resultado = $mysqli->query($valida);
-$row = $resultado->fetch_assoc();
+             
+        
+        else
+        { $url = "recupera_senha.php?codigo=". $_GET['codigo'];
+        ?>
+        <form action=<?php echo $url; ?>>
+            <h1>Informações incorretas, tente novamente</h1>
+            <input type="submit" value="OK" />
+        </form>
+        
+        <?php 
+        } ?>
 
-if($row['nm_email'] == $email and $row['cd_cpf_prestador'] == $cpf){
+      </fieldset>
+
+                </div>
+
+          </div>
+            <div class="row"></div>
+        </div>
+    </section>
+
+    <!-- About Section --><!-- Contact Section --><!-- Footer -->
+    <footer class="text-center">
+        <div class="footer-above">
+            <div class="container">
+                <div class="row">
+                    <div class="footer-col col-md-4">
+                    <h3>Criadores</h3>
+                    <p>Equipe SPF</p>
+                  </div>
+                    <div class="footer-col col-md-4">
+                      <h3>Sobre o SPF</h3>
+                        <p>Service Provider Finder é uma ferramenta gratuita que ajuda pessoas a acharem um profissional para ajudá-las</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-below">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        Copyright &copy; Corporation</div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scroll to Top Button (Only visible on small and extra-small screen sizes) -->
+    <div class="scroll-top page-scroll hidden-sm hidden-xs hidden-lg hidden-md">
+        <a class="btn btn-primary" href="#page-top">
+            <i class="fa fa-chevron-up"></i>
+        </a>
+    </div>
 
 
-$sql="update prestador set cd_senha='$senha1' where nm_email='$email' and cd_cpf_prestador='$cpf'";
-$mysqli->query($sql) or die ($mysqli->error);
+    <!-- jQuery -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
-require 'PHPMailerAutoload.php';
+    <!-- Bootstrap Core JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
-$mail = new PHPMailer;
 
-$mail->SMTPDebug = 2;                               // Enable verbose debug output
+    <!-- Plugin JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
 
-$mail->isSMTP();                                      // Set mailer to use SMTP
-$mail->Host = 'smtp.gmail.com';  // Specify main and backup SMTP servers
-$mail->SMTPAuth = true;                               // Enable SMTP authentication
-$mail->Username = 'tccserviceproviderfinder@gmail.com';                 // SMTP username
-$mail->Password = 'Rafapramimemerda';                           // SMTP password
-$mail->SMTPSecure = 'tls';                            // Enable TLS encryption, `ssl` also accepted
-$mail->Port = 587;                                    // TCP port to connect to
+        <!-- Theme JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/startbootstrap-freelancer/3.3.7/js/freelancer.min.js"></script>
 
-$mail->setFrom('tccserviceproviderfinder@gmail.com', 'SPF');
-$mail->addAddress($email, $nome);     // Add a recipient
-//$mail->addAddress('ellen@example.com');               // Name is optional
-//$mail->addReplyTo('info@example.com', 'Information');
-//$mail->addCC('cc@example.com');
-//$mail->addBCC('bcc@example.com');
 
-//$mail->addAttachment('/var/tmp/file.tar.gz');         // Add attachments
-//$mail->addAttachment('/tmp/image.jpg', 'new.jpg');    // Optional name
-$mail->isHTML(true);                                  // Set email format to HTML
+</body>
 
-$mail->Subject = 'Aqui está a senha de seu primeiro acesso';
-$mail->Body    = 'Olá sr(a)'. $nome .' aqui está a senha de seu primeiro acesso, recomendamos que crie uma nova senha após o primeiro acesso. <br/> <b>'. $password .'</b> <br/> A equipe do SPF lhe dá as boas vindas, esperamos que tenha uma excelente experiência utilizando nosso sistema.';
-//$mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+</html>
 
-if(!$mail->send()) {
-    echo 'Message could not be sent.';
-    echo 'Mailer Error: ' . $mail->ErrorInfo;
-} else {
-    echo 'Message has been sent';
-}
-
-$mysqli->close();
-}else{
-	echo 'Usuario não existe';
-}
-?>
+</html>

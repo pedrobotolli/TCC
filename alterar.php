@@ -8,15 +8,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
+    <link rel="icon" href="favicon.png" type="image/x-icon">
+    <title>Perfil</title>
 
-    <title>SPF</title>
-
-  
+    <link href="css/freelancer.css" rel="stylesheet">
     <link href="css/bootstrap.min.css" rel="stylesheet">
-
-
-    <link href="css/freelancer.min.css" rel="stylesheet">
-
 
     <link href="css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
@@ -62,135 +58,213 @@
         <!-- /.container-fluid -->
     </nav>
 
-    <!-- Header -->
-    <header>
-
-    </header>
-
-    <!-- Portfolio Grid Section -->
+   <!-- Portfolio Grid Section -->
     <section id="portfolio">
         <div class="container">
           <div class="row">
             <div class="col-lg-12 text-center">
                     <h2>Perfil</h2>
               </div>
-            <div class="col-lg-12 text-center">
+            <div class="col-lg-12 ">
                 <form action="alteracao.php" method="post">
       <fieldset>
         <legend>Altere seu perfil!</legend>
-        <div style="width:30%;">
+        <div style="float:left;width:30%;">
           
         </div>
-        <div class="col-lg-12 text-center">
-            <p>
-            <?php
-                session_start();
-                include 'conexao.php';
-                $CPF = $_POST["CPF"];
-                $nome = $_POST["nome"];
-                $email = $_POST["email"];
-                $profissao = $_POST["profissao"];
-                $rua = $_POST["endereco"];
-                $curriculo = $_POST["curriculo"];
-                $telefone = $_POST["telefone"];
-                $bairro = $_POST["bairro"];
-                $cidade = $_POST["cidade"];
-                $estado = $_POST["estado"];
-                $numero = $_POST["numero"];
-            ?>
-      
-         
-         
-         
-                <label >Nome: </label>
-                <input type = "text" name="nome" value='<?php echo $nome; ?>'/>
-                
-               
-               <label >CPF: </label>
-               <input type = 'text' name = 'CPF' value = '<?php echo $CPF; ?>' />
-               
-               <br/>
-          
-               <label >Email: </label>
-               <input type = 'text' name = 'email' value = '<?php echo $email; ?>'/>
-         
-             <br/>
-             
-             <label >Telefone: </label>
-          <input type = 'text' name = 'telefone' value = '<?php echo $telefone;?>'/>
-             
-            <label >Profissão: </label>
-          <input type = 'text' name = 'profissao' value = '<?php echo $profissao;?>'/>
-               
-               <br/>
-               
-                <label >Endereço: </label>
-          <input type = 'text' name = 'endereco' value = '<?php echo $rua;?>'/>
-               
-               <label >Número: </label>
-          <input type = 'text' name = 'numero' value = '<?php echo $numero;?>'/>
-       
-         <br/>
-        <label>Bairro: </label>
-                <?php
-    include 'conexao.php';
-    $sql3 = "select cd_bairro, nm_bairro from bairro";
-    $resultado3 = $mysqli->query($sql3);
-    ?>
-                <select name="bairro" >
-                            
-                            <?php
-                           echo "<option value=''>$bairro</option>";
-    while($row = $resultado3->fetch_assoc()) {
-        echo "<option value=".$row["cd_bairro"].">".$row["nm_bairro"]."</option>";
-        
-    }                    ?>
-       		</select> 
-             <?php 
-             include "conexao.php";
-             $sql4 = "select cd_cidade, nm_cidade from cidade";
-    $resultado4 = $mysqli->query($sql4);
-            echo "<label >Cidade: </label>";
-          echo "<select name='cidade' >";
-            echo    "<option value=''>$cidade</option>";
-              while($row2 = $resultado4->fetch_assoc()) {
-        echo "<option value=".$row2["cd_cidade"].">".$row2["nm_cidade"]."</option>";
-        
-    }
-                echo "</select> ";
-            echo "<br/>";
-            ?>
-            
-            <?php
-    
-    
-
-    include 'conexao.php';
-    
-    $sql1 = "select sg_estado, nm_estado from estado";
-    $resultado1 = $mysqli->query($sql1);
-    echo "<label >Estado</label>";
-                echo "<select name='estado'>";
-    echo "<option value=''>$estado</option>";
-    while($row = $resultado1->fetch_assoc()) {
-        echo "<option value=".$row["sg_estado"].">".$row["nm_estado"]."</option>";
-        
-    }                    ?>		
-    </select>
-               
-         
+        <div style="float:left;width:70%;">
+        <p>
          <?php
+         session_start();
+         include 'conexao.php';
+         
+         
+		 if($_SESSION['cod'] == 2) 
+	 {
+	     $p = $_SESSION['email'];
+         
+         $selecao = "select p.cd_cpf_prestador, nm_prestador, nm_email,nr_telefone,ds_curriculo,nm_profissao,nr_endereco,nr_cep from profissao as pro, prest_profi as pp, prestador as p where nm_email = '$p' and p.cd_cpf_prestador = pp.cd_cpf_prestador_pp and pp.cd_profissao_pp = pro.cd_profissao";
+         $resultado = $mysqli->query($selecao) or die ($mysqli->error);
+		 $row = $resultado->fetch_assoc();
+         
+         $CPF = $row["cd_cpf_prestador"];
+         $nome = $row["nm_prestador"];
+         $email = $row["nm_email"];
+         $profissao = $row["nm_profissao"];
+         $CEP = $row["nr_cep"];
+         $curriculo = $row["ds_curriculo"];
+         $telefone = $row["nr_telefone"];
+         $numero = $row["nr_endereco"];
+         
+         
+          echo "<div class='container'>";
+          echo "<label for='imagemPerfil' >Imagem de perfil </label>";
+          echo"<br><br>";
+          echo "<input type='hidden' name='MAX_FILE_SIZE' value='2000000' />";
+          echo "<input type='file' id='idFileUpload' name='userfile' accept='image/png, image/jpg' >";
+         echo "<div class='col-md-12'>";
+         echo "<label >Nome</label>";
+          echo "<input type = 'text' class='form-control'";
+            echo    " name = 'nome'";
+               echo  "value = '$nome'";
+          echo "<br/>";
+                echo "<br/>";
+               
+               echo "<label >CPF</label>";
+          echo "<input type = 'text' class='form-control'";
+            echo    " name = 'CPF'";
+               echo  "value = '$CPF'";
+                echo " readonly/>";
+          echo "<br/>";
+          echo "</div>";
+          
+          echo "<div class='col-md-12'>";
+         echo "<label >Email</label>";
+          echo "<input type = 'text' class='form-control'";
+            echo    " name = 'email'";
+               echo  "value = '$email' ";
+               echo "<br/>";
+               echo "<br/>";
+                
+         ?>
+             <?php
+             echo "<label >Telefone</label>";
+          echo "<input type = 'text' class='form-control'";
+            echo    " name = 'telefone'";
+               echo  "value = '$telefone' ";
+               echo "<br/>";
+               echo "<br/>";
+               echo "</div>";
+             ?>   
+             
+           <?php
+                        include 'conexao.php';
+                        $sql = "select cd_profissao, nm_profissao from profissao";
+                        $resultado = $mysqli->query($sql);
+                    echo "<div class='col-md-12'>";
+                    ?>
+                    
+                    <label>Profissão</label>
+                    <select id="profissao" name ="profissao" class='form-control'>
+                    <?php echo "<option>$profissao</option>" ?>
+                    <?php
+                        while($row = $resultado->fetch_assoc()) {
+                        echo "<option value=".$row["cd_profissao"].">".$row["nm_profissao"]."</option>";
+                        }                    
+	                ?>	
+                    </select>
+                   
+             <?php 
+             echo "<br/>";
+               echo "<label >CEP</label>";
+          echo "<input type = 'text' class='form-control'";
+            echo    " name = 'CEP'";
+               echo  "value = '$CEP'";
+                echo "<br/>";
+                echo "<br/>";
+                echo "</div>";
+                
+                echo "<div class='col-md-12'>";
+               echo "<label >Numero</label>";
+          echo "<input type = 'text' class='form-control'";
+            echo    " name = 'numero'";
+               echo  "value = '$numero' ";
+             
+         echo "<br/>";
+         
+         
          echo "<br/>";    
          echo "<label>Descrição</label>";
              
-               echo "<textarea name='curriculo'";
+               echo "<textarea name='curriculo' class='form-control'";
    echo "rows='10' cols='50'>$curriculo</textarea>";
+   echo "<br/>";
+           echo "</div>";
+           echo "</div>";
+           
             ?>
            
           
-          <br/>
-             <input type = "submit" value="Salvar"/>
-          <input type = "reset" />
+         
+             
+          <input type = "submit" class="btn btn-primary btn-lg pull-right" value="Alterar"/>
+          <input type = "reset"  class="btn btn-secondary btn-lg pull-right"/>
+          
+        <?php } 
+			else{
+		$p = $_SESSION['email'];		
+		$selecao = "select cd_cpf_cliente, nm_cliente, nm_email,nr_telefone,nr_endereco,nr_cep from cliente where nm_email = '$p' ";
+        $resultado = $mysqli->query($selecao) or die ($mysqli->error);
+     	$row = $resultado->fetch_assoc();
+     	
+		$cd = $row["cd_cpf_cliente"];
+         $nome = $row["nm_cliente"];
+         $email = $row["nm_email"];
+         $CEP = $row["nr_cep"];
+         $telefone = $row["nr_telefone"];
+         $numero = $row["nr_endereco"];	
+				
+			echo "<div class='container'>";	
+			  echo "<label for='imagemPerfil' >Imagem de perfil </label>";
+                echo"<br><br>";
+                    echo "<input type='hidden' name='MAX_FILE_SIZE' value='2000000' />";
+                    echo "<input type='file' id='idFileUpload' name='userfile' accept='image/png, image/jpg' >";
+				 echo "<div class='col-md-12'>";	
+		echo "<label >Nome</label>";
+          echo "<input type = 'text' class='form-control'";
+            echo    " name = 'nome'";
+               echo  "value = '$nome'";
+                echo "<br/>";
+                echo "<br/>";
+                
+                echo "<label >CPF</label>";
+          echo "<input type = 'text' class='form-control'";
+            echo    " name = 'CPF'";
+               echo  "value = '$cd'";
+                echo " readonly/>";
+               
+          echo "<br/>";
+          echo "</div>";
+          
+           echo "<div class='col-md-12'>";	
+         echo "<label >Email</label>";
+          echo "<input type = 'text' class='form-control'";
+            echo    " name = 'email'";
+               echo  "value = '$email' ";
+                echo "<br/>";
+         ?>
+             <br/>
+             
+             <?php
+             echo "<label >Telefone</label>";
+          echo "<input type = 'text' class='form-control'";
+            echo    " name = 'telefone'";
+               echo  "value = '$telefone' ";
+                echo "<br/>";
+               echo "<br/>";
+               echo "</div>";
+                echo "<div class='col-md-12'>";	
+               echo "<label >CEP</label>";
+          echo "<input type = 'text' class='form-control'";
+            echo    " name = 'CEP'";
+               echo  "value = '$CEP'";
+               echo "<br/>";
+               echo "<br/>";
+               echo "<label >Numero</label>";
+          echo "<input type = 'text' class='form-control'";
+            echo    " name = 'numero'";
+               echo  "value = '$numero' ";
+             echo "<br/>";
+       echo "</div>";
+       echo "</div>";
+         ?>
+         <br/>
+         
+         <input type = "submit" class="btn btn-primary btn-lg pull-right" value="Alterar"/>
+          <input type = "reset" class="btn btn-secondary btn-lg pull-right"/>
+         <?php               	
+				
+			}?>
        </p>
         </div>
       
@@ -208,47 +282,36 @@
 
     <!-- About Section --><!-- Contact Section --><!-- Footer -->
     <footer class="text-center">
-        <div class="footer-above">
-            <div class="container">
-                <div class="row">
-                    <div class="footer-col col-md-4">
-                    <h3>Criadores</h3>
-                    <p>Equipe SPF </p>
-                  </div>
-                  
-                    <div class="footer-col col-md-4">
-                        <h3>Sobre o SPF</h3>
-                        <p>Service Provider Finder é uma ferramenta gratuita que ajuda pessoas a acharem um profissional para ajudá-las</p>
-                    </div>
-                </div>
-            </div>
-        </div>
         <div class="footer-below">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12">
-                        Copyright &copy;Corporation</div>
+                        Copyright SPF Corporation</div>
                 </div>
             </div>
         </div>
     </footer>
 
+    <!-- Scroll to Top Button (Only visible on small and extra-small screen sizes) -->
+    <div class="scroll-top page-scroll hidden-sm hidden-xs hidden-lg hidden-md">
+        <a class="btn btn-primary" href="#page-top">
+            <i class="fa fa-chevron-up"></i>
+        </a>
+    </div>
 
     <!-- jQuery -->
-    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
-    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
 
     <!-- Plugin JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
 
-    <!-- Contact Form JavaScript -->
-    <script src="js/jqBootstrapValidation.js"></script>
-    <script src="js/contact_me.js"></script>
+        <!-- Theme JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/startbootstrap-freelancer/3.3.7/js/freelancer.min.js"></script>
 
-    <!-- Theme JavaScript -->
-    <script src="js/freelancer.min.js"></script>
 
 </body>
 

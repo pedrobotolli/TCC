@@ -3,9 +3,16 @@
  * Copyright 2013-2016 Start Bootstrap
  * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap/blob/gh-pages/LICENSE)
  */
+ 
+
 body {
   font-family: 'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   overflow-x: hidden;
+  line-height: 1.42857143;
+  color: #000000;
+  min-height: 100vh;
+  position: relative;
+  margin: 0;
 }
 p {
   font-size: 20px;
@@ -18,7 +25,7 @@ a:hover,
 a:focus,
 a:active,
 a.active {
-  color: #18BC9C;
+  color: #11a6f3;
 }
 h1,
 h2,
@@ -41,8 +48,9 @@ hr.star-primary {
 }
 hr.star-light:after,
 hr.star-primary:after {
-  content: "\f005";
   font-family: FontAwesome;
+  content: "\f041";
+  color:#000000;
   display: inline-block;
   position: relative;
   top: -0.8em;
@@ -50,26 +58,27 @@ hr.star-primary:after {
   padding: 0 0.25em;
 }
 hr.star-light {
-  border-color: white;
+  border-color: black;
 }
 hr.star-light:after {
-  background-color: #18BC9C;
-  color: white;
+  background-color: #ffffff;
+  color: black;
 }
 hr.star-primary {
-  border-color: #2C3E50;
+  border-color: #000000;
 }
 hr.star-primary:after {
   background-color: white;
-  color: #2C3E50;
+  color: #0000000;
 }
 .img-centered {
   margin: 0 auto;
 }
 header {
   text-align: center;
-  background: #18BC9C;
-  color: white;
+  background: #ffffff;
+  color: black;
+  padding-top: 54px;
 }
 header .container {
   padding-top: 100px;
@@ -90,9 +99,12 @@ header .intro-text .skills {
   font-size: 1.25em;
   font-weight: 300;
 }
+
+
+
 @media (min-width: 768px) {
   header .container {
-    padding-top: 200px;
+    padding-top: 20px;
     padding-bottom: 100px;
   }
   header .intro-text .name {
@@ -142,7 +154,7 @@ header .intro-text .skills {
   background: #18BC9C;
 }
 .navbar-custom .navbar-toggle {
-  color: white;
+  color: black;
   text-transform: uppercase;
   font-size: 10px;
   border-color: white;
@@ -150,12 +162,12 @@ header .intro-text .skills {
 .navbar-custom .navbar-toggle:hover,
 .navbar-custom .navbar-toggle:focus {
   background-color: #18BC9C;
-  color: white;
+  color: black;
   border-color: #18BC9C;
 }
 @media (min-width: 768px) {
   .navbar-custom {
-    padding: 25px 0;
+    padding: 2px 0;
     -webkit-transition: padding 0.3s;
     -moz-transition: padding 0.3s;
     transition: padding 0.3s;
@@ -181,8 +193,8 @@ section h2 {
   font-size: 3em;
 }
 section.success {
-  background: #18BC9C;
-  color: white;
+  background: #ffffff;
+  color: black;
 }
 @media (max-width: 767px) {
   section {
@@ -290,21 +302,24 @@ form .row:first-child .floating-label-form-group {
   border-top: 1px solid #eeeeee;
 }
 footer {
-  color: white;
+  color: #403d3d;
+  width:100%;
+  position: absolute;
+  bottom: 0;
 }
 footer h3 {
   margin-bottom: 30px;
 }
 footer .footer-above {
   padding-top: 50px;
-  background-color: #2C3E50;
+  background-color: #f1f1f1;
 }
 footer .footer-col {
   margin-bottom: 50px;
 }
 footer .footer-below {
   padding: 25px 0;
-  background-color: #233140;
+  background-color: #d6d6d6;
 }
 .btn-outline {
   color: white;

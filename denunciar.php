@@ -9,13 +9,13 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="icon" href="favicon.png" type="image/x-icon">
-    <title>Email</title>
+    <title>Denúncia</title>
 
 
     <link href="css/bootstrap.min.css" rel="stylesheet">
 
 
-    <link href="css/freelancer.min.css" rel="stylesheet">
+    <link href="css/freelancer.css" rel="stylesheet">
 
 
     <link href="css/font-awesome.min.css" rel="stylesheet" type="text/css">
@@ -118,7 +118,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12">
-                        Copyright &copy;Thomas Corporation</div>
+                        Copyright &copy;Corporation</div>
                 </div>
             </div>
         </div>

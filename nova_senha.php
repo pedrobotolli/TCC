@@ -67,39 +67,118 @@
     <section id="portfolio">
         <div class="container">
             <div class="row">
-                <div class="col-md-12 text-center">
-                    <h2>Recuperar Senha</h2><br>
-                    <legend>Insira seu email registrado e CPF para recuperar a senha</legend>
-                </div>
                 
-            </div>
+                    <script language="javascript" type="text/javascript">
+var forte = false;
+var txt="";
+function validarSenha(){
+	senha1 = document.getElementById("idSenha1").value;
+	senha2 = document.getElementById("idSenha2").value;
+ 
+	if (senha1 === senha2){
+	    document.getElementById("idForcaSenha").value = txt+", e coincidem";
+	    if(forte==true){
+	        document.getElementById("botaoVal").disabled = false;
+	    }
+	}else{
+	    document.getElementById("idForcaSenha").value = txt+", e não coincidem";
+	}
+}
+	
+	
+function verifica(){
+	senha1 = document.getElementById("idSenha1").value;
+	forca = 0;
+	mostra = document.getElementById("mostra");
+	if((senha1.length >= 6) && (senha1.length <= 10)){
+		forca += 10;
+	}else if(senha1.length>10){
+		forca += 25;
+	}
+	if(senha1.match(/[a-z]+/)){
+		forca += 15;
+	}
+	if(senha1.match(/[A-Z]+/)){
+		forca += 20;
+	}
+	if(senha1.match(/[0-9]+/)){
+		forca += 20;
+	}
+
+	if(senha1.match(/!@#$%¨&*()[]~;:+/)){
+		forca += 25;
+	}
+	return mostra_res();
+}
+
+function mostra_res(){
+	if(forca < 30){
+	    txt="Muito Fraca";
+		document.getElementById("idForcaSenha").value = "Muito Fraca";
+		forte = false;
+		document.getElementById("idSenha2").disabled = true;
+
+	}else if((forca >= 30) && (forca < 60)){
+	    txt="Média";
+		document.getElementById("idForcaSenha").value = "Média";
+        forte = true;
+        document.getElementById("idSenha2").disabled = false;
+	}else if((forca >= 60) && (forca < 85)){
+	    txt="Forte";
+		document.getElementById("idForcaSenha").value = "Forte";
+        forte = true;
+        document.getElementById("idSenha2").disabled = false;
+	}else{
+	    txt="Muito Forte";
+		document.getElementById("idForcaSenha").value = "Muito Forte";
+		forte = true;
+		document.getElementById("idSenha2").disabled = false;
+	}
+}	
+</script>
+        <div class="container">
+            <legend><h2>Mudança de senha</h2></legend>
             <div class="row">
-                <div class="col-md-4 col-md-offset-4 text-center">
-                    <form action="validando_redef_senha.php" method="post">
-                        <fieldset>
-                            <p>
-                                 
-        			             <label>Email: </label>
-                                 <input class="form-control" type="text" name="email" value="">
-                  
-                                 <label>CPF: </label>
-                                 <input class="form-control" type="text" name="cpf" value="">
-                            </p>
-                            <button class="btn btn-primary" type = "submit">Confirmar</button>
-                        </fieldset>
+                <div class="col-md-4 offset-md-4">  
+                    <form action="novasenha.php" name="f1" method="post">
+                        <label>Senha antiga:</label> 
+                        <input type="password" class="form-control" name="senhaantiga" id="senhaantiga" size="20">
+                        <br>
+                        <label>Senha:</label> 
+                        <input type="password" class="form-control" name="senha1" id="idSenha1" size="20" onkeyup="verifica()">
+                        <br>
+                        <label>Confirmar Senha:</label>
+                        <input type="password" class="form-control" name="senha2" id="idSenha2" size="20" onkeyup="validarSenha()" disabled>
+                        <br>
+                        <label> Força da Senha:</label>
+                        <input type="text" class="form-control" id="idForcaSenha" value="" name="forcaSenha" disabled>
+                        <br>
+                        <button type="submit" class="btn btn-primary" value="Validar" id="botaoVal" disabled >Enviar</button>
+              
                     </form>
                 </div>
             </div>
-
-                
-    </div>            
-          
-            <div class="row"></div>
         </div>
+
+        
     </section>
-<h1><br></h1>
+
     <!-- About Section --><!-- Contact Section --><!-- Footer -->
     <footer class="text-center">
+        <div class="footer-above">
+            <div class="container">
+                <div class="row">
+                    <div class="footer-col col-md-4">
+                    <h3>Criadores</h3>
+                    <p>Equipe SPF </p>
+                  </div>
+                    <div class="footer-col col-md-4">
+                      <h3>Sobre o SPF</h3>
+                        <p>Service Provider Finder é uma ferramenta gratuita que ajuda pessoas a acharem um profissional para ajudá-las</p>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="footer-below">
             <div class="container">
                 <div class="row">
@@ -108,8 +187,9 @@
                 </div>
             </div>
         </div>
-    </footer>
 
+
+    <!-- jQuery -->
     <!-- jQuery -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 

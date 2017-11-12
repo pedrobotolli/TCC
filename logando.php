@@ -18,14 +18,14 @@ if($senha==NULL){
 				     	if($row['cd_senha'] == $senha)
 						{
 				     		echo 'usuario existe';
-
+										$_SESSION['cod'] = 2;
 				                        $_SESSION['email'] = $email;
 							header('location: busca.php?perfil='. $email);
 					 	}
 					 	else
 					 	{
 						 	echo "senha incorreta";
-						 	header('location: login.php');
+						 	header('location: login.html');
 					 	}
      }
 	else
@@ -39,8 +39,9 @@ if($senha==NULL){
      		if($row['cd_senha'] == $senha)
 			{
      		  echo 'usuario existe';
+     						$_SESSION['cod'] = 1;
                             $_SESSION['email'] = $email;
-                            $_SESSION['CPF'] = $row['cd_cliente'];
+                            $_SESSION['CPF'] = $row['cd_cpf_cliente'];
 			  header('location: busca.php?perfil='. $email);
 	 		}
 	 		else
@@ -61,9 +62,9 @@ if($senha==NULL){
         	}
 			else
 			{
-				echo 'Esse Usuario não existe';
-				//echo 'usuario não cadastrado   ';
-				echo $sql;
+				echo 'Esse Usuario nao existe';
+				header('location: login.html');
+				exit;
 			}
 		}
     }

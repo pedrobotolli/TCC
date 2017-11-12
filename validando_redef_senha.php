@@ -1,28 +1,19 @@
 <!doctype html>
 <html>
 <head>
-<meta charset="utf-8">
-<title>Enviar Denúncia</title>
-</head>
-
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-
     <meta charset="utf-8">
+    <title>Recuperar Senha</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
+    <link rel="icon" href="favicon.png" type="image/x-icon">
 
-    <title>busca</title>
-
+    <link href="css/freelancer.css" rel="stylesheet">
 
     <link href="css/bootstrap.min.css" rel="stylesheet">
 
 
-    <link href="css/freelancer.css" rel="stylesheet">
 
 
     <link href="css/font-awesome.min.css" rel="stylesheet" type="text/css">
@@ -31,7 +22,6 @@
 
 
 
-</head>
 
 <body id="page-top" class="index">
 <div id="skipnav"><a href="#maincontent">Skip to main content</a></div>
@@ -83,71 +73,100 @@
 
         <p>
 <?php
-session_start();
 include("conexao.php");
-$selecao = "select cd_denuncia from denuncia";
+    $tamanho = 10;
+    $consoantes = 'bcfg';
+    $vogais = 'aeiou';
+    $password= '';
+    $alt = time() % 2;
+    for ($i = 0; $i < $tamanho; $i++) {
+        if ($alt == 1) {
+            $password .= $consoantes[(rand() % strlen($consoantes))];
+            $alt = 0;
+           
+        } else {
+            $password .= $vogais[(rand() % strlen($vogais))];
+            $alt = 1;
+           
+        }
+    }
+$aux = $user.time(); 
+$codigo = substr(md5($aux),0,10);
+$email=$_GET['email'];
+$cpf=$_GET['cpf'];
+$selecao = "select cd_cpf_cliente, nm_email, nm_cliente from cliente where nm_email='". $email ."' and cd_cpf_cliente='". $cpf ."'";
 $resultado = $mysqli->query($selecao) or die ($mysqli->error);
-$cd_denuncia = 0;
-while($row = $resultado->fetch_assoc()){
-	$cd_denuncia=$row['cd_denuncia'];
-}
-$cd_denuncia++;
-$email=$_POST['email'];
-$usuario=$_SESSION['email'];
-$selecao="select cd_cpf_prestador,nm_email from prestador where nm_email='$email'";
-$resultado = $mysqli->query($selecao) or die ($mysqli->error);
-$row = $resultado->fetch_assoc();
-if($row['nm_email']==$email)
+$num=$mysqli->query($selecao)->num_rows;
+if($num > 0)
 {
-	$cd_prestador=$row['cd_cpf_prestador'];
-	$selecao="select cd_cpf_cliente from cliente where nm_email='$usuario'";
-
-	$resultado = $mysqli->query($selecao) or die ($mysqli->error);
-	$row = $resultado->fetch_assoc();
-	$cd_cpf_cliente=$row['cd_cpf_cliente'];
-	$dt_denuncia=date('Y-m-d');
-    $ds_denuncia=$_POST['mensagem'];
-    $sql1 = "INSERT INTO denuncia (cd_denuncia, ds_denuncia, dt_denuncia, cd_cpf_cliente_d,cd_cpf_prestador_d) VALUES ";
-    $sql1 .= "('$cd_denuncia','$ds_denuncia','$dt_denuncia','$cd_cpf_cliente','$cd_prestador')";
-    if($mysqli->query($sql1)===TRUE)
+    
+    $res = $resultado->fetch_assoc();
+    $nome = $res['nm_cliente'];
+    $selecao = "update cliente set cd_ativacao='".$codigo."' where nm_email='". $email ."' and cd_cpf_cliente='". $cpf ."'";
+    $resultado = $mysqli->query($selecao) or die ($mysqli->error);
+    require 'vendor/autoload.php';
+    $dotenv = new Dotenv\Dotenv( __DIR__ , 'sendgrid.env'); 
+    $dotenv->load();
+    $from = new SendGrid\Email("Equipe SPF", "naoresponda@serviceproviderfinder.com");
+    $subject = "Recuperação de Senha";
+    $to = new SendGrid\Email("Usuário", $email);
+    $content = new SendGrid\Content("text/html", "<p style='font-family: Arial, Helvetica, sans-serif;color:#000080;'>Caro Sr(a) ". $nome .", </p> <br /> <p style='font-family: Arial, Helvetica, sans-serif;color:#000080;'> Recebemos sua solicitação de recuperação de senha, <a href='http://tcc-spf-pedrobotolli.c9users.io/recupera_senha.php?codigo=". $codigo .">clique aqui para redefinir sua senha</a>.</p>");
+    $mail = new SendGrid\Mail($from, $subject, $to, $content);
+    
+    //usando o  getenv
+    $apiKey = getenv('SENDGRID_API_KEY');
+    
+    
+    $sg = new \SendGrid($apiKey);
+    $response = $sg->client->mail()->send()->post($mail);
+    echo $response->statusCode();
+    print_r($response->headers());
+    echo $response->body();
+    echo "<h3>Enviamos um e-mail para que seja feita a alteração da senha</h3>";
+}
+else 
+{
+    $selecao = "select cd_cpf_prestador, nm_email, nm_prestador from prestador where nm_email='". $email ."' and cd_cpf_prestador='". $cpf ."'";
+    $resultado = $mysqli->query($selecao) or die ($mysqli->error);
+    $num=$mysqli->query($selecao)->num_rows;
+    if($num > 0)
     {
-        echo 'Denúncia Registrada com sucesso!';
-
+        $res = $resultado->fetch_assoc();
+        $nome = $res['nm_cliente'];
+        $selecao = "update cliente set cd_ativacao='".$codigo."' where nm_email='". $email ."' and cd_cpf_cliente='". $cpf ."'";
+        $resultado = $mysqli->query($selecao) or die ($mysqli->error);
+        require 'vendor/autoload.php';
+        $dotenv = new Dotenv\Dotenv( __DIR__ , 'sendgrid.env'); 
+        $dotenv->load();
+        $from = new SendGrid\Email("Equipe SPF", "naoresponda@serviceproviderfinder.com");
+        $subject = "Recuperação de Senha";
+        $to = new SendGrid\Email("Usuário", $email);
+        $content = new SendGrid\Content("text/html", "<p style='font-family: Arial, Helvetica, sans-serif;color:#000080;'>Caro Sr(a) ". $nome .", </p> <br /> <p style='font-family: Arial, Helvetica, sans-serif;color:#000080;'> Recebemos sua solicitação de recuperação de senha, <a href='http://tcc-spf-pedrobotolli.c9users.io/recupera_senha.php?codigo=". $codigo .">clique aqui para redefinir sua senha</a>.</p>");
+        $mail = new SendGrid\Mail($from, $subject, $to, $content);
+        
+        //usando o  getenv
+        $apiKey = getenv('SENDGRID_API_KEY');
+        
+        
+        $sg = new \SendGrid($apiKey);
+        $response = $sg->client->mail()->send()->post($mail);
+        echo $response->statusCode();
+        print_r($response->headers());
+        echo $response->body();
+        echo "<h3>Enviamos um e-mail para que seja feita a alteração da senha</h3>";
     }
     else
     {
-        echo 'ERRO: ' . $sql1 . '<br>' . $mysqli->error;
+
+?>
+    <form action="recuperasenha.html">
+        <h1>Informações incorretas, tente novamente</h1>
+        <input type="submit" value="OK" />
+    </form>
+<?php 
+        
     }
 }
-else
-{
-	$selecao="select cd_cpf_cliente from cliente where nm_email='$email'";
-	echo $selecao;
-	$resultado = $mysqli->query($selecao) or die ($mysqli->error);
-	$row = $resultado->fetch_assoc();
-	$cd_cpf_cliente=$row['cd_cpf_cliente'];
-
-	$selecao="select cd_cpf_prestador from prestador where nm_email='$usuario'";
-	echo $selecao;
-	$resultado = $mysqli->query($selecao) or die ($mysqli->error);
-	$row = $resultado->fetch_assoc();
-	$cd_prestador=$row['cd_cpf_prestador'];
-    $dt_denuncia=date('Y-m-d');
-    $ds_denuncia=$_POST['mensagem'];
-    $sql1 = "INSERT INTO denuncia (cd_denuncia, ds_denuncia, dt_denuncia, cd_cpf_cliente,cd_cpf_prestador) VALUES ";
-    $sql1 .= "('$cd_denuncia','$ds_denuncia','$dt_denuncia','$cd_cpf_cliente'','$cd_prestador')";
-    if($mysqli->query($sql1)===TRUE)
-    {
-        echo 'Denúncia Registrada com sucesso!';
-
-    }
-    else
-    {
-        echo 'ERRO: ' . $sql1 . '<br>' . $mysqli->error;
-
-    }
-}
-    echo $row;
 ?>
         </p>
 
@@ -171,7 +190,7 @@ else
                   </div>
                     <div class="footer-col col-md-4">
                       <h3>Sobre o SPF</h3>
-                        <p>Service Provider Finder � uma ferramenta gratuita que ajuda pessoas a acharem um profissional para ajud�-las</p>
+                        <p>Service Provider Finder é uma ferramenta gratuita que ajuda pessoas a acharem um profissional para ajudá-las</p>
                     </div>
                 </div>
             </div>
@@ -180,7 +199,7 @@ else
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12">
-                        Copyright &copy;Thomas Corporation</div>
+                        Copyright &copy; Corporation</div>
                 </div>
             </div>
         </div>
@@ -194,7 +213,7 @@ else
     </div>
 
 
-<!-- jQuery -->
+    <!-- jQuery -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
@@ -206,6 +225,7 @@ else
 
         <!-- Theme JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/startbootstrap-freelancer/3.3.7/js/freelancer.min.js"></script>
+
 
 </body>
 
