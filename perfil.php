@@ -26,7 +26,7 @@ session_start();
        * element that contains the map. */
       #map {
 		float:center;
-		width: 80%;
+		width: 100%;
         height: 400px;
       }
       /* Optional: Makes the sample page fill the window.
@@ -110,13 +110,15 @@ session_start();
           <div class="row">
             <div class="col-lg-12 text-center">
                     <h2>Perfil</h2>
-              </div>
+                    <legend></legend>
+                    <br>
+            </div>
+            <div id="map"></div>
             <div class="col-lg-12">
 
       <fieldset>
         <div style="float:left;width:30%;">
         </div>
-		<div id="map"></div>
 		<div style="float:left;width:70%;">
         <p>
          <?php
@@ -326,21 +328,62 @@ session_start();
           </div>
             <div class="row"></div>
 
-
-		<script>
-		function initMap() {
-
-		var geocoder1 = new google.maps.Geocoder();
-		var geocoder2 = new google.maps.Geocoder();
-		var address1 = "<?php echo $endereco; ?>";
-		var address2 = "<?php echo $enderecous; ?>";
+    <script src="//malsup.github.io/jquery.form.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js" type="text/javascript"></script>
+    <script src="/js/jquery.maskedinput.js" type="text/javascript"></script>
+    <script type="text/javascript">
+    
+        var address1 = "<?php echo $CEP ?>";
+		var numaddress1 = "<?php echo $numero ?>";
+		//var address2 = "<?php echo $enderecous; ?>";
+		var endereco;
 		var latitude1;
 		var longitude1;
 		var latitude2;
 		var longitude2;
 		var centrolat;
 		var centrolg;
+        var marcador = "marcador.png";
+    
+        jQuery(function($){
+            var cepSoNumeros = address1.replace(/[^0-9]/gi, '');
+            $.ajax({ 
+                url: "https://viacep.com.br/ws/"+cepSoNumeros+"/json/",
+                type: 'GET',
+                success: function (dados) {
+                    var resultado = dados;
+                    if(Object.keys(resultado)[0]=="cep"){
+                        endereco = resultado.localidade + ", " + resultado.bairro + ", "  + resultado.logradouro + " " + numaddress1;
+                        inicializarMapa();
+                    }else{
 
+                    }
+                },
+                error: function () {
+
+                }
+            });
+        });
+    
+		function inicializarMapa() {
+
+    		var geocoder1 = new google.maps.Geocoder();
+    		var geocoder2 = new google.maps.Geocoder();
+		
+        
+        
+        
+        //function geolocalizar(){
+            geocoder1.geocode( { 'address': endereco}, function(results, status) {
+
+				  if (status == google.maps.GeocoderStatus.OK) {
+					latitude1 = results[0].geometry.location.lat();
+					longitude1 = results[0].geometry.location.lng();
+					pronto();
+				  }
+				});
+        //}
+        /*
 		geocoder1.geocode( { 'address': address1}, function(results, status) {
 
 		  if (status == google.maps.GeocoderStatus.OK) {
@@ -360,6 +403,7 @@ session_start();
 				});
 		  }
 		});
+		*/
 		/*
 		geocoder2.geocode( { 'address': address2}, function(results, status) {
 
@@ -373,53 +417,38 @@ session_start();
 
 
 		function pronto (){
-			centrolat = (latitude1+latitude2)/2;
-			centrolg = (longitude1+longitude2)/2;
+			//centrolat = (latitude1+latitude2)/2;
+			//centrolg = (longitude1+longitude2)/2;
 			var map = new google.maps.Map(document.getElementById('map'), {
 			  zoom: 11,
-			  center: {lat: centrolat, lng: centrolg}
+			  center: {lat: latitude1, lng: longitude1}
 
 
 			});
 			var marker1 = new google.maps.Marker({
               map: map,
               position: {lat: latitude1, lng: longitude1},
-
+              icon: marcador
             });
+            /*
 			var marker2 = new google.maps.Marker({
               map: map,
               position: {lat: latitude2, lng: longitude2},
 
             });
-
+            */
         }
       }
 
     </script>
 
     <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAeOjMtwy0vXBK5MlFaU4wxf8qRV_ys7Gk&callback=initMap">
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAeOjMtwy0vXBK5MlFaU4wxf8qRV_ys7Gk&&callback=initialize">
     </script>
     </section>
 
     <!-- About Section --><!-- Contact Section --><!-- Footer -->
     <footer class="text-center">
-        <div class="footer-above">
-            <div class="container">
-                <div class="row">
-                    <div class="footer-col col-md-4">
-                    <h3>Criadores</h3>
-                    <p>Equipe SPF</p>
-
-                  </div>
-
-                    <div class="footer-col col-md-4">
-                        <h3>Sobre o SPF</h3>
-                        <p>Service Provider Finder é uma ferramenta gratuita que ajuda pessoas a acharem um profissional para ajudá-las</p>
-                    </div>
-                </div>
-            </div>
-        </div>
         <div class="footer-below">
             <div class="container">
                 <div class="row">
