@@ -25,6 +25,7 @@ $upPro = "update prest_profi set cd_profissao_pp = '$profissao' where cd_cpf_pre
     $uploadfile = $uploaddir . basename($_FILES['userfile']['name']);
     $path = $_FILES['userfile']['name'];
     $ext = pathinfo($path, PATHINFO_EXTENSION);
+    $ext = strtolower($ext);
     $new_name = "P-" . $CPF . "." . $ext;
     if(file_exists("/home/ubuntu/workspace/uploads/$new_name")) unlink("/home/ubuntu/workspace/uploads/$new_name");
     //if($ext == "jpg" || $ext == "jpeg" || $ext == "png"){
@@ -67,11 +68,12 @@ $up = "update cliente set nm_cliente = '$nome',nm_email='$email',nr_telefone = '
     $uploadfile = $uploaddir . basename($_FILES['userfile']['name']);
     $path = $_FILES['userfile']['name'];
     $ext = pathinfo($path, PATHINFO_EXTENSION);
+    $ext = strtolower($ext);
     $new_name = "P-" . $CPF . "." . $ext;
     echo '<pre>';
     //if($ext == "jpg" || $ext == "jpeg" || $ext == "png"){
-        if(file_exists("/home/ubuntu/workspace/uploads/$new_name")) 
-            unlink("/home/ubuntu/workspace/uploads/$new_name");
+        if(file_exists("/home/ubuntu/workspace/uploads/$new_name"))
+        unlink("/home/ubuntu/workspace/uploads/$new_name");
             
         if (move_uploaded_file($_FILES['userfile']['tmp_name'], $dir.$new_name)) {
             echo "Arquivo válido e enviado com sucesso.\n";

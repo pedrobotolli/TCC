@@ -79,7 +79,7 @@
                 
                 <?php session_start();
                   $emailCLI=$_SESSION['email'];
-                  $emailPRES=$_SESSION['CPF_PREST'];
+                  $emailPRES=$_POST['email'];
                   
                 
                 ?>

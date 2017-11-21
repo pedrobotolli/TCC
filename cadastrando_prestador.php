@@ -70,6 +70,8 @@
     <script type="text/javascript">
         var cepValido = false;
         var cpfValido = false;
+        var profissoes = 1;
+        
         
         
         /*jQuery(function($){
@@ -165,6 +167,23 @@
                 
             return true;   
         }
+        
+        function addProfissao(){
+            if(profissoes<3){
+                profissoes=profissoes+1;
+                var nProf= "prof"+profissoes;
+                var elemento = document.getElementById(nProf);
+                elemento.style.display = "block";
+            }
+        }
+        function rmProfissao(){
+            if(profissoes>1){
+                var nProf= "prof"+profissoes;
+                var elemento = document.getElementById(nProf);
+                elemento.style.display = "none";
+                profissoes=profissoes-1;
+            }
+        }
     </script>
     <!-- Portfolio Grid Section -->
     <section id="portfolio">
@@ -172,7 +191,7 @@
             <div class="row">
                 <div class="col-md-12 text-center">
                     <br>
-                    <br><h2>Cadastro de Prestador</h2><br>
+                    <h2>Cadastro de Prestador</h2><br>
                     <legend>Preencha o formulário para se cadastrar</legend>
                 </div>
             </div>
@@ -192,7 +211,7 @@
                     <label for="nomeUsuario">Nome</label>
                     <input type = "text" class="form-control" name = "nome" id="nomeUsuario" value= "" required>
                     <br>
-                    <label for="cpfUsuario">CPF</label>
+                    <label for="cpfUsuario">CPF (somente números)</label>
                     <input type = "text" class="form-control" name = "CPF" id="cpfUsuario" onkeyup="digitarCPF()" value = "" required>
                 </div>
             </div>
@@ -202,7 +221,7 @@
                     <label for="emailUsuario">Email</label>
                     <input type = "email" class="form-control" name = "email" id="emailUsuario" value = "" required>
                     <br>
-                    <label>CEP</label>
+                    <label>CEP (somente números)</label>
                     <div class="row justify-content-center">
                         <div class="col-lg-12">
                             <div class="input-group">
@@ -230,17 +249,50 @@
                         $resultado = $mysqli->query($sql);
                     ?>
                     <label>Profissão</label>
-                    <div class="input-group">
-                        <select id="profissao" name ="profissao" class="form-control">
+                    <select id="profissao1" name ="profissao1" class="form-control">
                         <option></option>
                         <?php
                             while($row = $resultado->fetch_assoc()) {
                             echo "<option value=".$row["cd_profissao"].">".utf8_encode($row["nm_profissao"])."</option>";
                             }                    
     	                ?>	
-                        </select><span class="input-group-btn"><button type="button" class="btn btn-primary">Verificar</button>
-                        </span>
-                            </div>
+                    </select>
+                    <?php
+                        include 'conexao.php';
+                        $sql = "select cd_profissao, nm_profissao from profissao";
+                        $resultado = $mysqli->query($sql);
+                    ?>
+                    <br>
+                    <div id="prof2" style="display:none;">
+                        <select id="profissao2" name ="profissao2" class="form-control" >
+                            <option></option>
+                            <?php
+                                while($row = $resultado->fetch_assoc()) {
+                                echo "<option value=".$row["cd_profissao"].">".utf8_encode($row["nm_profissao"])."</option>";
+                                }                    
+        	                ?>	
+                        </select>
+                        <br>
+                    </div>
+                    <?php
+                        include 'conexao.php';
+                        $sql = "select cd_profissao, nm_profissao from profissao";
+                        $resultado = $mysqli->query($sql);
+                    ?>
+                    <div id="prof3" style="display:none;">
+                        <select id="profissao3" name ="profissao3" class="form-control">
+                            <option></option>
+                            <?php
+                                while($row = $resultado->fetch_assoc()) {
+                                echo "<option value=".$row["cd_profissao"].">".utf8_encode($row["nm_profissao"])."</option>";
+                                }                    
+        	                ?>	
+                        </select>
+                        <br>
+                    </div>
+                    
+                    <button type="button" class="btn btn-primary" onclick="addProfissao()" >Adicionar Profissão</button><button type="button" class="btn" onclick="rmProfissao()" >Remover Profissão</button>
+                    <br>
                     <br>
                     <label>Descrição</label>
                     <textarea class="form-control" name="curriculo" rows="4" cols="50" required>

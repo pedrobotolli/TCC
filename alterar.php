@@ -66,7 +66,7 @@
                     <h2>Perfil</h2>
             </div>
             <div class="col-md-12 ">
-                <form action="alteracao.php" method="post">
+                <form enctype="multipart/form-data" action="alteracao.php" method="post">
                 <fieldset>
                 <legend>Altere seu perfil!</legend>
                 <div style="float:left;width:30%;">

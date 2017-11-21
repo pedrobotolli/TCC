@@ -64,6 +64,13 @@ session_start();
          document.forms.formulario.submit();
        }
       </script>
+      <script LANGUAGE="JavaScript">
+       function Indicar()
+       {
+         document.formulario.action="indicar.php";
+         document.forms.formulario.submit();
+       }
+      </script>
 
 </head>
 
@@ -229,6 +236,9 @@ session_start();
       echo"<input type='submit' class='btn btn-primary btn-lg pull-right' onclick='SolicitarServico()' value='Solicitar Serviço'/>";
       
       echo"<input type='submit' class='btn btn-primary btn-lg pull-right' onclick='Denunciar()' value='Denunciar'/>";
+      
+      echo"<input type='submit' class='btn btn-primary btn-lg pull-right' onclick='Indicar()' value='Indicar'/>";
+
       echo"</form>";
       echo"<form action='indicar.php'>";
 			echo"<input type='submit' class='btn btn-primary btn-lg pull-right' value='Indicar'/>";

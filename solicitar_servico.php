@@ -84,7 +84,6 @@
         <p>
 <?php
 session_start();
-require 'PHPMailerAutoload.php';
 include 'conexao.php';
 $emailp=$_POST['email'];
 $emailc=$_SESSION['email'];
@@ -101,41 +100,27 @@ $row = $resultado->fetch_assoc();
 $nomep=$row['nm_prestador'];			
 
 $mensagem="Olá sr.(a) '$nomep', o cliente '$nomec' está interessado em seu serviço, entre em contato através do email '$emailc' ou através do telefone '$telefonec' para negociar os termos do contrato. A equipe do Service Provider Finder lhe deseja uma boa sorte com o serviço.";
-$mail = new PHPMailer;
-
-$mail->SMTPDebug = 2;                               // Enable verbose debug output
-
-$mail->isSMTP();                                      // Set mailer to use SMTP
-$mail->Host = 'smtp.gmail.com';  // Specify main and backup SMTP servers
-$mail->SMTPAuth = true;                               // Enable SMTP authentication
-$mail->Username = 'tccserviceproviderfinder@gmail.com';                 // SMTP username
-$mail->Password = 'Rafapramimemerda';                           // SMTP password
-$mail->SMTPSecure = 'tls';                            // Enable TLS encryption, `ssl` also accepted
-$mail->Port = 587;                                    // TCP port to connect to
-
-$mail->setFrom('tccserviceproviderfinder@gmail.com', 'SPF');
-$mail->addAddress($emailp, $nomep);     // Add a recipient
-//$mail->addAddress('ellen@example.com');               // Name is optional
-//$mail->addReplyTo('info@example.com', 'Information');
-//$mail->addCC('cc@example.com');
-//$mail->addBCC('bcc@example.com');
-
-//$mail->addAttachment('/var/tmp/file.tar.gz');         // Add attachments
-//$mail->addAttachment('/tmp/image.jpg', 'new.jpg');    // Optional name
-$mail->isHTML(true);                                  // Set email format to HTML
-
-$mail->Subject = $assunto;
-$mail->Body    = $mensagem;
-//$mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
-
-if(!$mail->send()) {
-    echo 'Message could not be sent.';
-    echo 'Mailer Error: ' . $mail->ErrorInfo;
-} else {
-    echo 'Message has been sent';
-}
+            
+            $dotenv = new Dotenv\Dotenv( __DIR__ , 'sendgrid.env'); 
+            $dotenv->load();
+            
+            $from = new SendGrid\Email("Equipe SPF", "naoresponda@serviceproviderfinder.com");
+            $subject = "Um usuário do SPF está interessado em seu trabalho";
+            $to = new SendGrid\Email($nomep , $emailp);
+            $content = new SendGrid\Content("text/html", "<p>Olá sr.(a) ". $nomep ."</p> <p>Um cliente se interessou pelos seus serviços, segue abaixo as informações de contato:</p> <p> Nome: ". $nomec. "</p> <p>Telefone: ".$telefonec."</p> E-mail: ".$emailc."</p> <p>Esperamos que tenha sucesso com o novo cliente</p> <p>Equipe SPF</p>" );
+            $mail = new SendGrid\Mail($from, $subject, $to, $content);
+            
+            //usando o  getenv
+            $apiKey = getenv('SENDGRID_API_KEY');
+            
+            
+            $sg = new \SendGrid($apiKey);
+            $response = $sg->client->mail()->send()->post($mail);
+            echo $response->statusCode();
+            print_r($response->headers());
+            echo $response->body();
 ?>
-       <h3>Mensagem enviada com Sucesso</h3>
+       <h3>Prestador Solicitado com sucesso</h3>
         </p>
 
       </fieldset>

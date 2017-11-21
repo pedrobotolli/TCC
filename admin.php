@@ -87,12 +87,12 @@
                   <form action="admin.php" method="post">
                    <?php
 					include("conexao.php");
-					$consulta="select denuncia.cd_denuncia, cliente.nm_cliente, prestador.nm_prestador from prestador join denuncia join cliente where denuncia.cd_cpf_prestador = prestador.cd_cpf_prestador and denuncia.cd_cliente=cliente.cd_cliente";
-$resultado = $mysqli->query($consulta) or die ($mysqli->error);
-					
-$linhas= $mysqli->query($consulta)->num_rows;
-if($linhas>0){
-	?>			<input type="submit" value="Abrir">
+					$consulta="select denuncia.cd_denuncia, cliente.nm_cliente, prestador.nm_prestador from prestador join denuncia join cliente where denuncia.cd_cpf_prestador_d = prestador.cd_cpf_prestador and denuncia.cd_cpf_cliente_d=cliente.cd_cpf_cliente";
+                    $resultado = $mysqli->query($consulta) or die ($mysqli->error);
+                    $linhas= $mysqli->query($consulta)->num_rows;
+                    if($linhas>0){
+	                ?>			
+	                <input type="submit" value="Abrir">
 					<dl>
 						<dt><select name="selectScript" size="3">
 				<?php		
@@ -100,7 +100,7 @@ if($linhas>0){
 				{ ?>
 					
            			    <option value=" <?php echo $busca['cd_denuncia'];?>"><?php echo $busca['nm_cliente'];?> / <?php echo $busca['nm_prestador'];?></option>
-				<?php } }?>
+				<?php } ?>
 				</select></dt>
 
 					</dl>
@@ -113,7 +113,7 @@ if($linhas>0){
           			<?php if(isset($_POST['selectScript'])){
 							$denuncia = $_POST['selectScript'];
 					
-						$consulta="select denuncia.ds_denuncia, cliente.nm_cliente, cliente.nm_email, prestador.nm_prestador, prestador.nm_email from prestador join denuncia join cliente where denuncia.cd_cpf_prestador = prestador.cd_cpf_prestador and denuncia.cd_cliente=cliente.cd_cliente and denuncia.cd_denuncia=" . $denuncia;
+						$consulta="select denuncia.ds_denuncia, cliente.nm_cliente, cliente.nm_email, prestador.nm_prestador, prestador.nm_email from prestador join denuncia join cliente where denuncia.cd_cpf_prestador_d = prestador.cd_cpf_prestador and denuncia.cd_cpf_cliente_d=cliente.cd_cpf_cliente and denuncia.cd_denuncia=" . $denuncia;
 						$resultado2 = $mysqli->query($consulta) or die ($mysqli->error);
 
 						while($busca2=$resultado2->fetch_assoc()){
@@ -141,6 +141,10 @@ if($linhas>0){
                  	<input type="submit" value="Deletar">
                  </form>
                   </div>
+                  <?php } 
+                  else{
+                      echo "<h1> Nenhuma denúncia registrada até o momento </h1>";
+                  } ?>
        		  </div>
             </div>
         </div>

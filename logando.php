@@ -10,7 +10,7 @@ if($senha==NULL){
 }
 //$senha = crypt($password,'rl');
 
-	 $sql = "SELECT nm_email, cd_senha from prestador where nm_email = '$email' and cd_senha = '$senha'";
+	 $sql = "SELECT nm_email, cd_senha, cd_cpf_prestador from prestador where nm_email = '$email' and cd_senha = '$senha'";
 	 $resultado = $mysqli->query($sql) or die ($mysqli->error);;
      $row = $resultado->fetch_assoc();
      if($row['nm_email'] == $email)
@@ -20,6 +20,7 @@ if($senha==NULL){
 				     		echo 'usuario existe';
 										$_SESSION['cod'] = 2;
 				                        $_SESSION['email'] = $email;
+				                        $_SESSION['CPF_PREST'] = $row['cd_cpf_prestador'];
 							header('location: busca.php?perfil='. $email);
 					 	}
 					 	else
