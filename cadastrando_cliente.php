@@ -35,15 +35,19 @@ include 'conexao.php';
     
     
     
-    $valida = "select cd_cpf_cliente, nm_email from cliente where nm_email = '$email' and cd_cpf_cliente = '$CPF'";
+    $valida = "select cd_cpf_cliente, nm_email from cliente where nm_email = '$email' or cd_cpf_cliente = '$CPF'";
     $resultado = $mysqli->query($valida) or die ($mysqli->error);
     $row = $resultado->fetch_assoc();
+    $validaPrest = "select cd_cpf_prestador, nm_email from prestador where nm_email = '$email'";
+    $resultadoPrest = $mysqli->query($validaPrest) or die ($mysqli->error);
+    $rowPrest = $resultadoPrest->fetch_assoc();
     
-    if($row['nm_email' == $email] and $row['cd_cpf_cliente'] == $CPF){
+    if($row['nm_email' == $email] or $row['cd_cpf_cliente'] == $CPF){
         
         Echo "Usuario já existe";
     
-    
+    }elseif($rowPrest['nm_cliente'==$email]){
+        Echo "Esse e-mail já está sendo usado em outra conta!";
     }else{
         date_default_timezone_set("Brazil/East");
         $ext = strtolower(substr($_FILES['fileUpload']['name'],-4)); //Pegando extensão do arquivo

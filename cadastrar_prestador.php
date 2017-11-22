@@ -51,7 +51,7 @@
     $row = $resultado->fetch_assoc();
     $validaCli = "select cd_cpf_cliente, nm_email from cliente where nm_email = '$email'";
     $resultadoCli = $mysqli->query($validaCli) or die ($mysqli->error);
-    $rowCli = $resultado->fetch_assoc();
+    $rowCli = $resultadoCli->fetch_assoc();
     if($row['nm_email' == $email] or $row['cd_cpf_prestador'] == $CPF){
         
         Echo "Usuario já existe";
