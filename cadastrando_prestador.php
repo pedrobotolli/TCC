@@ -71,6 +71,7 @@
         var cepValido = false;
         var cpfValido = false;
         var profissoes = 1;
+        document.getElementById("numProfissoes").value = profissoes;
         
         
         
@@ -174,6 +175,7 @@
                 var nProf= "prof"+profissoes;
                 var elemento = document.getElementById(nProf);
                 elemento.style.display = "block";
+                document.getElementById("numProfissoes").value = profissoes;
             }
         }
         function rmProfissao(){
@@ -181,7 +183,8 @@
                 var nProf= "prof"+profissoes;
                 var elemento = document.getElementById(nProf);
                 elemento.style.display = "none";
-                profissoes=profissoes-1;
+                profissoes=profissoes-1;        
+                document.getElementById("numProfissoes").value = profissoes;
             }
         }
     </script>
@@ -233,8 +236,6 @@
                         </div>
                     </div>
                     <input type="hidden" id="endereco" name="endComp" value="">
-                    <input type="hidden" id="latitude" name="lat" value="">
-                    <input type="hidden" id="longitude" name="lng" value="" >
                     <br>
                     <label>Numero</label>
                     <input type = "text" class="form-control" name = "numero" value = "" required>
@@ -242,6 +243,9 @@
                     <label>Telefone</label>
                     <input type = "text" class="form-control" name = "telefone" value = "" required>
                     <br>
+                    
+                    <input type="hidden" id="numProfissoes" name="numProfissoes" value = "" >
+                    
                     
                     <?php
                         include 'conexao.php';
