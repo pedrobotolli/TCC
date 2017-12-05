@@ -41,22 +41,21 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
-                    <li class="hidden">
+<li class="hidden">
                         <a href="#page-top"></a>
                     </li>
                     <li>
                         <a href="login.html">Login</a>
                     </li>
-                    <li class="page-scroll">
-                        <a href="#portfolio">Portfolio</a>
+                    <li>
+                        <a href="cadastrar_cliente.php">Cadastrar Cliente</a>
                     </li>
-                    <li class="page-scroll">
-                        <a href="#about">About</a>
+                    <li>
+                        <a href="cadastrando_prestador.php">Cadastrar Prestador</a>
                     </li>
-                    <li class="page-scroll">
-                        <a href="#contact">Contact</a>
-                    </li>
-                </ul>
+     <li>
+                        <a href="recuperasenha.html">Recuperar Senha</a>
+                    </li>                </ul>
             </div>
             <!-- /.navbar-collapse -->
         </div>
@@ -141,20 +140,6 @@
 
     <!-- About Section --><!-- Contact Section --><!-- Footer -->
     <footer class="text-center">
-        <div class="footer-above">
-            <div class="container">
-                <div class="row">
-                    <div class="footer-col col-md-4">
-                    <h3>Criadores</h3>
-                    <p>Equipe SPF</p>
-                  </div>
-                    <div class="footer-col col-md-4">
-                      <h3>Sobre o SPF</h3>
-                        <p>Service Provider Finder é uma ferramenta gratuita que ajuda pessoas a acharem um profissional para ajudá-las</p>
-                    </div>
-                </div>
-            </div>
-        </div>
         <div class="footer-below">
             <div class="container">
                 <div class="row">

@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,14 +11,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="favicon.png" type="image/x-icon">
-    <title>Denúncia</title>
-
-
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-
+    <link rel="icon" href="favicon.png" type="image/x-icon" />
+    <title>Perfil</title>
 
     <link href="css/freelancer.css" rel="stylesheet">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
 
 
     <link href="css/font-awesome.min.css" rel="stylesheet" type="text/css">
@@ -25,7 +25,6 @@
 
 
 </head>
-
 <body id="page-top" class="index">
 <div id="skipnav"><a href="#maincontent">Skip to main content</a></div>
 
@@ -47,16 +46,13 @@
                         <a href="#page-top"></a>
                     </li>
                     <li>
-                        <a href="login.html">Login</a>
+                        <a href="busca.php">Busca</a>
                     </li>
-                    <li class="page-scroll">
-                        <a href="#admin">Mensagens</a>
+                    <li>
+                        <a href="meuperfil.php">Perfil</a>
                     </li>
-                    <li class="page-scroll">
-                        <a href="#about">About</a>
-                    </li>
-                    <li class="page-scroll">
-                        <a href="#contact">Contact</a>
+                    <li>
+                        <a href="deslogar.php">Deslogar</a>
                     </li>
                 </ul>
             </div>
@@ -65,6 +61,7 @@
         <!-- /.container-fluid -->
     </nav>
 
+   
     <!-- Header --><!-- Portfolio Grid Section -->
 
  <section id="admin">
@@ -78,16 +75,16 @@
                 <div style="float:left;width:30%;">
                 
                 <?php session_start();
-                  $emailU=$_SESSION['email'];
-                  $emailD=$_GET['email'];
-                  
+                  $emailD=$_POST['email'];
+
                 
                 ?>
 					<form name ="denuncia" action="Enviar_Denuncia.php" method="post">
 					<br></p>
 					<p>Descreva sua denúncia:</p><p><textarea name="mensagem" rows="10" cols="50"></textarea></p><br>
-                    <input type="hidden" id='email' name='email' value=<?php echo $emailD; ?>/>
-                 	<input type="submit" value="Enviar">
+                    <input type="hidden" id='emaild' name='emaild' value=<?php echo $emailD; ?>>
+
+                 	<input type="submit" class='btn btn-primary btn-lg pull-right' value="Enviar">
 
                  </form>
                   </div>
@@ -100,25 +97,11 @@
 
     <!-- About Section --><!-- Contact Section --><!-- Footer -->
     <footer class="text-center">
-        <div class="footer-above">
-            <div class="container">
-                <div class="row">
-                    <div class="footer-col col-md-4">
-                    <h3>Criadores</h3>
-                    <p>Equipe SPF</p>
-                  </div>
-                    <div class="footer-col col-md-4">
-                      <h3>Sobre o SPF</h3>
-                        <p>Service Provider Finder é uma ferramenta gratuita que ajuda pessoas a acharem um profissional para ajudá-las</p>
-                    </div>
-                </div>
-            </div>
-        </div>
         <div class="footer-below">
             <div class="container">
                 <div class="row">
-                    <div class="col-lg-12">
-                        Copyright &copy;Corporation</div>
+                    <div class="col-12">
+                        Copyright SPF Corporation</div>
                 </div>
             </div>
         </div>

@@ -42,14 +42,15 @@
                     <li class="hidden">
                         <a href="#page-top"></a>
                     </li>
-                    <li>
-                        <a href="login.html">Login</a>
-                    </li>
+                    
                     <li>
                         <a href="busca.php">Busca</a>
                     </li>
                     <li>
                         <a href="meuperfil.php">Perfil</a>
+                    </li>
+                    <li>
+                        <a href="deslogar.php">Deslogar</a>
                     </li>
                 </ul>
             </div>
@@ -98,24 +99,24 @@ if($_SESSION['cod'] == 2){
                 echo "<input type='file' id='idFileUpload' name='userfile' accept='image/png, image/jpg' >";
                 echo "<label >Nome</label>";
                 echo "<input type = 'text' class='form-control' name = 'nome' value = '$nome'>";
-                echo "<br/>";
+                
                 echo "<br/>";
                 echo "<label >CPF</label>";
                 echo "<input type = 'text' class='form-control'  name = 'CPF' value = '$CPF' readonly/>";
                 echo "<br/>";
                 echo "<label >Email</label>";
                 echo "<input type = 'text' class='form-control' name = 'email' value = '$email' >";
-                echo "<br/>";
+                
                 echo "<br/>";
                 echo "<label >Telefone</label>";
                 echo "<input type = 'text' class='form-control' name = 'telefone' value = '$telefone' >";
-                echo "<br/>";
+                
                 echo "<br/>";
     include 'conexao.php';
     $sql = "select cd_profissao, nm_profissao from profissao";
     $resultado = $mysqli->query($sql);
-                echo "<div class='col-md-12'>";
-                    echo "<label>Profissão</label>";
+                
+                echo "<label>Profissão</label>";
                     echo "<select id='profissao' name ='profissao' class='form-control'>";
                     echo "<option>$profissao</option>";
     while($row = $resultado->fetch_assoc()) {
@@ -126,17 +127,18 @@ if($_SESSION['cod'] == 2){
                 echo "<br/>";
                 echo "<label >CEP</label>";
                 echo "<input type = 'text' class='form-control' name = 'CEP' value = '$CEP'>";
-                echo "<br/>";
+                
                 echo "<br/>";
                 echo "<label >Numero</label>";
                 echo "<input type = 'text' class='form-control'  name = 'numero' value = '$numero'>";
-                echo "<br/>";
+                
                 echo "<br/>";    
                 echo "<label>Descrição</label>";
                 echo "<textarea name='curriculo' class='form-control' rows='10' cols='50'>$curriculo</textarea>";
                 echo "<br/>";
                 echo "<input type = 'submit' class='btn btn-primary btn-lg pull-right' value='Alterar'/>";
                 echo "<input type = 'reset'  class='btn btn-secondary btn-lg pull-right'/>";
+                
             echo "</div>";
         echo "</div>";
 }elseif($_SESSION['cod'] == 1){
@@ -154,13 +156,13 @@ if($_SESSION['cod'] == 2){
     		echo "<div class='col-md-12'>";
         		echo "<label for='imagemPerfil' >Imagem de perfil </label>";
                 echo"<br><br>";
-                echo "<input type='hidden' name='MAX_FILE_SIZE' value='2000000' />";
+                echo "<input type='hidden' name='MAX_FILE_SIZE' value='10000000' />";
                 echo "<input type='file' id='idFileUpload' name='userfile' accept='image/png, image/jpg' >";
         		echo "<label >Nome</label>";
                 echo "<input type = 'text' class='form-control'";
                 echo    " name = 'nome'";
                 echo  "value = '$nome'>";
-                echo "<br/>";
+                
                 echo "<br/>";
                 echo "<label >CPF</label>";
                 echo "<input type = 'text' class='form-control'";

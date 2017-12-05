@@ -13,13 +13,14 @@ $CEP = $_POST['CEP'];
 $numero = $_POST['numero'];
 $curriculo = $_POST['curriculo'];
 $telefone = $_POST['telefone'];
-$prof = $_POST["profissao"];
-$cd = "select cd_profissao from profissao where nm_profissao = '$prof'";
+$profissao = $_POST["profissao"];
+
+$cd = "select cd_profissao from profissao where cd_profissao = '$profissao'";
 $resultado = $mysqli->query($cd) or die ($mysqli->error);
 $res = $resultado->fetch_assoc();
-$profissao=$res['cd_profissao'];
+$profiss=$res['cd_profissao'];
 $up = "update prestador set nm_prestador = '$nome',nm_email='$email',ds_curriculo = '$curriculo',nr_telefone = '$telefone',nr_cep = '$CEP',nr_endereco = '$numero' where cd_cpf_prestador = '$CPF'";
-$upPro = "update prest_profi set cd_profissao_pp = '$profissao' where cd_cpf_prestador_pp = '$CPF'"; 
+$upPro = "update prest_profi set cd_profissao_pp = '$profiss' where cd_cpf_prestador_pp = '$CPF'"; 
     $ext = strtolower(substr($_FILES['fileUpload']['name'],-4)); //Pegando extensão do arquivo
     $dir = '/home/ubuntu/workspace/uploads/';
     $uploadfile = $uploaddir . basename($_FILES['userfile']['name']);
@@ -37,8 +38,8 @@ $upPro = "update prest_profi set cd_profissao_pp = '$profissao' where cd_cpf_pre
             error_log('Erro no upload');
         }
         
-        echo 'Aqui está mais informações de debug:';
-        print_r($_FILES);
+        //echo 'Aqui está mais informações de debug:';
+        //print_r($_FILES);
         
         print "</pre>";
     //} else {
@@ -47,12 +48,15 @@ $upPro = "update prest_profi set cd_profissao_pp = '$profissao' where cd_cpf_pre
     //}
         
 
-if($mysqli->query($up) == TRUE and $mysqli->query($upPro) == TRUE){
+if($mysqli->query($up) == TRUE){
+    $mysqli->query($upPro);
     $_SESSION['email']=$email;
     header("location: meuperfil.php");
+    
 }else{
 	echo($mysqli->error);
 }
+
 }else{
 $nome = $_POST['nome'];
 $CPF = $_POST['CPF'];
@@ -69,7 +73,7 @@ $up = "update cliente set nm_cliente = '$nome',nm_email='$email',nr_telefone = '
     $path = $_FILES['userfile']['name'];
     $ext = pathinfo($path, PATHINFO_EXTENSION);
     $ext = strtolower($ext);
-    $new_name = "P-" . $CPF . "." . $ext;
+    $new_name = "C-" . $CPF . "." . $ext;
     echo '<pre>';
     //if($ext == "jpg" || $ext == "jpeg" || $ext == "png"){
         if(file_exists("/home/ubuntu/workspace/uploads/$new_name"))

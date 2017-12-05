@@ -71,6 +71,13 @@ session_start();
          document.forms.formulario.submit();
        }
       </script>
+      <script LANGUAGE="JavaScript">
+       function Avaliar()
+       {
+         document.formulario.action="avaliacao.php";
+         document.forms.formulario.submit();
+       }
+      </script>
 
 </head>
 
@@ -94,14 +101,15 @@ session_start();
                     <li class="hidden">
                         <a href="#page-top"></a>
                     </li>
-                    <li>
-                        <a href="login.html">Login</a>
-                    </li>
+                    
                     <li>
                         <a href="busca.php">Busca</a>
                     </li>
                     <li>
                         <a href="meuperfil.php">Perfil</a>
+                    </li>
+                    <li>
+                        <a href="deslogar.php">Deslogar</a>
                     </li>
                 </ul>
             </div>
@@ -131,23 +139,21 @@ session_start();
          <?php
 
          include 'conexao.php';
-         $p = $_SESSION['email'];
-         $sel = "select nm_email from cliente where nm_email = '$p'";
-         $result = $mysqli->query($sel) or die ($mysqli->error);
-         $linha = $result->fetch_assoc();
          $per = $_GET['perfil'];
          
-         $selecao = "select cd_cpf_prestador, nm_prestador, nm_email,nr_telefone,ds_curriculo,nr_cep,nr_endereco from prestador where nm_email = '$per' ";
+         $selecao = "select nm_email from prestador where nm_email = '$per' ";
          $resultado = $mysqli->query($selecao) or die ($mysqli->error);
          $row = $resultado->fetch_assoc();
-         
-         $prestCPF = $row["cd_cpf_prestador"];
+         $emailprest=$row["nm_email"];
          $profi = "select nm_profissao from prestador as pre, profissao as p, prest_profi as pp where pp.cd_cpf_prestador_pp = pre.cd_cpf_prestador and pp.cd_profissao_pp = p.cd_profissao";
          $rpro = $mysqli->query($profi) or die ($mysqli->error);
          $rowpro = $rpro->fetch_assoc();
          $profissao = $rowpro["nm_profissao"];
          
-		if($_SESSION['cod'] == 1){
+		if($per == $emailprest){
+		 $selecao = "select cd_cpf_prestador, nm_prestador, nm_email,nr_telefone,ds_curriculo,nr_cep,nr_endereco from prestador where nm_email = '$per' ";
+         $resultado = $mysqli->query($selecao) or die ($mysqli->error);
+         $row = $resultado->fetch_assoc();
          $CPF = $row["cd_cpf_prestador"];
          $nome = $row["nm_prestador"];
          $email = $row["nm_email"];
@@ -156,14 +162,12 @@ session_start();
          $numero = $row["nr_endereco"];
          $CEP = $row["nr_cep"];
          $curriculo = $row["ds_curriculo"];
-
-         $_SESSION['CPF_PREST'] = $CPF;
 		 
 		 
         echo "<form method='post' name='formulario'>";
         
         echo "<div class='container'>";
-        echo "<img src='/uploads/C-".$CPF.".jpg' width='150' height='150'>" ;
+        echo "<img src='/uploads/P-".$CPF.".jpg' width='150' height='150'>" ;
         echo "<div class='col-md-12'>";
          echo "<label >Nome</label>";
           echo "<input type = 'text' class='form-control'";
@@ -172,16 +176,9 @@ session_start();
                echo " readonly/>";
                 echo" <br/>";
                 
-                
-               echo "<label >CPF</label>";
-          echo "<input type = 'text' class='form-control'";
-            echo    " name = 'CPF'";
-               echo  "value = '$CPF'";
-               echo " readonly/>";
-          echo "<br/>";
-          echo "</div>";
-
-        echo "<div class='col-md-12'>";
+    ?>
+    <input type="hidden" id='CPF' name='CPF' value=<?php echo $CPF; ?>>
+      <?php  echo "<div class='col-md-12'>";
          echo "<label >Email</label>";
           echo "<input type = 'text' class='form-control'";
             echo    " name = 'email'";
@@ -238,12 +235,46 @@ session_start();
       echo"<input type='submit' class='btn btn-primary btn-lg pull-right' onclick='Denunciar()' value='Denunciar'/>";
       
       echo"<input type='submit' class='btn btn-primary btn-lg pull-right' onclick='Indicar()' value='Indicar'/>";
+      if($_SESSION['cod']==1){
+      echo"<input type='submit' class='btn btn-primary btn-lg pull-right' onclick='Avaliar()' value='Avaliar'/>";
+      }
 
       echo"</form>";
-      echo"<form action='indicar.php'>";
-			echo"<input type='submit' class='btn btn-primary btn-lg pull-right' value='Indicar'/>";
-			echo"</form>";
-		}
+      
+      	$consulta="select c.nm_cliente, a.ds_avaliacao, c.cd_cpf_cliente, a.dt_avaliacao from cliente c join avaliacao a where c.cd_cpf_cliente = a.cd_cpf_cliente and a.cd_cpf_prestador=".$CPF;
+        $resultado = $mysqli->query($consulta) or die ($mysqli->error);
+        $linhas= $mysqli->query($consulta)->num_rows;
+        if($linhas>0){
+        $res= $mysqli->query($consulta);
+        while($comentario=$res->fetch_assoc()){
+      ?>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <h3>Comentários</h3>
+                </div><!-- /col-sm-12 -->
+            </div><!-- /row -->
+            <div class="row">
+                <div class="col-sm-1">
+                    <div class="thumbnail">
+                        <img class="img-responsive user-photo" src="/uploads/C-<?php echo $comentario['cd_cpf_cliente']; ?>".jpg">
+                    </div><!-- /thumbnail -->
+                </div><!-- /col-sm-1 -->
+                
+            <div class="col-sm-5">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <strong><?php echo $comentario['nm_cliente']; ?></strong> <span class="text-muted">Enviado em <?php echo $comentario['dt_avaliacao']; ?></span>
+                    </div>
+                    <div class="panel-body">
+                        <?php echo $comentario['ds_avaliacao']; ?>
+                    </div><!-- /panel-body -->
+                </div><!-- /panel panel-default -->
+            </div><!-- /col-sm-5 -->
+            
+        
+        </div>
+	<?php	}}}
 			else
 			{
 				$selecao = "select cd_cpf_cliente, nm_cliente, nm_email,nr_telefone,nr_endereco,nr_cep from cliente where nm_email = '$per'"; 
@@ -261,7 +292,7 @@ session_start();
               echo "<form method='post' name='formulario'>";
               
                     echo "<div class='container'>";
-                    echo "<img src='/uploads/P-".$CPF.".jpg' width='150' height='150'>" ;
+                    echo "<img src='/uploads/C-".$CPF.".jpg' width='150' height='150'>" ;
                     echo "<div class='col-md-12'>";
 					echo "<label >Nome</label>";
           			echo "<input type = 'text' class='form-control'";

@@ -141,6 +141,8 @@ function mostra_res(){
             <div class="row">
                 <div class="col-md-4 offset-md-4">  
                     <form action="novasenha.php" name="f1" method="post">
+                        <input type="hidden" id='email' name='email' value="<?php echo $_GET['perfil']; ?>">
+
                         <label>Senha antiga:</label> 
                         <input type="password" class="form-control" name="senhaantiga" id="senhaantiga" size="20">
                         <br>
@@ -165,20 +167,6 @@ function mostra_res(){
 
     <!-- About Section --><!-- Contact Section --><!-- Footer -->
     <footer class="text-center">
-        <div class="footer-above">
-            <div class="container">
-                <div class="row">
-                    <div class="footer-col col-md-4">
-                    <h3>Criadores</h3>
-                    <p>Equipe SPF </p>
-                  </div>
-                    <div class="footer-col col-md-4">
-                      <h3>Sobre o SPF</h3>
-                        <p>Service Provider Finder é uma ferramenta gratuita que ajuda pessoas a acharem um profissional para ajudá-las</p>
-                    </div>
-                </div>
-            </div>
-        </div>
         <div class="footer-below">
             <div class="container">
                 <div class="row">

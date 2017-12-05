@@ -5,11 +5,12 @@ $senha1= $_POST["senha1"];
 $senha2= $_POST["senha2"];
 if($senha1==$senha1)
 {
-    $senhaA = crypt($senhaantiga,'rl');
-    $senhanova	= crypt($senha1,'rl');
+    $senhaA = $senhaantiga;
+    $senhanova	= $senha1;
     $email = $_POST["email"];	
-    $sql="update prestador set cd_senha='$senha1' where nm_email='$email' and cd_senha='$senhaA'";
+    $sql="update prestador set cd_senha='$senha1' where nm_email='$email'";
     $mysqli->query($sql) or die ($mysqli->error);
+    header('login.html');
 }
 else
 {

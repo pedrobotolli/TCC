@@ -46,14 +46,15 @@ session_start();
                     <li class="hidden">
                         <a href="#page-top"></a>
                     </li>
-                    <li>
-                        <a href="login.html">Login</a>
-                    </li>
+                    
                     <li>
                         <a href="busca.php">Busca</a>
                     </li>
                     <li>
                         <a href="meuperfil.php">Perfil</a>
+                    </li>
+                    <li>
+                        <a href="deslogar.php">Deslogar</a>
                     </li>
                     
                 </ul>

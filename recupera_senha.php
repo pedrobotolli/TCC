@@ -180,7 +180,7 @@ function mostra_res(){
             }   
             else
             {
-                    $selecao = "select cd_ativacao,cd_cpf_prestador from prestador where cd_ativacao='". $codigo ."'";
+                    $selecao = "select cd_ativacao,cd_cpf_prestador from prestador where cd_ativacao='$codigo'";
                     $resultado = $mysqli->query($selecao) or die ($mysqli->error);
                     $row = $resultado->fetch_assoc();
                     $cd_res=$row['cd_ativacao'];
@@ -233,20 +233,6 @@ function mostra_res(){
 
     <!-- About Section --><!-- Contact Section --><!-- Footer -->
     <footer class="text-center">
-        <div class="footer-above">
-            <div class="container">
-                <div class="row">
-                    <div class="footer-col col-md-4">
-                    <h3>Criadores</h3>
-                    <p>Equipe SPF </p>
-                  </div>
-                    <div class="footer-col col-md-4">
-                      <h3>Sobre o SPF</h3>
-                        <p>Service Provider Finder é uma ferramenta gratuita que ajuda pessoas a acharem um profissional para ajudá-las</p>
-                    </div>
-                </div>
-            </div>
-        </div>
         <div class="footer-below">
             <div class="container">
                 <div class="row">

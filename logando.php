@@ -5,12 +5,12 @@ include 'conexao.php';
 
 $email = $_GET['login'];
 $senha = $_GET['senha'];
-if($senha==NULL){
-	$senha='0';
+if($senha==NULL || $email==NULL){
+	header('location: login.html');
 }
 //$senha = crypt($password,'rl');
 
-	 $sql = "SELECT nm_email, cd_senha, cd_cpf_prestador from prestador where nm_email = '$email' and cd_senha = '$senha'";
+	 $sql = "SELECT nm_email, cd_senha, cd_cpf_prestador from prestador where ic_ativo=1 and nm_email = '$email' and cd_senha = '$senha'";
 	 $resultado = $mysqli->query($sql) or die ($mysqli->error);;
      $row = $resultado->fetch_assoc();
      if($row['nm_email'] == $email)
@@ -20,7 +20,7 @@ if($senha==NULL){
 				     		echo 'usuario existe';
 										$_SESSION['cod'] = 2;
 				                        $_SESSION['email'] = $email;
-				                        $_SESSION['CPF_PREST'] = $row['cd_cpf_prestador'];
+				                        $_SESSION['cpf'] = $row['cd_cpf_prestador'];
 							header('location: busca.php?perfil='. $email);
 					 	}
 					 	else
@@ -31,7 +31,7 @@ if($senha==NULL){
      }
 	else
 	{
-        $sql = "SELECT nm_email, cd_senha from cliente where nm_email = '$email' and cd_senha = '$senha'";
+        $sql = "SELECT nm_email, cd_senha,cd_cpf_cliente from cliente where ic_ativo=1 and nm_email = '$email' and cd_senha = '$senha'";
 	 	$resultado = $mysqli->query($sql) or die ($mysqli->error);
      	$row = $resultado->fetch_assoc();
 		echo $row['nm_email'];
@@ -42,7 +42,7 @@ if($senha==NULL){
      		  echo 'usuario existe';
      						$_SESSION['cod'] = 1;
                             $_SESSION['email'] = $email;
-                            $_SESSION['CPF'] = $row['cd_cpf_cliente'];
+                            $_SESSION['cpf'] = $row['cd_cpf_cliente'];
 			  header('location: busca.php?perfil='. $email);
 	 		}
 	 		else
@@ -53,13 +53,13 @@ if($senha==NULL){
         }
 		else
 		{
-			$sql = "select nm_email,nm_adm from adm where nm_email = '". $email ."'";
+			$sql = "select nm_email,nm_adm from adm where nm_email = '$email'";
 	 		$resultado = $mysqli->query($sql) or die ($mysqli->error);
      		$row = $resultado->fetch_assoc();
      		if($row['nm_email'] == $email)
 	 		{
                     $_SESSION['email'] = $email;
-     			header("location: admin.php");
+     			header("location: novoadmin.php");
         	}
 			else
 			{

@@ -1,6 +1,3 @@
-<?php
-session_start();
-?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,12 +8,11 @@ session_start();
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="favicon.png" type="image/x-icon" />
-    <title>Perfil</title>
+    <link rel="icon" href="favicon.png" type="image/x-icon">
+    <title>Avaliação</title>
 
     <link href="css/freelancer.css" rel="stylesheet">
     <link href="css/bootstrap.min.css" rel="stylesheet">
-
 
     <link href="css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
@@ -25,6 +21,7 @@ session_start();
 
 
 </head>
+
 <body id="page-top" class="index">
 <div id="skipnav"><a href="#maincontent">Skip to main content</a></div>
 
@@ -45,15 +42,14 @@ session_start();
                     <li class="hidden">
                         <a href="#page-top"></a>
                     </li>
-                    
+                    <li>
+                        <a href="login.html">Login</a>
+                    </li>
                     <li>
                         <a href="busca.php">Busca</a>
                     </li>
                     <li>
                         <a href="meuperfil.php">Perfil</a>
-                    </li>
-                    <li>
-                        <a href="deslogar.php">Deslogar</a>
                     </li>
                 </ul>
             </div>
@@ -61,82 +57,48 @@ session_start();
         </div>
         <!-- /.container-fluid -->
     </nav>
-    <!-- Header --><!-- Portfolio Grid Section -->
+
+   <!-- Portfolio Grid Section -->
     <section id="portfolio">
         <div class="container">
-            <div class="row">
-                <div class="col-lg-12 text-center">
-                </div>
-              <div class="col-lg-12 text-center">
-      <fieldset>
-
-        <p>
-<?php
-session_start();
-include("conexao.php");
-$selecao = "select cd_denuncia from denuncia";
-$resultado = $mysqli->query($selecao) or die ($mysqli->error);
-$cd_denuncia = 0;
-while($row = $resultado->fetch_assoc()){
-	$cd_denuncia=$row['cd_denuncia'];
-}
-$cd_denuncia++;
-$email=$_POST['emaild'];
-$usuario=$_SESSION['cpf'];
-$codigo =$_SESSION['cod'];
-if($codigo==2)
-{
-	$cd_cpf_prestador=$usuario;
-	$selecao="select cd_cpf_cliente from cliente where nm_email='.$email.'";
-	$resultado = $mysqli->query($selecao) or die ($mysqli->error);
-	$row = $resultado->fetch_assoc();
-	$cd_cpf_cliente=$row['cd_cpf_cliente'];
-	$dt_denuncia=date('Y-m-d');
-    $ds_denuncia=$_POST['mensagem'];
-    $sql1 = "INSERT INTO denuncia (cd_denuncia, ds_denuncia, dt_denuncia, cd_cpf_cliente,cd_cpf_prestador) VALUES ";
-    $sql1 .= "('$cd_denuncia','$ds_denuncia','$dt_denuncia','$cd_cpf_cliente','$cd_cpf_prestador')";
-    if($mysqli->query($sql1)===TRUE)
-    {
-        echo 'Denúncia Registrada com sucesso!';
-
-    }
-    else
-    {
-        echo 'ERRO: ' . $sql1 . '<br>' . $mysqli->error;
-    }
-}
-else
-{
-	$cd_cpf_cliente=$usuario;
-	$selecao="select cd_cpf_prestador from prestador where nm_email='$email'";
-	$resultado = $mysqli->query($selecao) or die ($mysqli->error);
-	$row = $resultado->fetch_assoc();
-	$cd_cpf_prestador=$row['cd_cpf_prestador'];
-    $dt_denuncia=date('Y-m-d');
-    $ds_denuncia=$_POST['mensagem'];
-    $sql1 = "INSERT INTO denuncia (cd_denuncia, ds_denuncia, dt_denuncia, cd_cpf_cliente,cd_cpf_prestador) VALUES ";
-    $sql1 .= "('$cd_denuncia','$ds_denuncia','$dt_denuncia','$cd_cpf_cliente','$cd_cpf_prestador')";
-    if($mysqli->query($sql1)===TRUE)
-    {
-        echo 'Denúncia Registrada com sucesso!';
-
-    }
-    else
-    {
-        echo 'ERRO: ' . $sql1 . '<br>' . $mysqli->error;
-
-    }
-}
-?>
-        </p>
-
+          <div class="row">
+            <div class="col-lg-12 text-center">
+                    <h2>Avaliação</h2>
+              </div>
+            <div class="col-lg-12 text center">
+            <fieldset>
+          <div class="col-lg-12 text center">
+        <legend>Avalie este perfil</legend>
+        </div>
+        <div style="float:left;width:30%;">
+          <?php 
+          include("conexao.php");
+          $email=$_POST['email'];
+          $selecao = "select cd_cpf_prestador from prestador where nm_email = '$email' ";
+          $resultado = $mysqli->query($selecao) or die ($mysqli->error);
+          $row = $resultado->fetch_assoc();
+          
+          ?>
+          <form name ="avaliacao" action="Enviar_Avaliacao.php" method="post">
+					<br></p>
+					<p>Escreva um comentário sobre este perfil:</p><p><textarea name="ds" rows="10" cols="50"></textarea></p><br>
+                    <input type="hidden" id='emailp' name='emailp' value=<?php echo $email; ?>>
+                 	<input type="submit" class='btn btn-primary btn-lg pull-right' value="Enviar">
+            </form>
+        </div>
+        <div style="float:left;width:70%;">
+        <p>			
+       </p>
+        </div>
+      
+          
       </fieldset>
-
+          </div>
                 </div>
-
+                
           </div>
             <div class="row"></div>
-        </div>
+        
     </section>
 
     <!-- About Section --><!-- Contact Section --><!-- Footer -->
@@ -145,7 +107,7 @@ else
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12">
-                        Copyright &copy;Corporation</div>
+                        Copyright Equipe SPF</div>
                 </div>
             </div>
         </div>
@@ -158,8 +120,9 @@ else
         </a>
     </div>
 
+   
 
-<!-- jQuery -->
+    <!-- jQuery -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
@@ -172,8 +135,7 @@ else
         <!-- Theme JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/startbootstrap-freelancer/3.3.7/js/freelancer.min.js"></script>
 
-</body>
 
-</html>
+</body>
 
 </html>

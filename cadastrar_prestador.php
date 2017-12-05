@@ -44,8 +44,9 @@
     $curriculo = $_POST["curriculo"]; 
     $queryPrestProf = FALSE;
     
-
-
+    echo "$profissao1";
+    echo $numProfissoes;
+    
     $validaPrest = "select cd_cpf_prestador, nm_email from prestador where nm_email = '$email' or cd_cpf_prestador = '$CPF'";
     $resultado = $mysqli->query($validaPrest) or die ($mysqli->error);
     $row = $resultado->fetch_assoc();
@@ -78,48 +79,57 @@
                 echo "Possível ataque de upload de arquivo!\n";
             }
             
-            echo 'Aqui está mais informações de debug:';
-            print_r($_FILES);
+            //echo 'Aqui está mais informações de debug:';
+            //print_r($_FILES);
             
             print "</pre>";
         } else {
             echo "<script type='javascript'>alert('Tipo de arquivo errado!');";
             echo "</script>";
         }
+        
+        
+        
+        //$pp = "insert into prest_profi (cd_profissao_pp, cd_cpf_prestador_pp) values ($profissao,$CPF)";
+        //echo $pp;
+        //$mysqli->query($pp);
+        
+        $prest = "INSERT INTO prestador (cd_cpf_prestador, cd_senha, nm_prestador, nm_email, nr_telefone,ds_curriculo, nr_cep,nr_endereco, cd_ativacao, ic_ativo) VALUES ";
+        $prest .= "('$CPF','$password','$nome','$email','$telefone','$curriculo','$CEP','$numero','$codigo',TRUE)";
+        if($mysqli->query($prest)){
+            $prestadorsql = TRUE;
+        }
+        
         switch ($numProfissoes){
             case 1:
-                $pp1 = "insert into prest_profi (cd_profissao_pp, cd_cpf_prestador_pp) values ($profissao1,$CPF)";
-                if($mysqli->query($pp1)===TRUE){
+                $pp1 = "insert into prest_profi (cd_profissao_pp, cd_cpf_prestador_pp) values ('$profissao1','$CPF')";
+                if($mysqli->query($pp1)==TRUE){
                     $queryPrestProf = TRUE;
+                    echo "deu certo";
                 }
                 break;
             case 2:
-                $pp1 = "insert into prest_profi (cd_profissao_pp, cd_cpf_prestador_pp) values ($profissao1,$CPF)";
-                $pp2 = "insert into prest_profi (cd_profissao_pp, cd_cpf_prestador_pp) values ($profissao2,$CPF)";
-                if($mysqli->query($pp1)===TRUE && $mysqli->query($pp2)===TRUE){
+                $pp1 = "insert into prest_profi (cd_profissao_pp, cd_cpf_prestador_pp) values ('$profissao1','$CPF')";
+                $pp2 = "insert into prest_profi (cd_profissao_pp, cd_cpf_prestador_pp) values ('$profissao2','$CPF')";
+                if($mysqli->query($pp1)==TRUE && $mysqli->query($pp2)==TRUE){
                     $queryPrestProf = TRUE;
+                    echo "deu certo";
                 }
                 break;
             case 3:
-                $pp1 = "insert into prest_profi (cd_profissao_pp, cd_cpf_prestador_pp) values ($profissao1,$CPF)";
-                $pp2 = "insert into prest_profi (cd_profissao_pp, cd_cpf_prestador_pp) values ($profissao2,$CPF)";
-                $pp3 = "insert into prest_profi (cd_profissao_pp, cd_cpf_prestador_pp) values ($profissao3,$CPF)";
-                if($mysqli->query($pp1)===TRUE && $mysqli->query($pp2)===TRUE && $mysqli->query($pp3)===TRUE){
+                $pp1 = "insert into prest_profi (cd_profissao_pp, cd_cpf_prestador_pp) values ('$profissao1','$CPF')";
+                $pp2 = "insert into prest_profi (cd_profissao_pp, cd_cpf_prestador_pp) values ('$profissao2','$CPF')";
+                $pp3 = "insert into prest_profi (cd_profissao_pp, cd_cpf_prestador_pp) values ('$profissao3','$CPF')";
+                if($mysqli->query($pp1)==TRUE && $mysqli->query($pp2)==TRUE && $mysqli->query($pp3)==TRUE){
                     $queryPrestProf = TRUE;
+                    echo "deu certo";
                 }
                 break;
             default:
                 echo "algo deu errado";
             
         }
-        
-        //$pp = "insert into prest_profi (cd_profissao_pp, cd_cpf_prestador_pp) values ($profissao,$CPF)";
-        //echo $pp;
-        //$mysqli->query($pp);
-        $prest = "INSERT INTO prestador (cd_cpf_prestador, cd_senha, nm_prestador, nm_email, nr_telefone,ds_curriculo, nr_cep,nr_endereco, cd_ativacao, ic_ativo) VALUES ";
-        $prest .= "('$CPF','$password','$nome','$email','$telefone','$curriculo','$CEP','$numero','$codigo',FALSE)";
-        
-        if($mysqli->query($prest)===TRUE && $queryPrestProf === TRUE){
+        if($prestadorsql===TRUE && $queryPrestProf === TRUE){
             echo 'Usuario incluido com sucesso';
             require 'vendor/autoload.php';
             

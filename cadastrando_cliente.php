@@ -79,7 +79,7 @@ include 'conexao.php';
     
     
         $cadastro= "INSERT INTO cliente (cd_cpf_cliente,cd_senha,nm_cliente,nr_telefone,nm_email,nr_cep,nr_endereco,ic_ativo,cd_ativacao)VALUES "; 
-        $cadastro.= "('$CPF','$password','$nome','$telefone','$email','$CEP','$numero',TRUE,'$senha')";
+        $cadastro.= "('$CPF','$password','$nome','$telefone','$email','$CEP','$numero',TRUE,'$codigo')";
     
         
     if($mysqli->query($cadastro)===TRUE)

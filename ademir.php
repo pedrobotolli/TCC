@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 include 'conexao.php';
 
@@ -13,21 +13,14 @@ $row = $resultado->fetch_assoc();
 	$denuncia = "SELECT * from denuncia where cd_cpf_prestador = '$cpf'";
 	$resultdenuncia = $mysqli->query($denuncia);
 		  while($busca=$resultdenuncia->fetch_assoc()){
-			  $deleteadmdenuncia = "DELETE from adm_denuncia where cd_denuncia = ". $busca['cd_denuncia'];
-			  $mysqli->query($deleteadmdenuncia) or die ($mysqli->error);
 			  $deletedenuncia = "DELETE from denuncia where cd_denuncia = ". $busca['cd_denuncia'];
 			  $mysqli->query($deletedenuncia) or die ($mysqli->error);
+		  }
+		  $up= "update prestador set ic_ativo=0 where cd_cpf_prestador=".$cpf;
+			  if($mysqli->query($up) == TRUE){
 			  echo "Delete denuncia! ";
-		  }
+			  }
 	
-		 
-	$indicacao = "SELECT * from indicacao where cd_cpf_prestador = '$cpf'";
-	$resultindicacao = $mysqli->query($indicacao);
-		 while($buscaindicacao=$resultindicacao->fetch_assoc()){
-			  $deleteindicacao = "DELETE from indicacao where cd_cpf_prestador = ". $buscaindicacao['cd_cpf_prestador'];
-			  $mysqli->query($deleteindicacao) or die ($mysqli->error);
-			 echo "Delete indicacao! ";
-		  }
 		 
 	$avaliacao = "SELECT * from avaliacao where cd_cpf_prestador = '$cpf'";
 	$resultavaliacao = $mysqli->query($avaliacao);
@@ -45,11 +38,7 @@ $row = $resultado->fetch_assoc();
 		   $mysqli->query($deleteprest_profi) or die ($mysqli->error);
 		echo "prost_profi deletado! ";
 	}
-     $delete = "DELETE from prestador where cd_cpf_prestador = '$cpf'";
-	 
-  
-     $mysqli->query($delete) or die ($mysqli->error);
-     echo "Deletado o Prestador!";
+	header('admin.php');
   }else{
 
 $sqlcliente = "SELECT * from cliente where cd_cliente = '$cpf' ";
@@ -60,12 +49,13 @@ $rowcliente = $resultadocliente->fetch_assoc();
   $denunciac = "SELECT * from denuncia where cd_cliente = '$cpf'";
   $resultdenunciac = $mysqli->query($denunciac);
 		while($buscadenunciac=$resultdenunciac->fetch_assoc()){
-			  $deleteadmdenunciac = "DELETE from adm_denuncia where cd_denuncia = ". $buscadenunciac['cd_denuncia'];
-			  $mysqli->query($deleteadmdenunciac) or die ($mysqli->error);
 			  $deletedenunciac = "DELETE from denuncia where cd_denuncia = ". $buscadenunciac['cd_denuncia'];
 			  $mysqli->query($deletedenunciac) or die ($mysqli->error);
-			  echo "Delete denuncia! ";
 		  }
+		  $up= "update prestador set ic_ativo=0 where cd_cpf_prestador=".$cpf;
+			  if($mysqli->query($up) == TRUE){
+			  echo "Delete denuncia! ";
+			  }
 		
 		  $avaliacaoc = "SELECT * from avaliacao where cd_cliente = '$cpf'";
   $resultavaliacaoc = $mysqli->query($avaliacaoc);
@@ -74,17 +64,7 @@ $rowcliente = $resultadocliente->fetch_assoc();
 			  $mysqli->query($deleteavaliacaoc) or die ($mysqli->error);
 			 echo "Delete avaliacao! ";
 		  }
-		
-  $indicacaoc = "SELECT * from indicacao where cd_cliente = '$cpf'";
-  $resultindicacaoc = $mysqli->query($indicacaoc);
-		 while($buscaindicacaoc=$resultindicacaoc->fetch_assoc()){
-			  $deleteindicacaoc = "DELETE from indicacao where cd_cliente = ". $buscaindicacaoc['cd_cliente'];
-			  $mysqli->query($deleteindicacaoc) or die ($mysqli->error);
-			 echo "Delete indicacao! ";
-		  }
-     $deletecliente = "DELETE from cliente where cd_cliente = '$cpf'";
-     $mysqli->query($deletecliente) or die ($mysqli->error);
-     echo "Deletado o Cliente!";
+	header('admin.php');
   }else{
  echo "USUÁRIO NÃO ENCONTRADO!";
  }

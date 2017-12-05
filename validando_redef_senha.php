@@ -46,14 +46,14 @@
                     <li>
                         <a href="login.html">Login</a>
                     </li>
-                    <li class="page-scroll">
-                        <a href="#portfolio">Portfolio</a>
+                    <li>
+                        <a href="cadastrar_cliente.php">Cadastrar Cliente</a>
                     </li>
-                    <li class="page-scroll">
-                        <a href="#about">About</a>
+                    <li>
+                        <a href="cadastrando_prestador.php">Cadastrar Prestador</a>
                     </li>
-                    <li class="page-scroll">
-                        <a href="#contact">Contact</a>
+     <li>
+                        <a href="recuperasenha.html">Recuperar Senha</a>
                     </li>
                 </ul>
             </div>
@@ -92,8 +92,8 @@ include("conexao.php");
     }
 $aux = $user.time(); 
 $codigo = substr(md5($aux),0,10);
-$email=$_GET['email'];
-$cpf=$_GET['cpf'];
+$email=$_POST['email'];
+$cpf=$_POST['cpf'];
 $selecao = "select cd_cpf_cliente, nm_email, nm_cliente from cliente where nm_email='". $email ."' and cd_cpf_cliente='". $cpf ."'";
 $resultado = $mysqli->query($selecao) or die ($mysqli->error);
 $num=$mysqli->query($selecao)->num_rows;
@@ -102,7 +102,7 @@ if($num > 0)
     
     $res = $resultado->fetch_assoc();
     $nome = $res['nm_cliente'];
-    $selecao = "update cliente set cd_ativacao='".$codigo."' where nm_email='". $email ."' and cd_cpf_cliente='". $cpf ."'";
+    $selecao = "update cliente set cd_senha='".$password."' where nm_email='". $email ."' and cd_cpf_cliente='". $cpf ."'";
     $resultado = $mysqli->query($selecao) or die ($mysqli->error);
     require 'vendor/autoload.php';
     $dotenv = new Dotenv\Dotenv( __DIR__ , 'sendgrid.env'); 
@@ -119,8 +119,8 @@ if($num > 0)
     
     $sg = new \SendGrid($apiKey);
     $response = $sg->client->mail()->send()->post($mail);
-    echo $response->statusCode();
-    print_r($response->headers());
+    //echo $response->statusCode();
+    //print_r($response->headers());
     echo $response->body();
     echo "<h3>Enviamos um e-mail para que seja feita a alteração da senha</h3>";
 }
@@ -133,7 +133,7 @@ else
     {
         $res = $resultado->fetch_assoc();
         $nome = $res['nm_cliente'];
-        $selecao = "update cliente set cd_ativacao='".$codigo."' where nm_email='". $email ."' and cd_cpf_cliente='". $cpf ."'";
+        $selecao = "update cliente set cd_senha='".$password."' where nm_email='". $email ."' and cd_cpf_cliente='". $cpf ."'";
         $resultado = $mysqli->query($selecao) or die ($mysqli->error);
         require 'vendor/autoload.php';
         $dotenv = new Dotenv\Dotenv( __DIR__ , 'sendgrid.env'); 
@@ -150,8 +150,8 @@ else
         
         $sg = new \SendGrid($apiKey);
         $response = $sg->client->mail()->send()->post($mail);
-        echo $response->statusCode();
-        print_r($response->headers());
+        //echo $response->statusCode();
+        //print_r($response->headers());
         echo $response->body();
         echo "<h3>Enviamos um e-mail para que seja feita a alteração da senha</h3>";
     }

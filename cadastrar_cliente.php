@@ -29,8 +29,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js" type="text/javascript"></script>
     <script src="/js/jquery.maskedinput.js" type="text/javascript"></script>
     <script type="text/javascript">
-        var cepValido = false;
-        var cpfValido = false;
+        var cepValido = true;
+        var cpfValido = true;
         
         
     
@@ -60,12 +60,12 @@
         
         function cpfErrado(){
             cpfValido = false;
-            document.getElementById("btEnviar").disabled=true;
+            document.getElementById("btEnviar").disabled=false;
         }
         
         function cepErrado(){
             cepValido = false;
-            document.getElementById("btEnviar").disabled=true;
+            document.getElementById("btEnviar").disabled=false;
         }
         function validaCep(){
             cepValido = true;
@@ -73,7 +73,7 @@
             verificaCampos();
         }
         function verificaCampos(){
-            if(cpfValido==true && cepValido==true && document.getElementById("emailUsuario").value != ""){
+            if(cpfValido==true && cepValido==true){
                 document.getElementById("btEnviar").disabled=false;
             }
         }
@@ -83,7 +83,7 @@
                 cpfValido=true;
                 verificaCampos();
             }else{
-                document.getElementById("btEnviar").disabled=true;
+                document.getElementById("btEnviar").disabled=false;
                 cpfValido=false;
             }
         }

@@ -44,14 +44,15 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
-                    <li>
-                        <a href="login.html">Login</a>
-                    </li>
+                    
                     <li>
                         <a href="busca.php">Busca</a>
                     </li>
                     <li>
                         <a href="meuperfil.php">Perfil</a>
+                    </li>
+                    <li>
+                        <a href="deslogar.php">Deslogar</a>
                     </li>
                 </ul>
             </div>
@@ -87,16 +88,16 @@ $email=array();
 $num_total=0;
 $num=0;
 while($busca=$resultado->fetch_assoc()){
-$sql="select p.nm_prestador from prest_profi pp join prestador p on p.cd_cpf_prestador=pp.cd_cpf_prestador_pp where pp.cd_profissao_pp=". $busca['cd_profissao'];
+$sql="select p.nm_prestador from prest_profi pp join prestador p on p.cd_cpf_prestador=pp.cd_cpf_prestador_pp where p.ic_ativo=1 and pp.cd_profissao_pp=". $busca['cd_profissao'];
 $query = $mysqli->query($sql) or die ($mysqli->error);
 $num_total+=$mysqli->query($sql)->num_rows;
-$sql="select p.nm_prestador from prest_profi pp join prestador p on p.cd_cpf_prestador=pp.cd_cpf_prestador_pp where pp.cd_profissao_pp=". $busca['cd_profissao']. " LIMIT ". $pagina ."," .$itens_por_pagina;
+$sql="select p.nm_prestador from prest_profi pp join prestador p on p.cd_cpf_prestador=pp.cd_cpf_prestador_pp where p.ic_ativo=1 and pp.cd_profissao_pp=". $busca['cd_profissao']. " LIMIT ". $pagina ."," .$itens_por_pagina;
 $query = $mysqli->query($sql) or die ($mysqli->error);
 $num+=$mysqli->query($sql)->num_rows;
 while($busca2=$query->fetch_assoc()){
 	$pessoa[]=$busca2;
 }
-$sql2="select p.nm_email from prest_profi pp join prestador p on p.cd_cpf_prestador=pp.cd_cpf_prestador_pp where pp.cd_profissao_pp=". $busca['cd_profissao']. " LIMIT ". $pagina ."," .$itens_por_pagina;
+$sql2="select p.nm_email from prest_profi pp join prestador p on p.cd_cpf_prestador=pp.cd_cpf_prestador_pp where p.ic_ativo=1 and pp.cd_profissao_pp=". $busca['cd_profissao']. " LIMIT ". $pagina ."," .$itens_por_pagina;
 $query2 = $mysqli->query($sql2) or die ($mysqli->error);
 while($busca3=$query2->fetch_assoc()){
 	$email[]=$busca3;
@@ -124,16 +125,16 @@ $email=array();
 $num_total=0;
 $num=0;
 while($busca=$resultado->fetch_assoc()){
-$sql="select prestador.nm_prestador from prestador join logradouro on prestador.cd_logradouro=logradouro.cd_logradouro where prestador.cd_logradouro=". $busca['cd_logradouro']; 
+$sql="select prestador.nm_prestador from prestador join logradouro on prestador.cd_logradouro=logradouro.cd_logradouro where prestador.ic_ativo=1 and prestador.cd_logradouro=". $busca['cd_logradouro']; 
 $query = $mysqli->query($sql) or die ($mysqli->error);
 $num_total+=$mysqli->query($sql)->num_rows;
-$sql="select prestador.nm_prestador from prestador join logradouro on prestador.cd_logradouro=logradouro.cd_logradouro where prestador.cd_logradouro=". $busca['cd_logradouro']. " LIMIT ". $pagina ."," .$itens_por_pagina; 
+$sql="select prestador.nm_prestador from prestador join logradouro on prestador.cd_logradouro=logradouro.cd_logradouro where prestador.ic_ativo=1 and prestador.cd_logradouro=". $busca['cd_logradouro']. " LIMIT ". $pagina ."," .$itens_por_pagina; 
 $query = $mysqli->query($sql) or die ($mysqli->error);
 $num+=$mysqli->query($sql)->num_rows;
 while($busca2=$query->fetch_assoc()){
 	$pessoa[]=$busca2;
 }
-$sql2="select prestador.nm_email from prestador join logradouro on prestador.cd_logradouro=logradouro.cd_logradouro where prestador.cd_logradouro=". $busca['cd_logradouro'];
+$sql2="select prestador.nm_email from prestador join logradouro on prestador.cd_logradouro=logradouro.cd_logradouro where prestador.ic_ativo=1 and prestador.cd_logradouro=". $busca['cd_logradouro'];
 $query2 = $mysqli->query($sql2) or die ($mysqli->error);
 while($busca3=$query2->fetch_assoc()){
 	$email[]=$busca3;
@@ -151,21 +152,21 @@ $num_paginas = ceil($num_total/$itens_por_pagina);
 	}
 }
 elseif($escolha=='Nome'){
-$consulta="select nm_prestador from prestador where nm_prestador like '%". $pesquisa ."%'";
+$consulta="select nm_prestador from prestador where ic_ativo=1 and nm_prestador like '%". $pesquisa ."%'";
 $resultado = $mysqli->query($consulta) or die ($mysqli->error);
 $linhas= $mysqli->query($consulta)->num_rows;
 if($linhas>0){
 $pessoa=array();
 $email=array();
 $num_total=$linhas;
-$consulta="select nm_prestador from prestador where nm_prestador like '%". $pesquisa ."%' LIMIT ". $pagina ."," .$itens_por_pagina;
+$consulta="select nm_prestador from prestador where ic_ativo=1 and nm_prestador like '%". $pesquisa ."%' LIMIT ". $pagina ."," .$itens_por_pagina;
 $resultado = $mysqli->query($consulta) or die ($mysqli->error);
 $num=$mysqli->query($consulta)->num_rows;
 while($busca=$resultado->fetch_assoc()){
 $pessoa[]=$busca;
 }	
 	
-$consulta="select nm_email from prestador where nm_prestador like '%". $pesquisa ."%' LIMIT ". $pagina ."," .$itens_por_pagina;
+$consulta="select nm_email from prestador where ic_ativo=1 and nm_prestador like '%". $pesquisa ."%' LIMIT ". $pagina ."," .$itens_por_pagina;
 $resultado = $mysqli->query($consulta) or die ($mysqli->error);
 while($busca=$resultado->fetch_assoc()){
 $email[]=$busca;
@@ -182,21 +183,21 @@ $num_paginas = ceil($num_total/$itens_por_pagina);
 	}
 }	
 elseif($escolha=='Cliente'){
-$consulta="select nm_cliente from cliente where nm_cliente like '%". $pesquisa ."%'";
+$consulta="select nm_cliente from cliente where ic_ativo=1 and nm_cliente like '%". $pesquisa ."%'";
 $resultado = $mysqli->query($consulta) or die ($mysqli->error);
 $linhas= $mysqli->query($consulta)->num_rows;
 if($linhas>0){
 $num_total=$linhas;
 $pessoa=array();
 $email=array();
-$consulta="select nm_cliente from cliente where nm_cliente like '%". $pesquisa ."%' LIMIT ". $pagina ."," .$itens_por_pagina;
+$consulta="select nm_cliente from cliente where ic_ativo=1 and nm_cliente like '%". $pesquisa ."%' LIMIT ". $pagina ."," .$itens_por_pagina;
 $resultado = $mysqli->query($consulta) or die ($mysqli->error);
 $num=$mysqli->query($consulta)->num_rows;
 while($busca=$resultado->fetch_assoc()){
 $pessoa[]=$busca;
 }
 	
-$consulta="select nm_email from cliente where nm_cliente like '%". $pesquisa ."%' LIMIT ". $pagina ."," .$itens_por_pagina;
+$consulta="select nm_email from cliente where ic_ativo=1 and nm_cliente like '%". $pesquisa ."%' LIMIT ". $pagina ."," .$itens_por_pagina;
 $resultado = $mysqli->query($consulta) or die ($mysqli->error);	
 while($busca=$resultado->fetch_assoc()){
 $email[]=$busca;
@@ -212,29 +213,6 @@ $num_paginas = ceil($num_total/$itens_por_pagina);
 		$num_paginas = 0;
 	}
 
-}elseif($escolha=='Indicacao'){
-    $consul="select cd_cpf_prestador from indicacao";
-    $result = $mysqli->query($consul) or die ($mysqli->error);
-    $consulta = "select nm_email,nm_prestador from prestador where cd_cpf_prestador = '$result' LIMIT" .$pagina.",".$itens_por_pagina;
-    $resultado = $mysqli->query($consulta) or die ($mysqli->error);
-    $linhas= $mysqli->query($resultado)->num_rows;
-    if($linhas>0){
-        
-        $num_total=$linhas;
-        $pessoa=array();
-        $email=array();
-        while($busca=$resultado->fetch_assoc()){
-            $pessoa[]=$busca['nm_prestador'];
-            $email[]=$busca['nm_email'];
-}
-$num_paginas = ceil($num_total/$itens_por_pagina);
-}else{
-		echo"Nenhum resultado";
-		$r=0;
-		$num = 0;
-		$num_total=0;
-		$num_paginas = 0;
-	}
 }
 ?>
 

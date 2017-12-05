@@ -1,13 +1,7 @@
-﻿SPFSPFSPFSPFSPF<!doctype html>
-<html>
-<head>
-<meta charset="utf-8">
-<title>Documento sem título</title>
-</head>
+<?php namespace SendGrid; 
+require '/home/ubuntu/workspace/vendor/autoload.php';
 
-<!DOCTYPE html>
-<html lang="en">
-
+?>
 <head>
 
     <meta charset="utf-8">
@@ -15,20 +9,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
+    <link rel="icon" href="favicon.png" type="image/x-icon">
 
-    <title>busca</title>
-
-  
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-
+    <title>SPF</title>
 
     <link href="css/freelancer.css" rel="stylesheet">
+    
+    <link href="css/bootstrap.min.css" rel="stylesheet">
 
+    
 
     <link href="css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
-
 
 
 </head>
@@ -42,7 +35,7 @@
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header page-scroll">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
+                    <span class="sr-only">Toggle navigation</span> Menu
                 </button>
                 <a class="navbar-brand" href="index.html">Inicio</a>
             </div>
@@ -50,21 +43,17 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
-                    <li class="hidden">
-                        <a href="#page-top"></a>
+                    
+                    <li>
+                        <a href="busca.php">Busca</a>
                     </li>
                     <li>
-                        <a href="login.html">Login</a>
+                        <a href="meuperfil.php">Perfil</a>
                     </li>
-                    <li class="page-scroll">
-                        <a href="#portfolio">Portfolio</a>
+                    <li>
+                        <a href="deslogar.php">Deslogar</a>
                     </li>
-                    <li class="page-scroll">
-                        <a href="#about">About</a>
-                    </li>
-                    <li class="page-scroll">
-                        <a href="#contact">Contact</a>
-                    </li>
+                    
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
@@ -83,42 +72,74 @@
 
         <p>
 <?php
-session_start();
-include 'conexao.php';
-$emailp=$_POST['email'];
-$emailc=$_SESSION['email'];
-$assunto="Um cliente está interessado em seu serviço!";
-			
-$selecao = "select nm_cliente,nr_telefone from cliente where nm_email='$emailc'";
-$resultado = $mysqli->query($selecao) or die ($mysqli->error);
-$row = $resultado->fetch_assoc();
-$nomec=$row['nm_cliente'];	
-$telefonec=$row['nr_telefone'];			
-$selecao = "select nm_prestador from prestador where nm_prestador='$emailp'";
-$resultado = $mysqli->query($selecao) or die ($mysqli->error);
-$row = $resultado->fetch_assoc();
-$nomep=$row['nm_prestador'];			
 
-$mensagem="Olá sr.(a) '$nomep', o cliente '$nomec' está interessado em seu serviço, entre em contato através do email '$emailc' ou através do telefone '$telefonec' para negociar os termos do contrato. A equipe do Service Provider Finder lhe deseja uma boa sorte com o serviço.";
-            
-            $dotenv = new Dotenv\Dotenv( __DIR__ , 'sendgrid.env'); 
-            $dotenv->load();
-            
-            $from = new SendGrid\Email("Equipe SPF", "naoresponda@serviceproviderfinder.com");
-            $subject = "Um usuário do SPF está interessado em seu trabalho";
-            $to = new SendGrid\Email($nomep , $emailp);
-            $content = new SendGrid\Content("text/html", "<p>Olá sr.(a) ". $nomep ."</p> <p>Um cliente se interessou pelos seus serviços, segue abaixo as informações de contato:</p> <p> Nome: ". $nomec. "</p> <p>Telefone: ".$telefonec."</p> E-mail: ".$emailc."</p> <p>Esperamos que tenha sucesso com o novo cliente</p> <p>Equipe SPF</p>" );
-            $mail = new SendGrid\Mail($from, $subject, $to, $content);
-            
-            //usando o  getenv
-            $apiKey = getenv('SENDGRID_API_KEY');
-            
-            
-            $sg = new \SendGrid($apiKey);
-            $response = $sg->client->mail()->send()->post($mail);
-            echo $response->statusCode();
-            print_r($response->headers());
-            echo $response->body();
+function helloEmail()
+{
+    
+    session_start();
+    include 'conexao.php';
+    if($_SESSION['cod']==1){
+    $emailp=$_POST['email'];
+    $emailc=$_SESSION['email'];
+    $assunto="Um cliente está interessado em seu serviço!";
+    		
+    $selecao = "select nm_cliente,nr_telefone from cliente where nm_email='$emailc'";
+    $resultado = $mysqli->query($selecao) or die ($mysqli->error);
+    $row = $resultado->fetch_assoc();
+    $nomec=$row['nm_cliente'];	
+    $telefonec=$row['nr_telefone'];			
+    $selecao = "select nm_prestador,nr_telefone from prestador where nm_email='$emailp'";
+    $resultado = $mysqli->query($selecao) or die ($mysqli->error);
+    $row = $resultado->fetch_assoc();
+    $nomep=$row['nm_prestador'];		
+    $telefonep=$row['nr_telefone'];			
+    $from = new Email(null, "naoresponda@spf.com");
+    $subject = $assunto;
+    $to = new Email(null, $emailp);
+    $content = new Content("text/plain", "Olá sr.(a) '$nomep', o cliente '$nomec' está interessado em seus serviços, entre em contato através do email '$emailc' ou através do telefone '$telefonec' para negociar os termos do contrato. A equipe do Service Provider Finder lhe deseja uma boa sorte com o serviço.");
+    $mail = new Mail($from, $subject, $to, $content);
+    $to = new Email(null, "naoresponda@spf.com");
+    $mail->personalization[0]->addTo($to);
+    
+    
+    }
+    else{
+        $emailc=$_POST['email'];
+        $emailp=$_SESSION['email'];
+        $assunto="Um prestador está lhe oferecendo um serviço";
+        		
+        $selecao = "select nm_cliente,nr_telefone from cliente where nm_email='$emailc'";
+        $resultado = $mysqli->query($selecao) or die ($mysqli->error);
+        $row = $resultado->fetch_assoc();
+        $nomec=$row['nm_cliente'];	
+        $telefonec=$row['nr_telefone'];			
+        $selecao = "select nm_prestador,nr_telefone from prestador where nm_email='$emailp'";
+        $resultado = $mysqli->query($selecao) or die ($mysqli->error);
+        $row = $resultado->fetch_assoc();
+        $nomep=$row['nm_prestador'];
+        $telefonep=$row['nr_telefone'];			
+        $from = new Email(null, "naoresponda@spf.com");
+        $subject = $assunto;
+        $to = new Email(null, $emailc);
+        $content = new Content("text/plain", "Olá sr.(a) '$nomec', o prestador '$nomep' está lhe oferecendo serviço, entre em contato através do email '$emailp' ou através do telefone '$telefonep' para negociar os termos do contrato. A equipe do Service Provider Finder lhe deseja uma boa sorte com o serviço.");
+        $mail = new Mail($from, $subject, $to, $content);
+        $to = new Email(null, "naoresponda@spf.com");
+        $mail->personalization[0]->addTo($to);
+        
+        
+    }
+    
+    return $mail;
+}
+function sendHelloEmail()
+{
+    
+    $sg = new \SendGrid("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");
+    $request_body = helloEmail();
+    $response = $sg->client->mail()->send()->post($request_body);
+}
+sendHelloEmail();  // this will actually send an email
+
 ?>
        <h3>Prestador Solicitado com sucesso</h3>
         </p>
@@ -134,25 +155,11 @@ $mensagem="Olá sr.(a) '$nomep', o cliente '$nomec' está interessado em seu ser
 
     <!-- About Section --><!-- Contact Section --><!-- Footer -->
     <footer class="text-center">
-        <div class="footer-above">
-            <div class="container">
-                <div class="row">
-                    <div class="footer-col col-md-4">
-                    <h3>Criadores</h3>
-                    <p>Equipe SPF</p>
-                  </div>
-                    <div class="footer-col col-md-4">
-                      <h3>Sobre o SPF</h3>
-                        <p>Service Provider Finder � uma ferramenta gratuita que ajuda pessoas a acharem um profissional para ajud�-las</p>
-                    </div>
-                </div>
-            </div>
-        </div>
         <div class="footer-below">
             <div class="container">
                 <div class="row">
-                    <div class="col-lg-12">
-                        Copyright &copy;Thomas Corporation</div>
+                    <div class="col-12">
+                        Copyright SPF Corporation</div>
                 </div>
             </div>
         </div>

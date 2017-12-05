@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 
 <head>
 
@@ -9,19 +9,18 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="icon" href="favicon.png" type="image/x-icon">
-    <title>Email</title>
 
+    <title>SPF</title>
 
+    <link href="css/freelancer.css" rel="stylesheet">
+    
     <link href="css/bootstrap.min.css" rel="stylesheet">
 
-
-    <link href="css/freelancer.min.css" rel="stylesheet">
-
+    
 
     <link href="css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
-
 
 
 </head>
@@ -35,7 +34,7 @@
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header page-scroll">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
+                    <span class="sr-only">Toggle navigation</span> Menu
                 </button>
                 <a class="navbar-brand" href="index.html">Inicio</a>
             </div>
@@ -43,21 +42,16 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
-                    <li class="hidden">
-                        <a href="#page-top"></a>
+                    <li>
+                        <a href="busca.php">Busca</a>
                     </li>
                     <li>
-                        <a href="login.html">Login</a>
+                        <a href="meuperfil.php">Perfil</a>
                     </li>
-                    <li class="page-scroll">
-                        <a href="#admin">Mensagens</a>
+                    <li>
+                        <a href="deslogar.php">Deslogar</a>
                     </li>
-                    <li class="page-scroll">
-                        <a href="#about">About</a>
-                    </li>
-                    <li class="page-scroll">
-                        <a href="#contact">Contact</a>
-                    </li>
+                    
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
@@ -78,7 +72,6 @@
                 <div style="float:left;width:30%;">
                 
                 <?php session_start();
-                  $emailCLI=$_SESSION['email'];
                   $emailPRES=$_POST['email'];
                   
                 
@@ -88,7 +81,8 @@
 					<p>Descreva o porque da Indicação:</p><p><textarea name="mensagem" rows="10" cols="50"></textarea></p><br>
                     <label >Quem recebera Indicação</label></br>
                     <input type="text" id='emailIn' name='emailIn' value=''/>
-                 	<input type="submit" value="Enviar">
+                 	<input type="submit"  class='btn btn-primary btn-lg pull-right' value="Enviar">
+                    <input type="hidden" id='emailprest' name='emailprest' value=<?php echo $emailPRES; ?>>
 
                  </form>
                   </div>
@@ -101,25 +95,11 @@
 
     <!-- About Section --><!-- Contact Section --><!-- Footer -->
     <footer class="text-center">
-        <div class="footer-above">
-            <div class="container">
-                <div class="row">
-                    <div class="footer-col col-md-4">
-                    <h3>Criadores</h3>
-                    <p>Equipe SPF</p>
-                  </div>
-                    <div class="footer-col col-md-4">
-                      <h3>Sobre o SPF</h3>
-                        <p>Service Provider Finder é uma ferramenta gratuita que ajuda pessoas a acharem um profissional para ajudá-las</p>
-                    </div>
-                </div>
-            </div>
-        </div>
         <div class="footer-below">
             <div class="container">
                 <div class="row">
-                    <div class="col-lg-12">
-                        Copyright &copy; Corporation</div>
+                    <div class="col-12">
+                        Copyright SPF Corporation</div>
                 </div>
             </div>
         </div>

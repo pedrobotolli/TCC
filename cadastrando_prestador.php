@@ -71,9 +71,12 @@
         var cepValido = false;
         var cpfValido = false;
         var profissoes = 1;
-        document.getElementById("numProfissoes").value = profissoes;
-        
-        
+        function codeAddress() {
+            
+            document.getElementById("numProfissoes").value = profissoes;
+            console.log(profissoes);
+        }
+        window.onload = codeAddress;
         
         /*jQuery(function($){
             $("#cpfUsuario").mask("999.999.999-99");
@@ -107,7 +110,7 @@
         
         function cepErrado(){
             cepValido = false;
-            document.getElementById("btEnviar").disabled=true;
+            document.getElementById("btEnviar").disabled=false;
         }
         function validaCep(){
             cepValido = true;
@@ -125,7 +128,7 @@
                 cpfValido=true;
                 verificaCampos();
             }else{
-                document.getElementById("btEnviar").disabled=true;
+                document.getElementById("btEnviar").disabled=false;
                 cpfValido=false;
             }
         }
@@ -304,7 +307,7 @@
                     </textarea>
                     <br>
                     <button type = "reset" class="btn btn-secondary btn-lg pull-right">Redefinir</button>
-                    <button type = "submit" id="btEnviar" class="btn btn-primary btn-lg pull-right" disabled>Enviar</button>
+                    <button type = "submit" id="btEnviar" class="btn btn-primary btn-lg pull-right" >Enviar</button>
                 </div>
             </div>
             </fieldset>

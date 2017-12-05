@@ -42,14 +42,15 @@
                     <li class="hidden">
                         <a href="#page-top"></a>
                     </li>
-                    <li>
-                        <a href="login.html">Login</a>
-                    </li>
+                    
                     <li>
                         <a href="busca.php">Busca</a>
                     </li>
                     <li>
                         <a href="meuperfil.php">Perfil</a>
+                    </li>
+                    <li>
+                        <a href="deslogar.php">Deslogar</a>
                     </li>
                 </ul>
             </div>
@@ -100,7 +101,7 @@
          
          
          echo "<div class='container'>";
-         echo "<img src='/uploads/P-".$CPF.".png' width='150' height='150'>" ;
+         echo "<img src='/uploads/P-".$CPF.".jpg' width='150' height='150'>" ;
          echo "<div class='col-md-12'>";
          echo "<label for='nomeUsuario'>Nome</label>";
           echo "<input type = 'text' class='form-control' ";
@@ -193,10 +194,10 @@
          $email = $row["nm_email"];
          $CEP = $row["nr_cep"];
          $telefone = $row["nr_telefone"];
-         $numero = $row["nr_endereco"];	
+         $numero = $row["nr_endereco"];
 				
 			 echo "<div class='container'>";
-            echo "<img src='/uploads/C-".$CPF.".png' width='150' height='150'>" ;
+            echo "<img src='/uploads/C-".$CPF.".jpg' width='150' height='150'>" ;
 
          echo "<div class='col-md-12'>";	
 		echo "<label >Nome</label>";
@@ -251,6 +252,7 @@
          <br/>
          <input type = "submit" class="btn btn-primary btn-lg pull-right" value="Alterar"/>
           <input type = "reset" class="btn btn-secondary btn-lg pull-right"/>
+         
          <?php               	
 				
 			}?>
@@ -261,6 +263,7 @@
       </fieldset>
             
     </form>
+     <a href="nova_senha.php?perfil=<?php echo $_SESSION['email']; ?>" class="btn btn-secondary btn-lg pull-right">Alterar Senha</a>
         </div>
                 </div>
                 
